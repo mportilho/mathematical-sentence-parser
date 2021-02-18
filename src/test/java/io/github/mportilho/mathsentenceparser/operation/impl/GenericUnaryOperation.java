@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 import io.github.mportilho.mathsentenceparser.ParsingContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
-import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
 
-public class GenericOperationTwo extends AbstractOperation {
+public class GenericUnaryOperation extends AbstractUnaryOperator {
 
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		return new GenericOperationTwo();
+	public GenericUnaryOperation(AbstractOperation operand) {
+		super(operand);
 	}
 
 	@Override

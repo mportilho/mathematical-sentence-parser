@@ -1,20 +1,24 @@
 package io.github.mportilho.mathsentenceparser.operation.impl;
 
-import java.math.BigDecimal;
-
 import io.github.mportilho.mathsentenceparser.ParsingContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.AbstractValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 
-public class GenericOperationTwo extends AbstractOperation {
+public class GenericValueOperation extends AbstractValueOperation {
 
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		return new GenericOperationTwo();
+	public GenericValueOperation(Object value) {
+		super(value);
 	}
 
 	@Override
 	public Object resolve(ParsingContext context) {
-		return BigDecimal.ZERO;
+		return getValue();
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return null;
 	}
 
 	@Override

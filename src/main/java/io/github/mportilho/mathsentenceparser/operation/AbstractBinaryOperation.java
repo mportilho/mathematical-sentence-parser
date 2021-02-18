@@ -18,18 +18,22 @@ public abstract class AbstractBinaryOperation extends AbstractOperation {
 	}
 
 	@Override
-	protected CallSite createCloningMethodHandle() throws Throwable {
-		MethodHandles.Lookup lookup = MethodHandles.lookup();
-		MethodType factoryMethodType = MethodType.methodType(BiFunction.class);
-		MethodType functionMethodType = MethodType.methodType(void.class, new Class[] { AbstractOperation.class, AbstractOperation.class });
-		MethodHandle implementationMethodHandle = lookup.findConstructor(getClass(), functionMethodType);
-		return LambdaMetafactory.metafactory( //
-				lookup, //
-				"apply", //
-				factoryMethodType, //
-				functionMethodType, //
-				implementationMethodHandle, //
-				implementationMethodHandle.type().dropParameterTypes(0, 1));
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		CallSite callSite = cacheCopingFunction(getClass(), clazz -> {
+			MethodHandles.Lookup lookup = MethodHandles.lookup();
+			MethodType factoryMethodType = MethodType.methodType(BiFunction.class);
+			MethodType functionMethodType = MethodType.methodType(void.class, AbstractOperation.class, AbstractOperation.class);
+			MethodHandle implementationMethodHandle = lookup.findConstructor(clazz, functionMethodType);
+			return LambdaMetafactory.metafactory( //
+					lookup, //
+					"apply", //
+					factoryMethodType, //
+					functionMethodType.generic(), //
+					implementationMethodHandle, //
+					implementationMethodHandle.type());
+		});
+		return ((BiFunction<AbstractOperation, AbstractOperation, AbstractOperation>) callSite.getTarget().invokeExact())
+				.apply(leftOperand.copy(context), rightOperand.copy(context));
 	}
 
 	protected AbstractOperation getLeftOperand() {

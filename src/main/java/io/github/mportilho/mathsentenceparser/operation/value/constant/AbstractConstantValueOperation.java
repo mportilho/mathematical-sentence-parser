@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.operation;
+package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
 import java.lang.invoke.CallSite;
 import java.lang.invoke.LambdaMetafactory;
@@ -7,16 +7,15 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.function.Function;
 
-public abstract class AbstractUnaryOperator extends AbstractOperation {
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.AbstractValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 
-	private AbstractOperation operand;
+public abstract class AbstractConstantValueOperation extends AbstractValueOperation {
 
-	public AbstractUnaryOperator(AbstractOperation operand) {
-		this.operand = operand;
-	}
-
-	protected AbstractOperation getOperand() {
-		return operand;
+	public AbstractConstantValueOperation(Object value) {
+		super(value);
+		cachingForever();
 	}
 
 	@Override
@@ -24,7 +23,7 @@ public abstract class AbstractUnaryOperator extends AbstractOperation {
 		CallSite callSite = cacheCopingFunction(getClass(), clazz -> {
 			MethodHandles.Lookup lookup = MethodHandles.lookup();
 			MethodType factoryMethodType = MethodType.methodType(Function.class);
-			MethodType functionMethodType = MethodType.methodType(void.class, AbstractOperation.class);
+			MethodType functionMethodType = MethodType.methodType(void.class, Object.class);
 			MethodHandle implementationMethodHandle = lookup.findConstructor(clazz, functionMethodType);
 			return LambdaMetafactory.metafactory( //
 					lookup, //
@@ -34,6 +33,12 @@ public abstract class AbstractUnaryOperator extends AbstractOperation {
 					implementationMethodHandle, //
 					implementationMethodHandle.type());
 		});
-		return ((Function<AbstractOperation, AbstractOperation>) callSite.getTarget().invokeExact()).apply(operand.copy(context));
+		return ((Function<Object, AbstractOperation>) callSite.getTarget().invokeExact()).apply(getValue());
 	}
+
+	@Override
+	protected String getOperationToken() {
+		return "";
+	}
+
 }
