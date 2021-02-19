@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
 public class FunctionOperation extends AbstractOperation {
 
@@ -22,8 +23,8 @@ public class FunctionOperation extends AbstractOperation {
 		if (parameters == null || parameters.isEmpty()) {
 			this.parameters = Collections.emptyList();
 		} else {
-			for (AbstractOperation reader : this.parameters) {
-				reader.addParent(this);
+			for (AbstractOperation operation : this.parameters) {
+				operation.addParent(this);
 			}
 		}
 		if (noCache) {
@@ -32,7 +33,7 @@ public class FunctionOperation extends AbstractOperation {
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -44,6 +45,19 @@ public class FunctionOperation extends AbstractOperation {
 			newOperationList.add(param.copy(context));
 		}
 		return new FunctionOperation(this.functionName, newOperationList, this.noCache);
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
+	public boolean isNoCache() {
+		return noCache;
+	}
+
+	public List<AbstractOperation> getParameters() {
+		return parameters;
 	}
 
 	@Override
