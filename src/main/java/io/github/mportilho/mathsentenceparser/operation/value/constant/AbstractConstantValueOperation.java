@@ -8,13 +8,15 @@ import java.lang.invoke.MethodType;
 import java.util.function.Function;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
-import io.github.mportilho.mathsentenceparser.operation.AbstractValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
-public abstract class AbstractConstantValueOperation extends AbstractValueOperation {
+public abstract class AbstractConstantValueOperation extends AbstractOperation {
 
-	public AbstractConstantValueOperation(Object value) {
-		super(value);
+	private String value;
+
+	public AbstractConstantValueOperation(String value) {
+		this.value = value;
 		cachingForever();
 	}
 
@@ -23,7 +25,7 @@ public abstract class AbstractConstantValueOperation extends AbstractValueOperat
 		CallSite callSite = cacheCopingFunction(getClass(), clazz -> {
 			MethodHandles.Lookup lookup = MethodHandles.lookup();
 			MethodType factoryMethodType = MethodType.methodType(Function.class);
-			MethodType functionMethodType = MethodType.methodType(void.class, Object.class);
+			MethodType functionMethodType = MethodType.methodType(void.class, String.class);
 			MethodHandle implementationMethodHandle = lookup.findConstructor(clazz, functionMethodType);
 			return LambdaMetafactory.metafactory( //
 					lookup, //
@@ -33,7 +35,20 @@ public abstract class AbstractConstantValueOperation extends AbstractValueOperat
 					implementationMethodHandle, //
 					implementationMethodHandle.type());
 		});
-		return ((Function<Object, AbstractOperation>) callSite.getTarget().invokeExact()).apply(getValue());
+		return ((Function<Object, AbstractOperation>) callSite.getTarget().invokeExact()).apply(value);
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	protected void setValue(String value) {
+		this.value = value;
 	}
 
 	@Override

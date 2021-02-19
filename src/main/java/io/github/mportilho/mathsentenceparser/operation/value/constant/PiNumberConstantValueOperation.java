@@ -1,7 +1,7 @@
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 
 public class PiNumberConstantValueOperation extends AbstractConstantValueOperation {
 
@@ -9,12 +9,12 @@ public class PiNumberConstantValueOperation extends AbstractConstantValueOperati
 		this("pi");
 	}
 
-	public PiNumberConstantValueOperation(Object value) {
+	public PiNumberConstantValueOperation(String value) {
 		super(value);
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		return BigDecimalMath.pi(context.getMathContext());
 	}
 

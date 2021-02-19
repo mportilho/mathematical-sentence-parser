@@ -1,15 +1,15 @@
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 
 public class StringConstantValueOperation extends AbstractConstantValueOperation {
 
-	public StringConstantValueOperation(Object value) {
+	public StringConstantValueOperation(String value) {
 		super(value);
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		return getValue().toString();
 	}
 

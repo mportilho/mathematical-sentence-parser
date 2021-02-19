@@ -1,15 +1,15 @@
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 
 public class BooleanConstantValueOperation extends AbstractConstantValueOperation {
 
-	public BooleanConstantValueOperation(Object value) {
+	public BooleanConstantValueOperation(String value) {
 		super(value);
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		return Boolean.parseBoolean(getValue().toString());
 	}
 

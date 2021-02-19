@@ -1,17 +1,23 @@
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 
 public class PreciseNumberConstantValueOperation extends AbstractConstantValueOperation {
 
-	public PreciseNumberConstantValueOperation(Object value) {
+	public PreciseNumberConstantValueOperation(String value) {
 		super(value);
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		return BigDecimalMath.toBigDecimal(getValue().toString(), context.getMathContext());
+	}
+	
+	public void transformToPositiveValue() {
+		if (getValue() != null && getValue().startsWith("-")) {
+			setValue(getValue().substring(1));
+		}
 	}
 
 }
