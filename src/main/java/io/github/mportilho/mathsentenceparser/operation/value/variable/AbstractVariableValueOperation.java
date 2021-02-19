@@ -2,6 +2,7 @@ package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
 public abstract class AbstractVariableValueOperation extends AbstractOperation {
 
@@ -29,6 +30,11 @@ public abstract class AbstractVariableValueOperation extends AbstractOperation {
 		}
 		clearCache();
 		this.providedValue = newValue;
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor<T> visitor) {
+		return visitor.visit(this);
 	}
 
 	public String getVariableName() {

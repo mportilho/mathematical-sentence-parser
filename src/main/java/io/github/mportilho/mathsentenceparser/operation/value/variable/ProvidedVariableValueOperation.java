@@ -1,6 +1,6 @@
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 
 public class ProvidedVariableValueOperation extends AbstractVariableValueOperation {
 
@@ -11,7 +11,7 @@ public class ProvidedVariableValueOperation extends AbstractVariableValueOperati
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		if (getProvidedValue() instanceof VariableValueProvider) {
 			if (contextSupplier == null) {
 				contextSupplier = new VariableValueProviderContext(context.getMathContext(), context.getScale(), isCaching());

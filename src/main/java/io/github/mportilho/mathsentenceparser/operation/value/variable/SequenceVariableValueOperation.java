@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseProductOfSequenceOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSummationOperation;
@@ -24,7 +24,7 @@ public class SequenceVariableValueOperation extends AbstractVariableValueOperati
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		return getProvidedValue();
 	}
 
