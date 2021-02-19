@@ -9,7 +9,6 @@ public class PreciseSquareRootOperation extends AbstractUnaryOperator {
 
 	public PreciseSquareRootOperation(AbstractOperation operand) {
 		super(operand, OperatorPosition.FUNCTION);
-
 	}
 
 	@Override
