@@ -8,30 +8,30 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 
 public class TestBasicOperations {
 
-	ParsingContext context = new ParsingContext();
+	OperationContext context = new OperationContext();
 
 	@Test
 	public void testPreciseAditionOperation() {
-		PreciseAditionOperation operation;
+		PreciseAdditionOperation operation;
 
-		operation = new PreciseAditionOperation(new GenericValueOperation(BigDecimal.ZERO), new GenericValueOperation(BigDecimal.ZERO));
+		operation = new PreciseAdditionOperation(new GenericValueOperation(BigDecimal.ZERO), new GenericValueOperation(BigDecimal.ZERO));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("0");
 
-		operation = new PreciseAditionOperation(new GenericValueOperation(BigDecimal.ONE), new GenericValueOperation(BigDecimal.ONE));
+		operation = new PreciseAdditionOperation(new GenericValueOperation(BigDecimal.ONE), new GenericValueOperation(BigDecimal.ONE));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("2");
 
-		operation = new PreciseAditionOperation(new GenericValueOperation(valueOf(-1)), new GenericValueOperation(valueOf(1)));
+		operation = new PreciseAdditionOperation(new GenericValueOperation(valueOf(-1)), new GenericValueOperation(valueOf(1)));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("0");
 
-		operation = new PreciseAditionOperation(new GenericValueOperation(valueOf(-1)), new GenericValueOperation(valueOf(-1)));
+		operation = new PreciseAdditionOperation(new GenericValueOperation(valueOf(-1)), new GenericValueOperation(valueOf(-1)));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("-2");
 
-		operation = new PreciseAditionOperation(new GenericValueOperation(valueOf(1)), new GenericValueOperation(valueOf(2)));
+		operation = new PreciseAdditionOperation(new GenericValueOperation(valueOf(1)), new GenericValueOperation(valueOf(2)));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("3");
 	}
 

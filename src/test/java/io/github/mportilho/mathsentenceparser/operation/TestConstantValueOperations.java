@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.AbstractConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.BooleanConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.DateConstantValueOperation;
@@ -22,7 +22,7 @@ import io.github.mportilho.mathsentenceparser.operation.value.constant.TimeConst
 
 public class TestConstantValueOperations {
 
-	ParsingContext context = new ParsingContext();
+	OperationContext context = new OperationContext();
 
 	@Test
 	public void testBooleanConstantValueOperation() {

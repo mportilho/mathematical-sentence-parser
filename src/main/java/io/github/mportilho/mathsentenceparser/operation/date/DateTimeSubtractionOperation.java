@@ -3,7 +3,7 @@ package io.github.mportilho.mathsentenceparser.operation.date;
 import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 
-public class DateTimeSubtractionOperation extends AbstractDateTimeReader {
+public class DateTimeSubtractionOperation extends AbstractDateTimeOperation {
 
 	public DateTimeSubtractionOperation(AbstractOperation leftOperand, AbstractOperation rightOperand, DateElementEnum dateElement) {
 		super(leftOperand, rightOperand, dateElement);

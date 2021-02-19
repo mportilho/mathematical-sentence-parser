@@ -8,4 +8,8 @@ public class ParsingOptions {
 		return allowingNull;
 	}
 
+	public void setAllowingNull(boolean allowingNull) {
+		this.allowingNull = allowingNull;
+	}
+
 }

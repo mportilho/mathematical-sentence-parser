@@ -10,13 +10,13 @@ import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
-public abstract class AbstractDateTimeReader extends AbstractOperation {
+public abstract class AbstractDateTimeOperation extends AbstractOperation {
 
 	private AbstractOperation leftOperand;
 	private AbstractOperation rightOperand;
 	private DateElementEnum dateElement;
 
-	public AbstractDateTimeReader(AbstractOperation leftOperand, AbstractOperation rightOperand, DateElementEnum dateElement) {
+	public AbstractDateTimeOperation(AbstractOperation leftOperand, AbstractOperation rightOperand, DateElementEnum dateElement) {
 		super();
 		this.leftOperand = leftOperand;
 		this.rightOperand = rightOperand;

@@ -5,9 +5,9 @@ import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 
 public class GeneralParserGrammarVisitor extends MathematicalSentenceParserGrammarBaseVisitor<AbstractOperation> {
 
-	private ParserGrammarBaseVisitorContext context;
+	private OperationSyntaxTreeContext context;
 
-	public GeneralParserGrammarVisitor(ParserGrammarBaseVisitorContext context) {
+	public GeneralParserGrammarVisitor(OperationSyntaxTreeContext context) {
 		super();
 		this.context = context;
 	}

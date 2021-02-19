@@ -8,12 +8,12 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 
 public class TestComplexOperations {
 
-	ParsingContext context = new ParsingContext();
+	OperationContext context = new OperationContext();
 
 	@Test
 	public void testExponentialOperation() {
