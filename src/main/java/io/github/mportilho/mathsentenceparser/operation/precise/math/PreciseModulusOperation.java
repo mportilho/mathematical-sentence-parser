@@ -1,24 +1,25 @@
 package io.github.mportilho.mathsentenceparser.operation.precise.math;
 
-import ch.obermuhlner.math.big.BigDecimalMath;
+import java.math.BigDecimal;
+
 import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
 
-public class PreciseFactorialOperation extends AbstractUnaryOperator {
+public class PreciseModulusOperation extends AbstractUnaryOperator {
 
-	public PreciseFactorialOperation(AbstractOperation operand) {
-		super(operand, OperatorPosition.RIGHT);
+	public PreciseModulusOperation(AbstractOperation operand) {
+		super(operand, OperatorPosition.WRAPPED);
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return BigDecimalMath.factorial(getOperand().evaluate(context), context.getMathContext());
+		return getOperand().<BigDecimal>evaluate(context).abs(context.getMathContext());
 	}
 
 	@Override
 	protected String getOperationToken() {
-		return "!";
+		return "|";
 	}
 
 }

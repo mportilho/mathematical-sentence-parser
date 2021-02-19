@@ -1,24 +1,27 @@
 package io.github.mportilho.mathsentenceparser.operation.precise.math;
 
-import ch.obermuhlner.math.big.BigDecimalMath;
+import java.math.BigDecimal;
+
 import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
 
-public class PreciseFactorialOperation extends AbstractUnaryOperator {
+public class PrecisePercentualOperation extends AbstractUnaryOperator {
 
-	public PreciseFactorialOperation(AbstractOperation operand) {
+	private static final BigDecimal PERCENT = new BigDecimal("0.01");
+
+	public PrecisePercentualOperation(AbstractOperation operand) {
 		super(operand, OperatorPosition.RIGHT);
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return BigDecimalMath.factorial(getOperand().evaluate(context), context.getMathContext());
+		return getOperand().<BigDecimal>evaluate(context).multiply(PERCENT, context.getMathContext());
 	}
 
 	@Override
 	protected String getOperationToken() {
-		return "!";
+		return "%";
 	}
 
 }

@@ -5,20 +5,21 @@ import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
 
-public class PreciseFactorialOperation extends AbstractUnaryOperator {
+public class PreciseSquareRootOperation extends AbstractUnaryOperator {
 
-	public PreciseFactorialOperation(AbstractOperation operand) {
-		super(operand, OperatorPosition.RIGHT);
+	public PreciseSquareRootOperation(AbstractOperation operand) {
+		super(operand, OperatorPosition.FUNCTION);
+
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return BigDecimalMath.factorial(getOperand().evaluate(context), context.getMathContext());
+		return BigDecimalMath.sqrt(getOperand().evaluate(context), context.getMathContext());
 	}
 
 	@Override
 	protected String getOperationToken() {
-		return "!";
+		return "sqrt";
 	}
 
 }

@@ -2,10 +2,11 @@ package io.github.mportilho.mathsentenceparser.operation.precise.math;
 
 import java.math.BigDecimal;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
 public class PreciseSummationOperation extends AbstractOperation {
 
@@ -31,7 +32,7 @@ public class PreciseSummationOperation extends AbstractOperation {
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		int startIndexResult = startIndex.<BigDecimal>evaluate(context).intValue();
 		int endIndexResult = endIndex.<BigDecimal>evaluate(context).intValue();
 		BigDecimal result = BigDecimal.ZERO;
@@ -48,6 +49,27 @@ public class PreciseSummationOperation extends AbstractOperation {
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
 		return new PreciseSummationOperation(startIndex.copy(context), endIndex.copy(context), operation.copy(context),
 				(SequenceVariableValueOperation) sequenceVariable.copy(context));
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
+	public AbstractOperation getStartIndex() {
+		return startIndex;
+	}
+
+	public AbstractOperation getEndIndex() {
+		return endIndex;
+	}
+
+	public AbstractOperation getOperation() {
+		return operation;
+	}
+
+	public SequenceVariableValueOperation getSequenceVariable() {
+		return sequenceVariable;
 	}
 
 	@Override

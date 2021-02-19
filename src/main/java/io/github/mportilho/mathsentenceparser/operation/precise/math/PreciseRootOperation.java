@@ -7,25 +7,22 @@ import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 
-public class PreciseExponentialOperation extends AbstractBinaryOperation {
+public class PreciseRootOperation extends AbstractBinaryOperation {
 
-	public PreciseExponentialOperation(AbstractOperation leftOperand, AbstractOperation rightOperand) {
+	public PreciseRootOperation(AbstractOperation leftOperand, AbstractOperation rightOperand) {
 		super(leftOperand, rightOperand);
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		BigDecimal rightValue = getRightOperand().evaluate(context);
-		if (rightValue.compareTo(BigDecimal.ZERO) == 0) {
-			return BigDecimal.ONE;
-		}
 		BigDecimal leftValue = getLeftOperand().evaluate(context);
-		return BigDecimalMath.pow(leftValue, rightValue, context.getMathContext());
+		BigDecimal rightValue = getRightOperand().evaluate(context);
+		return BigDecimalMath.root(leftValue, rightValue, context.getMathContext());
 	}
 
 	@Override
 	protected String getOperationToken() {
-		return "^";
+		return "\u221A";
 	}
 
 }

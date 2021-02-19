@@ -6,20 +6,20 @@ import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 
-public class PreciseSubtractionOperation extends AbstractBinaryOperation {
+public class PreciseAdditionOperation extends AbstractBinaryOperation {
 
-	public PreciseSubtractionOperation(AbstractOperation leftOperand, AbstractOperation rightOperand) {
+	public PreciseAdditionOperation(AbstractOperation leftOperand, AbstractOperation rightOperand) {
 		super(leftOperand, rightOperand);
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return getLeftOperand().<BigDecimal>evaluate(context).subtract(getRightOperand().<BigDecimal>evaluate(context), context.getMathContext());
+		return getLeftOperand().<BigDecimal>evaluate(context).add(getRightOperand().<BigDecimal>evaluate(context), context.getMathContext());
 	}
 
 	@Override
 	protected String getOperationToken() {
-		return "-";
+		return "+";
 	}
 
 }
