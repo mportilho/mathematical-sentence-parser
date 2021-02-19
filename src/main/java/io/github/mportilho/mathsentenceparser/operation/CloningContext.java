@@ -7,22 +7,22 @@ import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractV
 
 public class CloningContext {
 
-	private Map<String, AbstractVariableValueOperation> userVariables;
+	private Map<String, AbstractVariableValueOperation> providedVariables;
 	private Map<String, AbstractOperation> assignedVariables;
-	private Map<AbstractOperation, AbstractOperation> readerMap;
+	private Map<AbstractOperation, AbstractOperation> clonedOperationMap;
 
 	public CloningContext() {
-		this.userVariables = new HashMap<>();
+		this.providedVariables = new HashMap<>();
 		this.assignedVariables = new HashMap<>();
-		this.readerMap = new HashMap<>();
+		this.clonedOperationMap = new HashMap<>();
 	}
 
-	public Map<AbstractOperation, AbstractOperation> getReaderMap() {
-		return readerMap;
+	public Map<AbstractOperation, AbstractOperation> getClonedOperationMap() {
+		return clonedOperationMap;
 	}
 
-	public final Map<String, AbstractVariableValueOperation> getUserVariables() {
-		return userVariables;
+	public final Map<String, AbstractVariableValueOperation> getProvidedVariables() {
+		return providedVariables;
 	}
 
 	public final Map<String, AbstractOperation> getAssignedVariables() {

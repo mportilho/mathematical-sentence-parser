@@ -7,15 +7,19 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.function.Function;
 
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
+
 public abstract class AbstractUnaryOperator extends AbstractOperation {
 
 	private AbstractOperation operand;
+	private OperatorPosition operatorPosition;
 
-	public AbstractUnaryOperator(AbstractOperation operand) {
+	public AbstractUnaryOperator(AbstractOperation operand, OperatorPosition operatorPosition) {
 		this.operand = operand;
+		this.operatorPosition = operatorPosition;
 	}
 
-	protected AbstractOperation getOperand() {
+	public AbstractOperation getOperand() {
 		return operand;
 	}
 
@@ -35,5 +39,18 @@ public abstract class AbstractUnaryOperator extends AbstractOperation {
 					implementationMethodHandle.type());
 		});
 		return ((Function<AbstractOperation, AbstractOperation>) callSite.getTarget().invokeExact()).apply(operand.copy(context));
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
+	public OperatorPosition getOperatorPosition() {
+		return operatorPosition;
+	}
+
+	public enum OperatorPosition {
+		LEFT, RIGHT, WRAPPED, FUNCTION
 	}
 }

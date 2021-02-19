@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
 public abstract class AbstractOperation {
 
@@ -20,25 +22,27 @@ public abstract class AbstractOperation {
 
 	private boolean applyingParenthesis;
 
-	protected abstract Object resolve(ParsingContext context);
+	protected abstract Object resolve(OperationContext context);
 
 	protected abstract AbstractOperation createClone(CloningContext context) throws Throwable;
 
 	protected abstract String getOperationToken();
 
+	public abstract <T> T accept(OperationVisitor<T> visitor);
+
 	public final AbstractOperation copy(CloningContext cloningContext) throws Throwable {
 		AbstractOperation copy = null;
-		if (!cloningContext.getReaderMap().keySet().contains(this)) {
+		if (!cloningContext.getClonedOperationMap().keySet().contains(this)) {
 			copy = createClone(cloningContext).copyAtributes(this);
-			cloningContext.getReaderMap().put(this, copy);
+			cloningContext.getClonedOperationMap().put(this, copy);
 		} else {
-			copy = cloningContext.getReaderMap().get(this);
+			copy = cloningContext.getClonedOperationMap().get(this);
 		}
 		return copy;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T evaluate(ParsingContext context) {
+	public <T> T evaluate(OperationContext context) {
 		Object result;
 		try {
 			result = readValue(context);
@@ -49,7 +53,7 @@ public abstract class AbstractOperation {
 					String.format("Arithmetic error for expression %s: %s", toString(), e.getMessage()));
 			newException.setStackTrace(e.getStackTrace());
 			throw newException;
-		} catch (MathSentenceParser e) {
+		} catch (MathSentenceParserException e) {
 			throw new IllegalStateException(e.getMessage(), e.getCause());
 		} catch (IllegalArgumentException e) {
 			throw e;
@@ -57,8 +61,8 @@ public abstract class AbstractOperation {
 			throw new IllegalStateException(String.format("Error during calculation of expression %s", toString()), e);
 		}
 		if (result == null && !context.getOptions().isAllowingNull()) {
-			if (this instanceof AbstractValueOperation) {
-				throw new IllegalArgumentException(String.format("A variável \"%s\" não possui valor atribuído", this.toString()));
+			if (this instanceof AbstractVariableValueOperation) {
+				throw new IllegalArgumentException(String.format("The variable \"%s\" does not have any provided value", this.toString()));
 			} else {
 				throw new NullPointerException(String.format("Not expected null value for expression %s ", toString()));
 			}
@@ -66,7 +70,7 @@ public abstract class AbstractOperation {
 		return (T) result;
 	}
 
-	private Object readValue(ParsingContext context) {
+	private Object readValue(OperationContext context) {
 		Object result = null;
 		if (caching || cachingForever) {
 			if (cache == null) {
@@ -101,7 +105,7 @@ public abstract class AbstractOperation {
 		return cachedCallSite;
 	}
 
-	void applyingParenthesis() {
+	public void applyingParenthesis() {
 		this.applyingParenthesis = true;
 	}
 
@@ -112,7 +116,7 @@ public abstract class AbstractOperation {
 		parents.add(operation);
 	}
 
-	protected void caching(boolean value) {
+	public void caching(boolean value) {
 		this.caching = value;
 	}
 

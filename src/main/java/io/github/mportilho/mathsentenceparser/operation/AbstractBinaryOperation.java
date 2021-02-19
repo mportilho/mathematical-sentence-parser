@@ -7,6 +7,8 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.function.BiFunction;
 
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
+
 public abstract class AbstractBinaryOperation extends AbstractOperation {
 
 	private AbstractOperation leftOperand;
@@ -36,11 +38,16 @@ public abstract class AbstractBinaryOperation extends AbstractOperation {
 				.apply(leftOperand.copy(context), rightOperand.copy(context));
 	}
 
-	protected AbstractOperation getLeftOperand() {
+	@Override
+	public <T> T accept(OperationVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
+	public AbstractOperation getLeftOperand() {
 		return leftOperand;
 	}
 
-	protected AbstractOperation getRightOperand() {
+	public AbstractOperation getRightOperand() {
 		return rightOperand;
 	}
 
