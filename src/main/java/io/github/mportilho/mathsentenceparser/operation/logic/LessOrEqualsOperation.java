@@ -1,6 +1,6 @@
 package io.github.mportilho.mathsentenceparser.operation.logic;
 
-import io.github.mportilho.mathsentenceparser.ParsingContext;
+import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 
@@ -11,7 +11,7 @@ public class LessOrEqualsOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
-	protected Object resolve(ParsingContext context) {
+	protected Object resolve(OperationContext context) {
 		return getLeftOperand().<Comparable<?>>evaluate(context).compareTo(getRightOperand().evaluate(context)) <= 0;
 	}
 
