@@ -7,8 +7,6 @@ import io.github.mportilho.mathsentenceparser.OperationContext;
 
 public class DateTimeConstantValueOperation extends AbstractConstantValueOperation {
 
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy-HH:mm:ss");
-
 	private boolean current;
 
 	public DateTimeConstantValueOperation(String value) {
@@ -25,7 +23,7 @@ public class DateTimeConstantValueOperation extends AbstractConstantValueOperati
 		if (current) {
 			return context.getCurrentDateTime();
 		}
-		return FORMATTER.parse(getValue().toString(), LocalDateTime::from);
+		return DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(getValue().toString(), LocalDateTime::from);
 	}
 
 }

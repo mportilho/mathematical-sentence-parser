@@ -24,11 +24,11 @@ public class TestDateOperations {
 
 		operation = new DateAdditionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.MONTH);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-05-02");
 
 		operation = new DateAdditionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.YEAR);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2002-03-02");
 	}
 
 	@Test
@@ -41,11 +41,11 @@ public class TestDateOperations {
 
 		operation = new DateSetOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.MONTH);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-02-02");
 
-		operation = new DateSetOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
+		operation = new DateSetOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2020)),
 				DateElementEnum.YEAR);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2020-03-02");
 	}
 
 	@Test
@@ -58,11 +58,11 @@ public class TestDateOperations {
 
 		operation = new DateSubtractionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.MONTH);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-01-02");
 
 		operation = new DateSubtractionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.YEAR);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("1998-03-02");
 	}
 
 }

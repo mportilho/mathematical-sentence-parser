@@ -3,7 +3,6 @@ package io.github.mportilho.mathsentenceparser.operation.datetime;
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
@@ -21,15 +20,15 @@ public class TestTimeOperations {
 
 		operation = new TimeAdditionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.HOUR);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("01:55:50");
 
 		operation = new TimeAdditionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.MINUTE);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("23:57:50");
 
 		operation = new TimeAdditionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.SECOND);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("23:55:52");
 	}
 
 	@Test
@@ -38,15 +37,15 @@ public class TestTimeOperations {
 
 		operation = new TimeSetOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.HOUR);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-02");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("02:55:50");
 
 		operation = new TimeSetOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.MINUTE);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-02");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("23:02:50");
 
 		operation = new TimeSetOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.SECOND);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-03-02");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("23:55:02");
 	}
 
 	@Test
@@ -55,15 +54,15 @@ public class TestTimeOperations {
 
 		operation = new TimeSubtractionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.HOUR);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-02-29");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("21:55:50");
 
 		operation = new TimeSubtractionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.MINUTE);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-02-29");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("23:53:50");
 
 		operation = new TimeSubtractionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.SECOND);
-		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("2000-02-29");
+		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("23:55:48");
 	}
 
 }

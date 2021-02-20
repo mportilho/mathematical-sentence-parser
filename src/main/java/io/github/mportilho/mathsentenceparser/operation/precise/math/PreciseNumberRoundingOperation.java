@@ -36,6 +36,8 @@ public class PreciseNumberRoundingOperation extends AbstractBinaryOperation {
 			return number.setScale(roundingFactor.intValue(), RoundingMode.HALF_UP);
 		case UP:
 			return number.setScale(roundingFactor.intValue(), RoundingMode.UP);
+		case UNNECESSARY:
+			return number.setScale(roundingFactor.intValue(), RoundingMode.UNNECESSARY);
 		default:
 			throw new IllegalStateException("Rounding method not implemented: " + context);
 		}
