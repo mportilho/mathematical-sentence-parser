@@ -35,10 +35,10 @@ public class PreciseProductOfSequenceOperation extends AbstractOperation {
 	protected Object resolve(OperationContext context) {
 		int startIndexResult = startIndex.<BigDecimal>evaluate(context).intValue();
 		int endIndexResult = endIndex.<BigDecimal>evaluate(context).intValue();
-		BigDecimal result = BigDecimal.ZERO;
+		BigDecimal result = BigDecimal.ONE;
 		for (int i = startIndexResult; i <= endIndexResult; i++) {
 			if (this.sequenceVariable != null) {
-				this.sequenceVariable.provideNewValue(i);
+				this.sequenceVariable.provideNewValue(BigDecimal.valueOf(i));
 			}
 			result = result.multiply(operation.evaluate(context));
 		}

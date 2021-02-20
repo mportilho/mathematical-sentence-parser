@@ -6,6 +6,7 @@ import java.util.Set;
 
 import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseProductOfSequenceOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSummationOperation;
 
@@ -16,6 +17,13 @@ public class SequenceVariableValueOperation extends AbstractVariableValueOperati
 
 	public SequenceVariableValueOperation(String variableName) {
 		super(variableName);
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		SequenceVariableValueOperation operation = new SequenceVariableValueOperation(getVariableName());
+		operation.providedValue = this.providedValue;
+		return operation;
 	}
 
 	public void provideNewValue(int newValue) {

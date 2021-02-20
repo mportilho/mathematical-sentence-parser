@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 
 public class DateConstantValueOperation extends AbstractConstantValueOperation {
 
@@ -24,6 +26,13 @@ public class DateConstantValueOperation extends AbstractConstantValueOperation {
 			return context.getCurrentDateTime().toLocalDate();
 		}
 		return DateTimeFormatter.ISO_LOCAL_DATE.parse(getValue().toString(), LocalDate::from);
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		DateConstantValueOperation operation = (DateConstantValueOperation) super.createClone(context);
+		operation.current = this.current;
+		return operation;
 	}
 
 }

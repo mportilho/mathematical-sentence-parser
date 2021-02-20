@@ -138,9 +138,9 @@ NEGATIVE_IDENTIFIER: NegativeSymbol IdentifierText ;
 STRING: QUOTES (~ '\'' )*  QUOTES;
 NUMBER: Decimal | OctalDigits | HexDigits;
 POSITIVE: PositiveNumber ;
-DATE: DAY_PART Slash MONTH_PART Slash NumberPart NumberPart NumberPart NumberPart ;
+DATE: NumberPart NumberPart NumberPart NumberPart MINUS MONTH_PART MINUS DAY_PART ;
 TIME: HOUR_PART Colon MINUTE_SECOND_PART (Colon MINUTE_SECOND_PART)? ;
-DATETIME: DATE '-' TIME ;
+DATETIME: DATE 'T' TIME ;
 
 // TYPE CASTING
 BOOLEAN_TYPE: '<bool>';

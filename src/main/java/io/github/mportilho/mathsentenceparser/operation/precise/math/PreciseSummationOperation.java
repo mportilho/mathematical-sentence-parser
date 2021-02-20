@@ -38,7 +38,7 @@ public class PreciseSummationOperation extends AbstractOperation {
 		BigDecimal result = BigDecimal.ZERO;
 		for (int i = startIndexResult; i <= endIndexResult; i++) {
 			if (this.sequenceVariable != null) {
-				this.sequenceVariable.provideNewValue(i);
+				this.sequenceVariable.provideNewValue(BigDecimal.valueOf(i));
 			}
 			result = result.add(operation.evaluate(context));
 		}

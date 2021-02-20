@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 
 public class TimeConstantValueOperation extends AbstractConstantValueOperation {
 
@@ -24,6 +26,13 @@ public class TimeConstantValueOperation extends AbstractConstantValueOperation {
 			return context.getCurrentDateTime().toLocalTime();
 		}
 		return DateTimeFormatter.ISO_LOCAL_TIME.parse(getValue().toString(), LocalTime::from);
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		TimeConstantValueOperation operation = (TimeConstantValueOperation) super.createClone(context);
+		operation.current = this.current;
+		return operation;
 	}
 
 }

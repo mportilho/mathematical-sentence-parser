@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 
 public class DateTimeConstantValueOperation extends AbstractConstantValueOperation {
 
@@ -16,6 +18,13 @@ public class DateTimeConstantValueOperation extends AbstractConstantValueOperati
 	public DateTimeConstantValueOperation() {
 		super("currDateTime");
 		this.current = true;
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		DateTimeConstantValueOperation operation = (DateTimeConstantValueOperation) super.createClone(context);
+		operation.current = this.current;
+		return operation;
 	}
 
 	@Override

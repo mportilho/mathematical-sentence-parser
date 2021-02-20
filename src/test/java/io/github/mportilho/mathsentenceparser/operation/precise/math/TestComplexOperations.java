@@ -9,8 +9,10 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
 import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseNumberRoundingOperation.RoundingEnum;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
 
 public class TestComplexOperations {
 
@@ -215,12 +217,39 @@ public class TestComplexOperations {
 
 	@Test
 	public void testSummationOperation() {
-//		throw new IllegalStateException();
+		GenericValueOperation startIndex = new GenericValueOperation(valueOf(0));
+		GenericValueOperation endIndex = new GenericValueOperation(valueOf(2));
+		SequenceVariableValueOperation sequenceVariable;
+		AbstractOperation summationOperation;
+		AbstractOperation operation;
+		///////////////////////
+
+		sequenceVariable = new SequenceVariableValueOperation("S");
+		summationOperation = new PreciseExponentialOperation(new GenericValueOperation(valueOf(2)), sequenceVariable);
+		operation = new PreciseSummationOperation(startIndex, endIndex, summationOperation, sequenceVariable);
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("7");
+
+		sequenceVariable = new SequenceVariableValueOperation("S");
+		summationOperation = new PreciseExponentialOperation(new PreciseAdditionOperation(new GenericValueOperation(valueOf(2)), sequenceVariable),
+				sequenceVariable);
+		operation = new PreciseSummationOperation(startIndex, endIndex, summationOperation, sequenceVariable);
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("20");
+
 	}
 
 	@Test
 	public void testProductOfSequenceOperation() {
-//		throw new IllegalStateException();
+		GenericValueOperation startIndex = new GenericValueOperation(valueOf(0));
+		GenericValueOperation endIndex = new GenericValueOperation(valueOf(2));
+		SequenceVariableValueOperation sequenceVariable;
+		AbstractOperation productOfSequenceOperation;
+		AbstractOperation operation;
+
+		sequenceVariable = new SequenceVariableValueOperation("P");
+		productOfSequenceOperation = new PreciseExponentialOperation(
+				new PreciseAdditionOperation(new GenericValueOperation(valueOf(2)), sequenceVariable), sequenceVariable);
+		operation = new PreciseProductOfSequenceOperation(startIndex, endIndex, productOfSequenceOperation, sequenceVariable);
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("48");
 	}
 
 }

@@ -1,6 +1,8 @@
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
 import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 
 public class ProvidedVariableValueOperation extends AbstractVariableValueOperation {
 
@@ -23,6 +25,17 @@ public class ProvidedVariableValueOperation extends AbstractVariableValueOperati
 			return result;
 		}
 		return getProvidedValue();
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		ProvidedVariableValueOperation operation = new ProvidedVariableValueOperation(getVariableName());
+		operation.providedValue = this.providedValue;
+		if (contextSupplier != null) {
+			operation.contextSupplier = new VariableValueProviderContext(contextSupplier.getMathContext(), contextSupplier.getScale(),
+					contextSupplier.isCaching());
+		}
+		return operation;
 	}
 
 }

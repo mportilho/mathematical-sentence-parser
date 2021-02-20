@@ -2,13 +2,28 @@ package io.github.mportilho.mathsentenceparser.operation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import org.junit.jupiter.api.Test;
 
+import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
+import io.github.mportilho.mathsentenceparser.operation.datetime.DateAdditionOperation;
+import io.github.mportilho.mathsentenceparser.operation.datetime.DateElementEnum;
+import io.github.mportilho.mathsentenceparser.operation.datetime.DateTimeAdditionOperation;
+import io.github.mportilho.mathsentenceparser.operation.datetime.TimeAdditionOperation;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericOperationOne;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericOperationTwo;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericUnaryOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.constant.DateConstantValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.constant.DateTimeConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNumberConstantValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.constant.TimeConstantValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.ProvidedVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
 
 public class TestCopingOperations {
 
@@ -59,6 +74,89 @@ public class TestCopingOperations {
 		PreciseNumberConstantValueOperation copyOperation = (PreciseNumberConstantValueOperation) operation.createClone(new CloningContext());
 		assertThat(copyOperation).isNotEqualTo(operation);
 		assertThat(copyOperation.getValue()).isEqualTo(((PreciseNumberConstantValueOperation) operation).getValue());
+	}
+
+	@Test
+	public void testCopingDateOperations() throws Throwable {
+		OperationContext context = new OperationContext();
+		context.getOptions().setAllowingNull(true);
+		AbstractDateTimeOperation operation;
+		AbstractDateTimeOperation copyOperation;
+
+		operation = new DateAdditionOperation(new DateConstantValueOperation(), new PreciseNumberConstantValueOperation("2"), DateElementEnum.DAY);
+		copyOperation = (AbstractDateTimeOperation) operation.copy(new CloningContext());
+		assertThat(operation.<LocalDate>evaluate(context)).isNotNull().isEqualTo(LocalDate.now().plusDays(2));
+		assertThat(copyOperation).isNotEqualTo(operation);
+		assertThat(copyOperation.<LocalDate>evaluate(context)).isNotNull().isEqualTo(LocalDate.now().plusDays(2));
+
+		operation = new DateTimeAdditionOperation(new DateTimeConstantValueOperation(), new PreciseNumberConstantValueOperation("2"),
+				DateElementEnum.DAY);
+		copyOperation = (AbstractDateTimeOperation) operation.copy(new CloningContext());
+		assertThat(operation.<LocalDateTime>evaluate(context).toLocalDate()).isNotNull().isEqualTo(LocalDate.now().plusDays(2));
+		assertThat(copyOperation).isNotEqualTo(operation);
+		assertThat(copyOperation.<LocalDateTime>evaluate(context).toLocalDate()).isNotNull().isEqualTo(LocalDate.now().plusDays(2));
+
+		operation = new TimeAdditionOperation(new TimeConstantValueOperation(), new PreciseNumberConstantValueOperation("2"), DateElementEnum.MINUTE);
+		copyOperation = (AbstractDateTimeOperation) operation.copy(new CloningContext());
+		assertThat(operation.<LocalTime>evaluate(context).getMinute()).isNotNull().isEqualTo(LocalTime.now().plusMinutes(2).getMinute());
+		assertThat(copyOperation).isNotEqualTo(operation);
+		assertThat(copyOperation.<LocalTime>evaluate(context).getMinute()).isNotNull().isEqualTo(LocalTime.now().plusMinutes(2).getMinute());
+	}
+
+	@Test
+	public void testCopingProvidedVariableValueOperations() throws Throwable {
+		OperationContext context = new OperationContext();
+		context.getOptions().setAllowingNull(true);
+		ProvidedVariableValueOperation operation;
+		ProvidedVariableValueOperation copy;
+
+		operation = new ProvidedVariableValueOperation("A");
+		copy = (ProvidedVariableValueOperation) operation.copy(new CloningContext());
+		assertThat(copy).isNotEqualTo(operation);
+		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
+		assertThat(operation.<Object>evaluate(context)).isNull();
+		assertThat(copy.<Object>evaluate(context)).isNull();
+
+		operation.provideNewValue(3);
+		assertThat(copy).isNotEqualTo(operation);
+		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
+		assertThat(operation.<Object>evaluate(context)).isNotNull().isEqualTo(3);
+		assertThat(copy.<Object>evaluate(context)).isNull();
+
+		operation.provideNewValue(4);
+		copy = (ProvidedVariableValueOperation) operation.copy(new CloningContext());
+		assertThat(copy).isNotEqualTo(operation);
+		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
+		assertThat(operation.<Object>evaluate(context)).isNotNull().isEqualTo(4);
+		assertThat(copy.<Object>evaluate(context)).isNotNull().isEqualTo(4);
+	}
+
+	@Test
+	public void testCopingSequenceVariableValueOperations() throws Throwable {
+		OperationContext context = new OperationContext();
+		context.getOptions().setAllowingNull(true);
+		SequenceVariableValueOperation operation;
+		SequenceVariableValueOperation copy;
+
+		operation = new SequenceVariableValueOperation("A");
+		copy = (SequenceVariableValueOperation) operation.copy(new CloningContext());
+		assertThat(copy).isNotEqualTo(operation);
+		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
+		assertThat(operation.<Object>evaluate(context)).isNull();
+		assertThat(copy.<Object>evaluate(context)).isNull();
+
+		operation.provideNewValue(3);
+		assertThat(copy).isNotEqualTo(operation);
+		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
+		assertThat(operation.<Object>evaluate(context)).isNotNull().isEqualTo(3);
+		assertThat(copy.<Object>evaluate(context)).isNull();
+
+		operation.provideNewValue(4);
+		copy = (SequenceVariableValueOperation) operation.copy(new CloningContext());
+		assertThat(copy).isNotEqualTo(operation);
+		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
+		assertThat(operation.<Object>evaluate(context)).isNotNull().isEqualTo(4);
+		assertThat(copy.<Object>evaluate(context)).isNotNull().isEqualTo(4);
 	}
 
 }

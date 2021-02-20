@@ -25,11 +25,13 @@ public class TestConstantOperations {
 	@Test
 	public void testDateConstantValueOperation() {
 		assertThat(new DateConstantValueOperation("2000-03-04").<LocalDate>evaluate(context)).isEqualTo("2000-03-04");
+		assertThat(new DateConstantValueOperation().<LocalDate>evaluate(context)).isEqualTo(LocalDate.now());
 	}
 
 	@Test
 	public void testDateTimeConstantValueOperation() {
 		assertThat(new DateTimeConstantValueOperation("2000-03-04T23:33:44").<LocalDateTime>evaluate(context)).isEqualTo("2000-03-04T23:33:44");
+		assertThat(new DateTimeConstantValueOperation().<LocalDateTime>evaluate(context).toLocalDate()).isEqualTo(LocalDate.now());
 	}
 
 	@Test
@@ -64,6 +66,7 @@ public class TestConstantOperations {
 		assertThat(new TimeConstantValueOperation("13:11:44").<LocalTime>evaluate(context)).isEqualTo("13:11:44");
 		assertThat(new TimeConstantValueOperation("02:12:46").<LocalTime>evaluate(context)).isEqualTo("02:12:46");
 		assertThat(new TimeConstantValueOperation("23:13:47").<LocalTime>evaluate(context)).isEqualTo("23:13:47");
+		assertThat(new TimeConstantValueOperation().<LocalTime>evaluate(context).getHour()).isEqualTo(LocalTime.now().getHour());
 	}
 
 }
