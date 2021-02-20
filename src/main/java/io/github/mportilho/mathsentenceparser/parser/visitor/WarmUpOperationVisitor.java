@@ -7,7 +7,7 @@ import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
-import io.github.mportilho.mathsentenceparser.operation.date.AbstractDateTimeOperation;
+import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.EmptyOperation;

@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.operation.date;
+package io.github.mportilho.mathsentenceparser.operation.datetime;
 
 import java.lang.invoke.CallSite;
 import java.lang.invoke.LambdaMetafactory;

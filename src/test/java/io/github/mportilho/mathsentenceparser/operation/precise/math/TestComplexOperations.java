@@ -83,6 +83,92 @@ public class TestComplexOperations {
 	}
 
 	@Test
+	public void testModuloOperation() {
+		PreciseModuloOperation operation;
+
+		operation = new PreciseModuloOperation(new GenericValueOperation(valueOf(4)), new GenericValueOperation(valueOf(4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("0");
+
+		operation = new PreciseModuloOperation(new GenericValueOperation(valueOf(8)), new GenericValueOperation(valueOf(4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("0");
+
+		operation = new PreciseModuloOperation(new GenericValueOperation(valueOf(3)), new GenericValueOperation(valueOf(2)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("1");
+
+		operation = new PreciseModuloOperation(new GenericValueOperation(valueOf(5)), new GenericValueOperation(valueOf(3)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("2");
+	}
+
+	@Test
+	public void testModulusOperation() {
+		PreciseModulusOperation operation;
+
+		operation = new PreciseModulusOperation(new GenericValueOperation(valueOf(4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("4");
+
+		operation = new PreciseModulusOperation(new GenericValueOperation(valueOf(-4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("4");
+	}
+
+	@Test
+	public void testNegativeOperation() {
+		PreciseNegativeOperation operation;
+
+		operation = new PreciseNegativeOperation(new GenericValueOperation(valueOf(4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("-4");
+
+		operation = new PreciseNegativeOperation(new GenericValueOperation(valueOf(-4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("4");
+	}
+	
+	@Test
+	public void testNumberRoundingOperation() {
+		throw new IllegalStateException();
+	}
+	
+	@Test
+	public void testPrecisePercentualOperation() {
+		PrecisePercentualOperation operation;
+		
+		operation = new PrecisePercentualOperation(new GenericValueOperation(valueOf(4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("0.04");
+
+		operation = new PrecisePercentualOperation(new GenericValueOperation(valueOf(-4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("-0.04");
+		
+		operation = new PrecisePercentualOperation(new GenericValueOperation(valueOf(0)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("0");
+		
+		operation = new PrecisePercentualOperation(new GenericValueOperation(valueOf(100)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("1");
+	}
+	
+	@Test
+	public void testPreciseRootOperation() {
+		PreciseRootOperation operation;
+		
+		operation = new PreciseRootOperation(new GenericValueOperation(valueOf(4)), new GenericValueOperation(valueOf(2)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("2");
+		
+		operation = new PreciseRootOperation(new GenericValueOperation(valueOf(144)), new GenericValueOperation(valueOf(2)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("12");
+		
+		operation = new PreciseRootOperation(new GenericValueOperation(valueOf(64)), new GenericValueOperation(valueOf(3)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("4");
+	}
+	
+	@Test
+	public void testPreciseSquareRootOperation() {
+		PreciseSquareRootOperation operation;
+		
+		operation = new PreciseSquareRootOperation(new GenericValueOperation(valueOf(4)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("2");
+		
+		operation = new PreciseSquareRootOperation(new GenericValueOperation(valueOf(144)));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("12");
+	}
+
+	@Test
 	public void testSummationOperation() {
 		throw new IllegalStateException();
 	}

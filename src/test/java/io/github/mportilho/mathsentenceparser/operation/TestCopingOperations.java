@@ -17,10 +17,10 @@ public class TestCopingOperations {
 		GenericOperationOne genericOperationOne = new GenericOperationOne();
 		GenericUnaryOperation operation = new GenericUnaryOperation(genericOperationOne);
 
-		GenericUnaryOperation copyOperation = (GenericUnaryOperation) operation.createClone(null);
+		GenericUnaryOperation copyOperation = (GenericUnaryOperation) operation.createClone(new CloningContext());
 		GenericOperationOne copyGenericOperationOne = (GenericOperationOne) copyOperation.getOperand();
 
-		GenericUnaryOperation copyOperation2 = (GenericUnaryOperation) copyOperation.createClone(null);
+		GenericUnaryOperation copyOperation2 = (GenericUnaryOperation) copyOperation.createClone(new CloningContext());
 		GenericOperationOne copyGenericOperationOne2 = (GenericOperationOne) copyOperation2.getOperand();
 
 		assertThat(operation).isNotEqualTo(copyOperation);
@@ -36,11 +36,11 @@ public class TestCopingOperations {
 		GenericOperationTwo genericOperationTwo = new GenericOperationTwo();
 		GenericBinaryOperation operation = new GenericBinaryOperation(genericOperationOne, genericOperationTwo);
 
-		GenericBinaryOperation copyOperation = (GenericBinaryOperation) operation.createClone(null);
+		GenericBinaryOperation copyOperation = (GenericBinaryOperation) operation.createClone(new CloningContext());
 		GenericOperationOne copyGenericOperationOne = (GenericOperationOne) copyOperation.getLeftOperand();
 		GenericOperationTwo copyGenericOperationTwo = (GenericOperationTwo) copyOperation.getRightOperand();
 
-		GenericBinaryOperation copyOperation2 = (GenericBinaryOperation) operation.createClone(null);
+		GenericBinaryOperation copyOperation2 = (GenericBinaryOperation) operation.createClone(new CloningContext());
 		GenericOperationOne copyGenericOperationOne_2 = (GenericOperationOne) copyOperation2.getLeftOperand();
 		GenericOperationTwo copyGenericOperationTwo_2 = (GenericOperationTwo) copyOperation2.getRightOperand();
 
@@ -56,7 +56,7 @@ public class TestCopingOperations {
 	@Test
 	public void testCopingConstantValueOperation() throws Throwable {
 		AbstractOperation operation = new PreciseNumberConstantValueOperation("3");
-		PreciseNumberConstantValueOperation copyOperation = (PreciseNumberConstantValueOperation) operation.createClone(null);
+		PreciseNumberConstantValueOperation copyOperation = (PreciseNumberConstantValueOperation) operation.createClone(new CloningContext());
 		assertThat(copyOperation).isNotEqualTo(operation);
 		assertThat(copyOperation.getValue()).isEqualTo(((PreciseNumberConstantValueOperation) operation).getValue());
 	}

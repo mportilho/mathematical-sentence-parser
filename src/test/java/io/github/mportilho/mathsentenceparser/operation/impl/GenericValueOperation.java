@@ -3,14 +3,14 @@ package io.github.mportilho.mathsentenceparser.operation.impl;
 import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
-import io.github.mportilho.mathsentenceparser.operation.value.constant.AbstractConstantValueOperation;
+import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
-public class GenericValueOperation extends AbstractConstantValueOperation {
+public class GenericValueOperation extends AbstractOperation {
 
-	private Object currentValue;
+	private Object value;
 
 	public GenericValueOperation(Object value) {
-		super(value.toString());
+		this.value = value;
 	}
 
 	@Override
@@ -23,12 +23,18 @@ public class GenericValueOperation extends AbstractConstantValueOperation {
 		return null;
 	}
 
-	public Object getCurrentValue() {
-		return currentValue;
+	public Object getValue() {
+		return value;
 	}
 
 	@Override
 	protected String getOperationToken() {
+		return null;
+	}
+
+	@Override
+	public <T> T accept(OperationVisitor<T> visitor) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

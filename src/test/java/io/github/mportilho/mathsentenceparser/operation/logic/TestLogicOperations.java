@@ -49,6 +49,74 @@ public class TestLogicOperations {
 	}
 
 	@Test
+	public void testNandOperation() {
+		NandOperation operation;
+
+		operation = new NandOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+
+		operation = new NandOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+
+		operation = new NandOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+
+		operation = new NandOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+	}
+
+	@Test
+	public void testNorOperation() {
+		NorOperation operation;
+
+		operation = new NorOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+
+		operation = new NorOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+
+		operation = new NorOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+
+		operation = new NorOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+	}
+
+	@Test
+	public void testXnorOperation() {
+		XnorOperation operation;
+
+		operation = new XnorOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+
+		operation = new XnorOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+
+		operation = new XnorOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+
+		operation = new XnorOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+	}
+
+	@Test
+	public void testXorOperation() {
+		XorOperation operation;
+
+		operation = new XorOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+
+		operation = new XorOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.TRUE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+
+		operation = new XorOperation(new GenericValueOperation(Boolean.TRUE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isTrue();
+
+		operation = new XorOperation(new GenericValueOperation(Boolean.FALSE), new GenericValueOperation(Boolean.FALSE));
+		assertThat(operation.<Boolean>evaluate(context)).isFalse();
+	}
+
+	@Test
 	public void testEqualsOperationWithComparables() {
 		EqualsOperation operation;
 
@@ -153,16 +221,13 @@ public class TestLogicOperations {
 		operation = new GreaterOperation(new GenericValueOperation(new BigDecimal(1)), new GenericValueOperation(BigDecimal.ZERO));
 		assertThat(operation.<Boolean>evaluate(context)).isTrue();
 
-		operation = new GreaterOperation(new GenericValueOperation(LocalDate.of(2000, 1, 5)),
-				new GenericValueOperation(LocalDate.of(2000, 1, 5)));
+		operation = new GreaterOperation(new GenericValueOperation(LocalDate.of(2000, 1, 5)), new GenericValueOperation(LocalDate.of(2000, 1, 5)));
 		assertThat(operation.<Boolean>evaluate(context)).isFalse();
 
-		operation = new GreaterOperation(new GenericValueOperation(LocalDate.of(2000, 1, 1)),
-				new GenericValueOperation(LocalDate.of(2000, 1, 5)));
+		operation = new GreaterOperation(new GenericValueOperation(LocalDate.of(2000, 1, 1)), new GenericValueOperation(LocalDate.of(2000, 1, 5)));
 		assertThat(operation.<Boolean>evaluate(context)).isFalse();
 
-		operation = new GreaterOperation(new GenericValueOperation(LocalDate.of(2000, 1, 15)),
-				new GenericValueOperation(LocalDate.of(2000, 1, 5)));
+		operation = new GreaterOperation(new GenericValueOperation(LocalDate.of(2000, 1, 15)), new GenericValueOperation(LocalDate.of(2000, 1, 5)));
 		assertThat(operation.<Boolean>evaluate(context)).isTrue();
 	}
 
@@ -247,8 +312,7 @@ public class TestLogicOperations {
 		operation = new LessOperation(new GenericValueOperation(LocalDate.of(2000, 1, 1)), new GenericValueOperation(LocalDate.of(2000, 1, 5)));
 		assertThat(operation.<Boolean>evaluate(context)).isTrue();
 
-		operation = new LessOperation(new GenericValueOperation(LocalDate.of(2000, 1, 15)),
-				new GenericValueOperation(LocalDate.of(2000, 1, 5)));
+		operation = new LessOperation(new GenericValueOperation(LocalDate.of(2000, 1, 15)), new GenericValueOperation(LocalDate.of(2000, 1, 5)));
 		assertThat(operation.<Boolean>evaluate(context)).isFalse();
 	}
 
