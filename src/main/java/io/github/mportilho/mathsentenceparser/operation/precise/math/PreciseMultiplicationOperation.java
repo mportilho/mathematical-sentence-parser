@@ -27,22 +27,18 @@ public class PreciseMultiplicationOperation extends AbstractBinaryOperation {
 		return operation;
 	}
 
-	protected void implicit(boolean implicit) {
-		this.implicit = implicit;
-	}
-
 	@Override
 	protected Object resolve(OperationContext context) {
 		return getLeftOperand().<BigDecimal>evaluate(context).multiply(getRightOperand().<BigDecimal>evaluate(context), context.getMathContext());
 	}
 
-	public boolean isImplicit() {
-		return implicit;
-	}
-
 	@Override
 	protected String getOperationToken() {
 		return "*";
+	}
+
+	public boolean isImplicit() {
+		return implicit;
 	}
 
 	@Override

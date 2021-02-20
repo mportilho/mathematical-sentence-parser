@@ -36,7 +36,7 @@ public class DateTimeSubtractionOperation extends AbstractDateTimeOperation {
 
 	@Override
 	protected String getOperationToken() {
-		return null;
+		return "minus";
 	}
 
 }

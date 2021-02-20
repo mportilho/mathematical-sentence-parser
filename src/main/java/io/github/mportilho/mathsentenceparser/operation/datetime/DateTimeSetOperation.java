@@ -36,8 +36,7 @@ public class DateTimeSetOperation extends AbstractDateTimeOperation {
 
 	@Override
 	protected String getOperationToken() {
-		// TODO Auto-generated method stub
-		return null;
+		return "set";
 	}
 
 }

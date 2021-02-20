@@ -30,8 +30,7 @@ public class TimeAdditionOperation extends AbstractDateTimeOperation {
 
 	@Override
 	protected String getOperationToken() {
-		// TODO Auto-generated method stub
-		return null;
+		return "plus";
 	}
 
 }

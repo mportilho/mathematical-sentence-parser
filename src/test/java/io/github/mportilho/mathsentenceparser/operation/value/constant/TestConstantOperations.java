@@ -52,6 +52,10 @@ public class TestConstantOperations {
 		assertThat(new PreciseNumberConstantValueOperation("-0.3").<BigDecimal>evaluate(context)).isEqualByComparingTo("-0.3");
 		assertThat(new PreciseNumberConstantValueOperation("0.3").<BigDecimal>evaluate(context)).isEqualByComparingTo("0.3");
 		assertThat(new PreciseNumberConstantValueOperation("0.0003").<BigDecimal>evaluate(context)).isEqualByComparingTo("0.0003");
+		
+		PreciseNumberConstantValueOperation operation = new PreciseNumberConstantValueOperation("-0.3");
+		operation.transformToPositiveValue();
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("0.3");
 	}
 
 	@Test

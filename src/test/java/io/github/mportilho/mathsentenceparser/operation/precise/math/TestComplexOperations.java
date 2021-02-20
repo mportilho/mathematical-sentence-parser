@@ -119,9 +119,21 @@ public class TestComplexOperations {
 
 		operation = new PreciseNegativeOperation(new GenericValueOperation(valueOf(4)));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("-4");
+		assertThat(operation.isNegatingValue()).isTrue();
 
 		operation = new PreciseNegativeOperation(new GenericValueOperation(valueOf(-4)));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("4");
+		assertThat(operation.isNegatingValue()).isTrue();
+
+		operation = new PreciseNegativeOperation(new GenericValueOperation(valueOf(4)));
+		operation.negatingValue(false);
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("4");
+		assertThat(operation.isNegatingValue()).isFalse();
+
+		operation = new PreciseNegativeOperation(new GenericValueOperation(valueOf(-4)));
+		operation.negatingValue(false);
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("-4");
+		assertThat(operation.isNegatingValue()).isFalse();
 	}
 
 	@Test

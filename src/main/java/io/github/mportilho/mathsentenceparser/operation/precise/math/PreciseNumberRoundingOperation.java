@@ -45,14 +45,16 @@ public class PreciseNumberRoundingOperation extends AbstractBinaryOperation {
 
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		PreciseNumberRoundingOperation operation = (PreciseNumberRoundingOperation) super.copy(context);
-		operation.roundingEnum = this.roundingEnum;
-		return operation;
+		return new PreciseNumberRoundingOperation(getLeftOperand().copy(context), getRightOperand().copy(context), roundingEnum);
 	}
 
 	@Override
 	protected String getOperationToken() {
 		return roundingEnum.toString();
+	}
+
+	public RoundingEnum getRoundingEnum() {
+		return roundingEnum;
 	}
 
 	public enum RoundingEnum {

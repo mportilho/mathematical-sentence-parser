@@ -40,7 +40,7 @@ public class TestConstantValueOperations {
 	public void testDateConstantValueOperation() {
 		AbstractOperation operation;
 
-		operation = new DateConstantValueOperation("12/04/2001");
+		operation = new DateConstantValueOperation("2001-04-12");
 		assertThat((LocalDate) operation.evaluate(context)).isEqualTo(LocalDate.of(2001, 4, 12));
 		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
 	}
@@ -58,7 +58,7 @@ public class TestConstantValueOperations {
 	public void testDateTimeConstantValueOperation() {
 		AbstractOperation operation;
 
-		operation = new DateTimeConstantValueOperation("12/04/2001-04:12:33");
+		operation = new DateTimeConstantValueOperation("2001-04-12T04:12:33");
 		assertThat((LocalDateTime) operation.evaluate(context)).isEqualTo(LocalDateTime.of(2001, 4, 12, 4, 12, 33));
 		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
 	}

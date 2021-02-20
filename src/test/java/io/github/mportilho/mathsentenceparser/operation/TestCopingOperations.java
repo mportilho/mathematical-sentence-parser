@@ -2,6 +2,7 @@ package io.github.mportilho.mathsentenceparser.operation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -18,6 +19,9 @@ import io.github.mportilho.mathsentenceparser.operation.impl.GenericBinaryOperat
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericOperationOne;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericOperationTwo;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericUnaryOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseMultiplicationOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseNumberRoundingOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseNumberRoundingOperation.RoundingEnum;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.DateConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.DateTimeConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNumberConstantValueOperation;
@@ -66,6 +70,30 @@ public class TestCopingOperations {
 		assertThat(copyOperation2).isNotEqualTo(copyOperation);
 		assertThat(copyGenericOperationOne_2).isNotEqualTo(copyGenericOperationOne);
 		assertThat(copyGenericOperationTwo_2).isNotEqualTo(copyGenericOperationTwo);
+	}
+
+	@Test
+	public void testCopingImplicitMultiplicationOperation() throws Throwable {
+		PreciseMultiplicationOperation operation = new PreciseMultiplicationOperation(new PreciseNumberConstantValueOperation("2"),
+				new PreciseNumberConstantValueOperation("3"), true);
+		PreciseMultiplicationOperation copy = (PreciseMultiplicationOperation) operation.copy(new CloningContext());
+
+		assertThat(operation).isNotEqualTo(copy);
+		assertThat(operation.isImplicit()).isEqualTo(copy.isImplicit());
+		assertThat(operation.<BigDecimal>evaluate(new OperationContext())).isEqualByComparingTo("6");
+		assertThat(copy.<BigDecimal>evaluate(new OperationContext())).isEqualByComparingTo("6");
+	}
+
+	@Test
+	public void testCopingPreciseRoundingOperation() throws Throwable {
+		PreciseNumberRoundingOperation operation = new PreciseNumberRoundingOperation(new PreciseNumberConstantValueOperation("2.355"),
+				new PreciseNumberConstantValueOperation("2"), RoundingEnum.HALF_EVEN);
+		PreciseNumberRoundingOperation copy = (PreciseNumberRoundingOperation) operation.copy(new CloningContext());
+
+		assertThat(operation).isNotEqualTo(copy);
+		assertThat(operation.getRoundingEnum()).isEqualTo(copy.getRoundingEnum());
+		assertThat(operation.<BigDecimal>evaluate(new OperationContext())).isEqualByComparingTo("2.36");
+		assertThat(copy.<BigDecimal>evaluate(new OperationContext())).isEqualByComparingTo("2.36");
 	}
 
 	@Test

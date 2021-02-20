@@ -1,6 +1,7 @@
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.math.BigDecimal;
 
@@ -30,6 +31,11 @@ public class TestVariableValueOperations {
 		operation = new ProvidedVariableValueOperation("B");
 		operation.provideNewValue(provider);
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo(BigDecimal.valueOf(2));
+	}
+
+	@Test
+	public void testNullVariableValue() {
+		assertThatThrownBy(() -> new ProvidedVariableValueOperation("a").provideNewValue(null)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

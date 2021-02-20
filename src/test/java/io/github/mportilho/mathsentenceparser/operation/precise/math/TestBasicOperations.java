@@ -74,6 +74,14 @@ public class TestBasicOperations {
 		operation = new PreciseMultiplicationOperation(new GenericValueOperation(valueOf(1)), new GenericValueOperation(valueOf(2)));
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("2");
 	}
+	
+	@Test
+	public void testPreciseImplicitMultiplicationOperation() {
+		PreciseMultiplicationOperation operation;
+
+		operation = new PreciseMultiplicationOperation(new GenericValueOperation(valueOf(2)), new GenericValueOperation(valueOf(3)), true);
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("6");
+	}
 
 	@Test
 	public void testPreciseSubtractionOperation() {
