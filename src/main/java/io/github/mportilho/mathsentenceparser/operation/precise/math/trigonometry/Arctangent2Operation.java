@@ -1,0 +1,24 @@
+package io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry;
+
+import ch.obermuhlner.math.big.BigDecimalMath;
+import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+
+public class Arctangent2Operation extends AbstractBinaryOperation {
+
+	public Arctangent2Operation(AbstractOperation leftOperand, AbstractOperation rightOperand) {
+		super(leftOperand, rightOperand);
+	}
+
+	@Override
+	protected Object resolve(OperationContext context) {
+		return BigDecimalMath.atan2(getLeftOperand().evaluate(context), getRightOperand().evaluate(context), context.getMathContext());
+	}
+
+	@Override
+	protected String getOperationToken() {
+		return "atan2";
+	}
+
+}
