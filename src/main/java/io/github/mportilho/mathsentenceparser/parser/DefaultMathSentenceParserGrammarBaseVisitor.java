@@ -62,6 +62,24 @@ import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseRoot
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSquareRootOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSubtractionOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSummationOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.logarithm.BinaryLogarithmOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.logarithm.CommonLogarithmOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.logarithm.LogarithmOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.logarithm.NaturalLogarithmOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.ArccosineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.ArcsineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.Arctangent2Operation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.ArctangentOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.CosineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.DeggreOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.HyperbolicCosineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.HyperbolicSineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.HyperbolicTangentOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.InverseHyperbolicCosineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.InverseHyperbolicSineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.InverseHyperbolicTangentOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.SineOperation;
+import io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry.TangentOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.OperationValueType;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.BooleanConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.DateConstantValueOperation;
@@ -294,8 +312,7 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitInverseHyperbolicSineExpression(InverseHyperbolicSineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new InverseHyperbolicSineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
@@ -305,14 +322,12 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitHyperbolicSineExpression(HyperbolicSineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new HyperbolicSineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitInverseHyperbolicCosineExpression(InverseHyperbolicCosineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new InverseHyperbolicCosineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
@@ -329,14 +344,12 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitTangentExpression(TangentExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new TangentOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitArctangent2Expression(Arctangent2ExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Arctangent2Operation(ctx.mathExpression(0).accept(this), ctx.mathExpression(1).accept(this));
 	}
 
 	@Override
@@ -361,14 +374,12 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitHyperbolicTangentExpression(HyperbolicTangentExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new HyperbolicTangentOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitHyperbolicCosineExpression(HyperbolicCosineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new HyperbolicCosineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
@@ -420,26 +431,22 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitLogarithmExpression(LogarithmExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.visitLogarithmExpression(ctx);
 	}
 
 	@Override
 	public AbstractOperation visitSineExpression(SineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitCosineExpression(CosineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CosineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitArctangentExpression(ArctangentExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArctangentOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
@@ -454,14 +461,12 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitInverseHyperbolicTangentExpression(InverseHyperbolicTangentExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new InverseHyperbolicTangentOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitDegreeExpression(DegreeExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DeggreOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
@@ -471,26 +476,29 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitArccosineExpression(ArccosineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArccosineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitArcsineExpression(ArcsineExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArcsineOperation(ctx.mathExpression().accept(this));
 	}
 
 	@Override
 	public AbstractOperation visitFixedLogarithm(FixedLogarithmContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		if (nonNull(ctx.BINARY_LOGARITHM())) {
+			return new BinaryLogarithmOperation(ctx.mathExpression().accept(this));
+		} else if (nonNull(ctx.COMMOM_LOGARITHM())) {
+			return new CommonLogarithmOperation(ctx.mathExpression().accept(this));
+		} else if (nonNull(ctx.NATURAL_LOGARITHM())) {
+			return new NaturalLogarithmOperation(ctx.mathExpression().accept(this));
+		}
+		throw new IllegalStateException(String.format("Operation %s not implemented", ctx.getText()));
 	}
 
 	@Override
 	public AbstractOperation visitVariableLogarithm(VariableLogarithmContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LogarithmOperation(ctx.mathExpression(0).accept(this), ctx.mathExpression(1).accept(this));
 	}
 
 	@Override
