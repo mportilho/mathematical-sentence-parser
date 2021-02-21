@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNumberConstantValueOperation;
 

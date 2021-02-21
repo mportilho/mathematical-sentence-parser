@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
-import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
+import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
 public abstract class AbstractOperation {
 
@@ -60,7 +59,7 @@ public abstract class AbstractOperation {
 		} catch (Exception e) {
 			throw new IllegalStateException(String.format("Error during calculation of expression %s", toString()), e);
 		}
-		if (result == null && !context.getOptions().isAllowingNull()) {
+		if (result == null && !context.isAllowingNull()) {
 			if (this instanceof AbstractVariableValueOperation) {
 				throw new IllegalArgumentException(String.format("The variable \"%s\" does not have any provided value", this.toString()));
 			} else {

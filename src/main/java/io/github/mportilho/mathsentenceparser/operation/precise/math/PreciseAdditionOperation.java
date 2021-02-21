@@ -2,9 +2,9 @@ package io.github.mportilho.mathsentenceparser.operation.precise.math;
 
 import java.math.BigDecimal;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseAdditionOperation extends AbstractBinaryOperation {
 

@@ -1,12 +1,12 @@
-package io.github.mportilho.mathsentenceparser.parser.visitor;
+package io.github.mportilho.mathsentenceparser.syntaxtree.visitor;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
@@ -17,7 +17,6 @@ import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseProd
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSummationOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.AbstractConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
-import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
 
 public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 

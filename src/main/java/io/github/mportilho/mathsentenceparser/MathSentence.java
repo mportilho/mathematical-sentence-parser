@@ -1,43 +1,42 @@
 package io.github.mportilho.mathsentenceparser;
 
+import java.util.Objects;
+
 import org.antlr.v4.runtime.CharStreams;
 
-import io.github.mportilho.mathsentenceparser.parser.DefaultMathSentenceParserGrammarBaseVisitor;
-import io.github.mportilho.mathsentenceparser.parser.OperationSyntaxTree;
-import io.github.mportilho.mathsentenceparser.parser.ParsingEngine;
+import io.github.mportilho.mathsentenceparser.syntaxtree.MathematicalSentenceGrammarParser;
+import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTree;
 
 public class MathSentence {
 
 	private final String sentence;
-	private final OperationContext operationContext;
-	private final ParsingEngine parsingEngine;
-
+	private MathSentenceOptions mathSentenceOptions;
 	private OperationSyntaxTree operationSyntaxTree;
 
 	public MathSentence(String sentence) {
-		this(sentence, new OperationContext(), new ParsingEngine(new DefaultMathSentenceParserGrammarBaseVisitor()));
+		this(sentence, null);
 	}
 
-	public MathSentence(String sentence, OperationContext operationContext) {
-		this(sentence, operationContext, new ParsingEngine(new DefaultMathSentenceParserGrammarBaseVisitor()));
+	public MathSentence(String sentence, MathSentenceOptions mathSentenceOptions) {
+		this.sentence = Objects.requireNonNull(sentence, "Math sentence text is required");
+		this.mathSentenceOptions = mathSentenceOptions != null ? mathSentenceOptions : new MathSentenceOptions();
 	}
 
-	public MathSentence(String sentence, OperationContext operationContext, ParsingEngine parsingEngine) {
-		this.sentence = sentence;
-		this.operationContext = operationContext;
-		this.parsingEngine = parsingEngine;
+	private void createOperationSyntaxTree() {
+		if (operationSyntaxTree == null) {
+			operationSyntaxTree = MathematicalSentenceGrammarParser.parseSentence(CharStreams.fromString(sentence), mathSentenceOptions);
+			mathSentenceOptions = null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T compute() {
-		if (operationSyntaxTree == null) {
-			operationSyntaxTree = parsingEngine.parseSentence(CharStreams.fromString(sentence));
-		}
-		return (T) operationSyntaxTree.compute(operationContext);
+		createOperationSyntaxTree();
+		return (T) operationSyntaxTree.compute();
 	}
 
 	public final MathSentence copy() {
-		MathSentence mathSentence = new MathSentence(sentence, operationContext, parsingEngine);
+		MathSentence mathSentence = new MathSentence(sentence, mathSentenceOptions);
 		mathSentence.operationSyntaxTree = operationSyntaxTree.copy();
 		return mathSentence;
 	}

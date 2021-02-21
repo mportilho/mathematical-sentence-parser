@@ -1,7 +1,7 @@
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
-import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
+import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
 public abstract class AbstractVariableValueOperation extends AbstractOperation {
 

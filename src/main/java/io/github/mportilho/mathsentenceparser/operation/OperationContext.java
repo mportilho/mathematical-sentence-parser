@@ -1,34 +1,33 @@
-package io.github.mportilho.mathsentenceparser;
+package io.github.mportilho.mathsentenceparser.operation;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
+
+import io.github.mportilho.mathsentenceparser.MathSentenceOptions;
 
 public class OperationContext {
 
 	private final MathContext mathContext;
 	private final int scale;
-	private final ParsingOptions options;
 
+	private boolean allowingNull;
 	private LocalDateTime currentDateTime;
 
 	public OperationContext() {
-		this(MathContext.DECIMAL64, new ParsingOptions());
+		this.mathContext = MathSentenceOptions.DEFAULT_MATH_CONTEXT;
+		this.scale = MathSentenceOptions.DEFAULT_SCALE;
+		this.allowingNull = false;
 	}
 
-	public OperationContext(MathContext mathContext, int scale, ParsingOptions options) {
+	public OperationContext(MathContext mathContext, int scale, boolean allowingNull) {
 		this.mathContext = mathContext;
 		this.scale = scale;
-		this.options = options;
-	}
-
-	public OperationContext(MathContext mathContext, ParsingOptions options) {
-		this.mathContext = mathContext;
-		this.scale = 8;
-		this.options = options;
+		this.allowingNull = allowingNull;
 	}
 
 	public OperationContext clearContext() {
 		this.currentDateTime = null;
+		this.allowingNull = false;
 		return this;
 	}
 
@@ -40,8 +39,12 @@ public class OperationContext {
 		return scale;
 	}
 
-	public ParsingOptions getOptions() {
-		return options;
+	public void setAllowingNull(boolean allowingNull) {
+		this.allowingNull = allowingNull;
+	}
+
+	public boolean isAllowingNull() {
+		return allowingNull;
 	}
 
 	public LocalDateTime getCurrentDateTime() {

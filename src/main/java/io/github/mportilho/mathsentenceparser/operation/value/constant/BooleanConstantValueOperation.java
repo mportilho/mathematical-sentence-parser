@@ -1,6 +1,6 @@
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class BooleanConstantValueOperation extends AbstractConstantValueOperation {
 

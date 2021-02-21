@@ -9,7 +9,6 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateAdditionOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateElementEnum;
@@ -107,7 +106,7 @@ public class TestCopingOperations {
 	@Test
 	public void testCopingDateOperations() throws Throwable {
 		OperationContext context = new OperationContext();
-		context.getOptions().setAllowingNull(true);
+		context.setAllowingNull(true);
 		AbstractDateTimeOperation operation;
 		AbstractDateTimeOperation copyOperation;
 
@@ -134,7 +133,7 @@ public class TestCopingOperations {
 	@Test
 	public void testCopingProvidedVariableValueOperations() throws Throwable {
 		OperationContext context = new OperationContext();
-		context.getOptions().setAllowingNull(true);
+		context.setAllowingNull(true);
 		ProvidedVariableValueOperation operation;
 		ProvidedVariableValueOperation copy;
 
@@ -162,7 +161,7 @@ public class TestCopingOperations {
 	@Test
 	public void testCopingSequenceVariableValueOperations() throws Throwable {
 		OperationContext context = new OperationContext();
-		context.getOptions().setAllowingNull(true);
+		context.setAllowingNull(true);
 		SequenceVariableValueOperation operation;
 		SequenceVariableValueOperation copy;
 

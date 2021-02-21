@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.BooleanConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNumberConstantValueOperation;

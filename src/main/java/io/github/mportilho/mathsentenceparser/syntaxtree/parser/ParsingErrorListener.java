@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.parser;
+package io.github.mportilho.mathsentenceparser.syntaxtree.parser;
 
 import java.util.BitSet;
 import java.util.Locale;

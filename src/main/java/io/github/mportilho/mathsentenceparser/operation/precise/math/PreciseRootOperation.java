@@ -3,9 +3,9 @@ package io.github.mportilho.mathsentenceparser.operation.precise.math;
 import java.math.BigDecimal;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseRootOperation extends AbstractBinaryOperation {
 

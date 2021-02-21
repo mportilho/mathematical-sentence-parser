@@ -7,7 +7,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.function.Function;
 
-import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
+import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
 public abstract class AbstractUnaryOperator extends AbstractOperation {
 

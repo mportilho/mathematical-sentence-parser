@@ -1,5 +1,6 @@
-package io.github.mportilho.mathsentenceparser.parser;
+package io.github.mportilho.mathsentenceparser.syntaxtree;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
@@ -21,10 +22,16 @@ public class OperationSyntaxTreeContext {
 	}
 
 	public Map<String, AbstractVariableValueOperation> getProvidedVariables() {
+		if (providedVariables == null) {
+			providedVariables = new HashMap<>();
+		}
 		return providedVariables;
 	}
 
 	public Map<String, AbstractOperation> getAssignedVariables() {
+		if (assignedVariables == null) {
+			assignedVariables = new HashMap<>();
+		}
 		return assignedVariables;
 	}
 

@@ -10,7 +10,7 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.Test;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class TestConstantOperations {
 

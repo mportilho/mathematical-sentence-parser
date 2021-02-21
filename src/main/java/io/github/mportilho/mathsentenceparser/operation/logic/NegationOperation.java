@@ -1,8 +1,8 @@
 package io.github.mportilho.mathsentenceparser.operation.logic;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class NegationOperation extends AbstractUnaryOperator {
 

@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.parser;
+package io.github.mportilho.mathsentenceparser.syntaxtree.visitor;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;

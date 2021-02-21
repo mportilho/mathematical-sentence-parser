@@ -3,9 +3,9 @@ package io.github.mportilho.mathsentenceparser.operation.value.constant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class DateConstantValueOperation extends AbstractConstantValueOperation {
 

@@ -1,9 +1,9 @@
 package io.github.mportilho.mathsentenceparser.operation.precise.math;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseFactorialOperation extends AbstractUnaryOperator {
 

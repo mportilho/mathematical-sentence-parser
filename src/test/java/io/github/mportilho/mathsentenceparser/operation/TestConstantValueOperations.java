@@ -9,7 +9,6 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.AbstractConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.BooleanConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.DateConstantValueOperation;
@@ -86,14 +85,14 @@ public class TestConstantValueOperations {
 		AbstractOperation operation;
 
 		operation = new PreciseNumberConstantValueOperation("3.141592653589793");
-		assertThat((BigDecimal) operation.evaluate(context)).isEqualTo(BigDecimal.valueOf(3.141592653589793));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualTo(BigDecimal.valueOf(3.141592653589793));
 		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
 
 		operation = new PreciseNumberConstantValueOperation("-3.141592653589793");
-		assertThat((BigDecimal) operation.evaluate(context)).isEqualTo(BigDecimal.valueOf(-3.141592653589793));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualTo(BigDecimal.valueOf(-3.141592653589793));
 
 		operation = new PreciseNumberConstantValueOperation("0");
-		assertThat((BigDecimal) operation.evaluate(context)).isEqualTo(BigDecimal.valueOf(0));
+		assertThat(operation.<BigDecimal>evaluate(context)).isEqualTo(BigDecimal.valueOf(0));
 	}
 
 	@Test

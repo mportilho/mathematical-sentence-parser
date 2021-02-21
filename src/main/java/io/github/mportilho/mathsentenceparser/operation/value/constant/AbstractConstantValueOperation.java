@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
-import io.github.mportilho.mathsentenceparser.parser.OperationVisitor;
+import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
 public abstract class AbstractConstantValueOperation extends AbstractOperation {
 

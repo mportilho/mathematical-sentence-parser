@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.parser;
+package io.github.mportilho.mathsentenceparser.syntaxtree.parser;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -92,15 +92,17 @@ import io.github.mportilho.mathsentenceparser.operation.value.constant.TimeConst
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.ProvidedVariableValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTree;
+import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTreeContext;
 
-public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSentenceParserGrammarBaseVisitor<AbstractOperation>
+public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentenceParserGrammarBaseVisitor<AbstractOperation>
 		implements OperationSyntaxTreeGenerator {
 
 	private OperationSyntaxTreeContext parserContext;
 	private List<FunctionOperation> functionOperations;
 	private Stack<List<SequenceVariableValueOperation>> sequenceVariableStack;
 
-	public DefaultMathSentenceParserGrammarBaseVisitor() {
+	public DefaultOperationSyntaxTreeGenerator() {
 		this.parserContext = new OperationSyntaxTreeContext();
 	}
 
@@ -108,7 +110,8 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 	public OperationSyntaxTree createOperationSyntaxTree(StartContext startContext) {
 		OperationSyntaxTree syntaxTree = new OperationSyntaxTree(visit(startContext), parserContext);
 		if (functionOperations != null) {
-			for (FunctionOperation functionOperation : functionOperations) {
+			for (int i = 0; i < functionOperations.size(); i++) {
+				FunctionOperation functionOperation = functionOperations.get(i);
 				if (functionOperation.isNoCache()) {
 					functionOperation.caching(false);
 				}
@@ -317,6 +320,9 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitSequenceExpression(SequenceExpressionContext ctx) {
+		if (sequenceVariableStack == null) {
+			sequenceVariableStack = new Stack<>();
+		}
 		return super.visitSequenceExpression(ctx);
 	}
 
@@ -650,6 +656,9 @@ public class DefaultMathSentenceParserGrammarBaseVisitor extends MathematicalSen
 
 	@Override
 	public AbstractOperation visitFunction(FunctionContext ctx) {
+		if (functionOperations != null) {
+			functionOperations = new ArrayList<>();
+		}
 		List<AbstractOperation> parameters = new ArrayList<>();
 		for (AllEntityTypesContext entityType : ctx.allEntityTypes()) {
 			parameters.add(entityType.accept(this));

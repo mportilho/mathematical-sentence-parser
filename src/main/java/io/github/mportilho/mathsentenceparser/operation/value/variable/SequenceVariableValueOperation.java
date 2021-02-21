@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseProductOfSequenceOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSummationOperation;
 

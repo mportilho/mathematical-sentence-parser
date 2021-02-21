@@ -1,9 +1,9 @@
 package io.github.mportilho.mathsentenceparser.operation.precise.math.trigonometry;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class Arctangent2Operation extends AbstractBinaryOperation {
 

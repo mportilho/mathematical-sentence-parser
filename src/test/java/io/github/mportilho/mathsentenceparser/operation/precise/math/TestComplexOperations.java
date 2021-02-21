@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseNumberRoundingOperation.RoundingEnum;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;

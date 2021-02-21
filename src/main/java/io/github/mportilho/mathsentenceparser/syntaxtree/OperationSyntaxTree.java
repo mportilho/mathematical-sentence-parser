@@ -1,54 +1,60 @@
-package io.github.mportilho.mathsentenceparser.parser;
+package io.github.mportilho.mathsentenceparser.syntaxtree;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
-import io.github.mportilho.mathsentenceparser.parser.visitor.WarmUpOperationVisitor;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
+import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.WarmUpOperationVisitor;
 
 public class OperationSyntaxTree {
 
 	private AbstractOperation operation;
-	private OperationSyntaxTreeContext context;
+	private OperationSyntaxTreeContext syntaxTreeContext;
+	private OperationContext operationContext;
 
-	public OperationSyntaxTree(AbstractOperation operation, OperationSyntaxTreeContext context) {
+	public OperationSyntaxTree(AbstractOperation operation, OperationSyntaxTreeContext syntaxTreeContext) {
 		super();
 		this.operation = operation;
-		this.context = context;
+		this.syntaxTreeContext = syntaxTreeContext;
 	}
 
-	public Object compute(OperationContext context) {
-		context.clearContext();
-		return operation.evaluate(context);
+	void setOperationContext(OperationContext operationContext) {
+		this.operationContext = operationContext;
+	}
+
+	public Object compute() {
+		operationContext.clearContext();
+		return operation.evaluate(operationContext);
 	}
 
 	public void warmUp(OperationContext context) {
-		boolean originalAllowingNull = context.getOptions().isAllowingNull();
+		boolean originalAllowingNull = context.isAllowingNull();
 		try {
-			context.getOptions().setAllowingNull(true);
+			context.setAllowingNull(true);
 			visitOperation(new WarmUpOperationVisitor(context));
 		} finally {
-			context.getOptions().setAllowingNull(originalAllowingNull);
+			context.setAllowingNull(originalAllowingNull);
 		}
 	}
 
 	public void provideValue(String variableName, Object value) {
 		try {
 			if (value instanceof Integer) {
-				context.getProvidedVariables().get(variableName).provideNewValue(new BigDecimal((Integer) value));
+				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(new BigDecimal((Integer) value));
 			} else if (value instanceof Long) {
-				context.getProvidedVariables().get(variableName).provideNewValue(BigDecimal.valueOf((Long) value));
+				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(BigDecimal.valueOf((Long) value));
 			} else if (value instanceof Number && !(value instanceof BigDecimal)) {
-				context.getProvidedVariables().get(variableName).provideNewValue(new BigDecimal(value.toString()));
+				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(new BigDecimal(value.toString()));
 			} else if (value instanceof Date) {
-				context.getProvidedVariables().get(variableName)
+				syntaxTreeContext.getProvidedVariables().get(variableName)
 						.provideNewValue(LocalDateTime.ofInstant(((Date) value).toInstant(), ZoneId.systemDefault()));
 			} else {
-				context.getProvidedVariables().get(variableName).provideNewValue(value);
+				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(value);
 			}
 		} catch (NullPointerException e) {
 			throw new IllegalArgumentException(
@@ -62,7 +68,9 @@ public class OperationSyntaxTree {
 			AbstractOperation copy = operation.copy(cloningContext);
 			OperationSyntaxTreeContext grammarBaseVisitorContext = new OperationSyntaxTreeContext(cloningContext.getProvidedVariables(),
 					cloningContext.getAssignedVariables());
-			return new OperationSyntaxTree(copy, grammarBaseVisitorContext);
+			OperationSyntaxTree syntaxTree = new OperationSyntaxTree(copy, grammarBaseVisitorContext);
+			syntaxTree.operationContext = this.operationContext;
+			return syntaxTree;
 		} catch (Throwable e) {
 			throw new IllegalStateException("Error while coping operation syntax tree", e);
 		}
@@ -70,14 +78,6 @@ public class OperationSyntaxTree {
 
 	public <T> T visitOperation(OperationVisitor<T> visitor) {
 		return operation.accept(visitor);
-	}
-
-	public AbstractOperation getOperation() {
-		return operation;
-	}
-
-	public OperationSyntaxTreeContext getContext() {
-		return context;
 	}
 
 }

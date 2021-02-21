@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 
 public class TestDateTimeOperations {

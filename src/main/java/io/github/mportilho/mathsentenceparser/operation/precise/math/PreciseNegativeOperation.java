@@ -2,9 +2,9 @@ package io.github.mportilho.mathsentenceparser.operation.precise.math;
 
 import java.math.BigDecimal;
 
-import io.github.mportilho.mathsentenceparser.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseNegativeOperation extends AbstractUnaryOperator {
 
