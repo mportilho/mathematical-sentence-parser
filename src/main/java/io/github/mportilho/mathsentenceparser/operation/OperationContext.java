@@ -58,6 +58,10 @@ public class OperationContext {
 		this.externalFunctions.putAll(externalFunctions);
 	}
 
+	public Map<String, Function<Object[], Object>> getExternalFunctions() {
+		return externalFunctions;
+	}
+
 	public LocalDateTime getCurrentDateTime() {
 		if (currentDateTime == null) {
 			currentDateTime = LocalDateTime.now();
