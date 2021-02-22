@@ -1,5 +1,7 @@
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
+import java.util.Set;
+
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
@@ -18,10 +20,14 @@ public abstract class AbstractVariableValueOperation extends AbstractOperation {
 	}
 
 	public void provideNewValue(Object newValue) {
+		provideNewValue(newValue, null);
+	}
+
+	public void provideNewValue(Object newValue, Set<Class<? extends AbstractOperation>> stopOnOperationTypes) {
 		if (newValue == null) {
 			throw new IllegalArgumentException(String.format("Variable %s was provided with a null value", variableName));
 		}
-		clearCache();
+		clearCache(stopOnOperationTypes);
 		this.providedValue = newValue;
 	}
 

@@ -18,24 +18,17 @@ public class FunctionOperation extends AbstractOperation {
 
 	private String functionName;
 	private List<AbstractOperation> parameters;
-	private boolean noCache = false;
 	private String functionKey;
 
-	public FunctionOperation(String functionName, List<AbstractOperation> parameters, boolean noCache) {
+	public FunctionOperation(String functionName, List<AbstractOperation> parameters, boolean caching) {
 		this.functionName = functionName;
-		this.parameters = parameters;
-		this.noCache = noCache;
-		this.functionKey = functionName + parameters.size();
+		this.parameters = parameters != null ? parameters : Collections.emptyList();
+		this.caching(caching);
+		this.functionKey = functionName + this.parameters.size();
 
-		if (parameters == null || parameters.isEmpty()) {
-			this.parameters = Collections.emptyList();
-		} else {
-			for (AbstractOperation operation : this.parameters) {
-				operation.addParent(this);
-			}
-		}
-		if (noCache) {
-			this.caching(false);
+		int count = this.parameters.size();
+		for (int i = 0; i < count; i++) {
+			this.parameters.get(i).addParent(this);
 		}
 	}
 
@@ -49,10 +42,13 @@ public class FunctionOperation extends AbstractOperation {
 
 		Function<Object[], Object> function = context.getExternalFunctions().get(functionKey);
 		if (function == null) {
+			function = context.getExternalFunctions().get(functionName);
+		}
+		if (function == null) {
 			throw new IllegalStateException(String.format("Function '%s' not found", functionName));
 		}
-		Object response = function.apply(args);
 
+		Object response = function.apply(args);
 		if (response instanceof Number) {
 			return new BigDecimal(response.toString(), context.getMathContext());
 		} else if (response instanceof Date) {
@@ -67,16 +63,12 @@ public class FunctionOperation extends AbstractOperation {
 		for (AbstractOperation param : parameters) {
 			newOperationList.add(param.copy(context));
 		}
-		return new FunctionOperation(this.functionName, newOperationList, this.noCache);
+		return new FunctionOperation(functionName, newOperationList, isCaching());
 	}
 
 	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
-	}
-
-	public boolean isNoCache() {
-		return noCache;
 	}
 
 	public List<AbstractOperation> getParameters() {

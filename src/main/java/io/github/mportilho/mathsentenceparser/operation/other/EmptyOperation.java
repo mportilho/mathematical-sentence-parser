@@ -3,6 +3,7 @@ package io.github.mportilho.mathsentenceparser.operation.other;
 import static java.util.Objects.nonNull;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,7 +21,10 @@ public class EmptyOperation extends AbstractOperation {
 
 	public EmptyOperation(OperationValueType type, Map<String, AbstractOperation> assignedVariables) {
 		this.type = type;
-		this.assignedVariables = assignedVariables;
+		this.assignedVariables = assignedVariables != null ? assignedVariables : Collections.emptyMap();
+		for (AbstractOperation operation : this.assignedVariables.values()) {
+			operation.addParent(this);
+		}
 	}
 
 	@Override
@@ -54,7 +58,7 @@ public class EmptyOperation extends AbstractOperation {
 		}
 		return new EmptyOperation(type, newAssignedVariables);
 	}
-	
+
 	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);

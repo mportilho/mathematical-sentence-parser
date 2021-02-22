@@ -17,6 +17,8 @@ public abstract class AbstractBinaryOperation extends AbstractOperation {
 	public AbstractBinaryOperation(AbstractOperation leftOperand, AbstractOperation rightOperand) {
 		this.leftOperand = leftOperand;
 		this.rightOperand = rightOperand;
+		this.leftOperand.addParent(this);
+		this.rightOperand.addParent(this);
 	}
 
 	@Override

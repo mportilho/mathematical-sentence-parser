@@ -100,6 +100,12 @@ public class OperationSyntaxTree {
 		operationContext.addExternalFunctions(Collections.singletonMap(functionName, dynamicFunction));
 	}
 
+	public Object getAssignedVariable(String variableName) {
+		return syntaxTreeContext.getAssignedVariables().containsKey(variableName)
+				? syntaxTreeContext.getAssignedVariables().get(variableName).evaluate(operationContext)
+				: null;
+	}
+
 	public <T> T visitOperation(OperationVisitor<T> visitor) {
 		return operation.accept(visitor);
 	}

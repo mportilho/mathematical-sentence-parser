@@ -109,14 +109,14 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	@Override
 	public OperationSyntaxTree createOperationSyntaxTree(StartContext startContext) {
 		OperationSyntaxTree syntaxTree = new OperationSyntaxTree(visit(startContext), parserContext);
-		if (functionOperations != null) {
-			for (int i = 0; i < functionOperations.size(); i++) {
-				FunctionOperation functionOperation = functionOperations.get(i);
-				if (functionOperation.isNoCache()) {
-					functionOperation.caching(false);
-				}
-			}
-		}
+//		if (functionOperations != null) {
+//			for (int i = 0; i < functionOperations.size(); i++) {
+//				FunctionOperation functionOperation = functionOperations.get(i);
+//				if (functionOperation.isNoCache()) {
+//					functionOperation.caching(false);
+//				}
+//			}
+//		}
 		return syntaxTree;
 	}
 
@@ -153,8 +153,14 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 			assignmentOperation.addParent(previousAssignmentOperation);
 			previousAssignmentOperation = assignmentOperation;
 		}
-		AbstractOperation mathOperation = nonNull(ctx.mathExpression()) ? ctx.mathExpression().accept(this)
-				: new EmptyOperation(OperationValueType.NUMBER, parserContext.getAssignedVariables());
+
+		AbstractOperation mathOperation;
+		if (nonNull(ctx.mathExpression())) {
+			mathOperation = ctx.mathExpression().accept(this);
+		} else {
+			mathOperation = new EmptyOperation(OperationValueType.NUMBER, parserContext.getAssignedVariables());
+		}
+
 		mathOperation.addParent(previousAssignmentOperation);
 		return mathOperation;
 	}
@@ -533,9 +539,15 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 
 	@Override
 	public AbstractOperation visitSequenceFunction(SequenceFunctionContext ctx) {
+		if (sequenceVariableStack == null) {
+			sequenceVariableStack = new Stack<>();
+		}
+		sequenceVariableStack.add(new ArrayList<>());
+		
 		AbstractOperation startIndexOperation = ctx.mathExpression(0).accept(this);
 		AbstractOperation endIndexOperation = ctx.mathExpression(1).accept(this);
 		AbstractOperation mathExpression = ctx.mathExpression(2).accept(this);
+		
 		List<SequenceVariableValueOperation> sequenceVariableContainer = sequenceVariableStack.pop();
 		SequenceVariableValueOperation sequenceVariable = sequenceVariableContainer.isEmpty() ? null : sequenceVariableContainer.get(0);
 		if (ctx.SUMMATION() != null) {
@@ -656,14 +668,14 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 
 	@Override
 	public AbstractOperation visitFunction(FunctionContext ctx) {
-		if (functionOperations != null) {
+		if (functionOperations == null) {
 			functionOperations = new ArrayList<>();
 		}
 		List<AbstractOperation> parameters = new ArrayList<>();
 		for (AllEntityTypesContext entityType : ctx.allEntityTypes()) {
 			parameters.add(entityType.accept(this));
 		}
-		FunctionOperation functionOperation = new FunctionOperation(ctx.IDENTIFIER().getText(), parameters, ctx.NOT() != null);
+		FunctionOperation functionOperation = new FunctionOperation(ctx.IDENTIFIER().getText(), parameters, ctx.NOT() == null);
 		functionOperations.add(functionOperation);
 		return functionOperation;
 	}

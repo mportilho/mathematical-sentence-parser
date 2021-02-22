@@ -17,6 +17,7 @@ public abstract class AbstractUnaryOperator extends AbstractOperation {
 	public AbstractUnaryOperator(AbstractOperation operand, OperatorPosition operatorPosition) {
 		this.operand = operand;
 		this.operatorPosition = operatorPosition;
+		this.operand.addParent(this);
 	}
 
 	public AbstractOperation getOperand() {

@@ -234,7 +234,6 @@ public class TestComplexOperations {
 		SequenceVariableValueOperation sequenceVariable;
 		AbstractOperation summationOperation;
 		AbstractOperation operation;
-		///////////////////////
 
 		sequenceVariable = new SequenceVariableValueOperation("S");
 		summationOperation = new PreciseExponentialOperation(new GenericValueOperation(valueOf(2)), sequenceVariable);

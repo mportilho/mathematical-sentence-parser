@@ -13,6 +13,7 @@ public class AssignedVariableOperation extends AbstractOperation {
 	public AssignedVariableOperation(String variableName, AbstractOperation assignedOperation) {
 		this.variableName = variableName;
 		this.assignedOperation = assignedOperation;
+		this.assignedOperation.addParent(this);
 	}
 
 	@Override

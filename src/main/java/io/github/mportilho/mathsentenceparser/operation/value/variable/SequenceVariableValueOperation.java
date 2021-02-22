@@ -1,5 +1,6 @@
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,9 +27,8 @@ public class SequenceVariableValueOperation extends AbstractVariableValueOperati
 		return operation;
 	}
 
-	public void provideNewValue(int newValue) {
-		clearCache(STOP_ON);
-		super.provideNewValue(newValue);
+	public void provideSequenceIndex(BigDecimal newValue) {
+		super.provideNewValue(newValue, STOP_ON);
 	}
 
 	@Override

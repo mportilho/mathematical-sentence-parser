@@ -21,6 +21,10 @@ public abstract class AbstractOperation {
 
 	private boolean applyingParenthesis;
 
+	public AbstractOperation() {
+		this.caching = true;
+	}
+
 	protected abstract Object resolve(OperationContext context);
 
 	protected abstract AbstractOperation createClone(CloningContext context) throws Throwable;
@@ -149,6 +153,10 @@ public abstract class AbstractOperation {
 				}
 			}
 		}
+	}
+
+	public Object getCache() {
+		return cache;
 	}
 
 	protected boolean isApplyingParenthesis() {
