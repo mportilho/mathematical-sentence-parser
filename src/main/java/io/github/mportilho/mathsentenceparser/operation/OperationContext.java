@@ -2,6 +2,9 @@ package io.github.mportilho.mathsentenceparser.operation;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 import io.github.mportilho.mathsentenceparser.MathSentenceOptions;
 
@@ -12,6 +15,7 @@ public class OperationContext {
 
 	private boolean allowingNull;
 	private LocalDateTime currentDateTime;
+	private Map<String, Function<Object[], Object>> externalFunctions;
 
 	public OperationContext() {
 		this.mathContext = MathSentenceOptions.DEFAULT_MATH_CONTEXT;
@@ -45,6 +49,13 @@ public class OperationContext {
 
 	public boolean isAllowingNull() {
 		return allowingNull;
+	}
+
+	public void addExternalFunctions(Map<String, Function<Object[], Object>> externalFunctions) {
+		if (this.externalFunctions == null) {
+			this.externalFunctions = new HashMap<>();
+		}
+		this.externalFunctions.putAll(externalFunctions);
 	}
 
 	public LocalDateTime getCurrentDateTime() {

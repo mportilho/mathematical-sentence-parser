@@ -16,7 +16,6 @@ public class OperationSyntaxTreeContext {
 
 	public OperationSyntaxTreeContext(Map<String, AbstractVariableValueOperation> providedVariables,
 			Map<String, AbstractOperation> assignedVariables) {
-		super();
 		this.providedVariables = providedVariables;
 		this.assignedVariables = assignedVariables;
 	}

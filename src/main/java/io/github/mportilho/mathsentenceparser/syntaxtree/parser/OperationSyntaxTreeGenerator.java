@@ -5,6 +5,6 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTree;
 
 public interface OperationSyntaxTreeGenerator {
 
-	public OperationSyntaxTree createOperationSyntaxTree(StartContext startContext);
+	OperationSyntaxTree createOperationSyntaxTree(StartContext startContext);
 
 }
