@@ -14,6 +14,11 @@ public class PiNumberConstantValueOperation extends AbstractConstantValueOperati
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(getValue());
+	}
+
+	@Override
 	protected Object resolve(OperationContext context) {
 		return BigDecimalMath.pi(context.getMathContext());
 	}

@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.function.Function;
 
@@ -54,6 +56,24 @@ public class TestFunctionOperations {
 		mathSentence.addFunctions(new FunctionProviderClass());
 		assertThat(mathSentence.<Boolean>compute()).isTrue();
 	}
+	
+	@Test
+	public void testFunctionOperationsWithExternalTimeMethods() {
+		MathSentence mathSentence;
+
+		mathSentence = new MathSentence("f.extractedTime() = 02:03:00");
+		mathSentence.addFunctions(new FunctionProviderClass());
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+	}
+	
+	@Test
+	public void testFunctionOperationsWithExternalDateTimeMethods() {
+		MathSentence mathSentence;
+
+		mathSentence = new MathSentence("f.extractedDateTime() = (currDateTime setHour 2 setMinute 3 setSecond 0)");
+		mathSentence.addFunctions(new FunctionProviderClass());
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+	}
 
 	@Test
 	public void testFunctionOperationsWithExternalBooleanMethods() {
@@ -81,6 +101,14 @@ public class TestFunctionOperations {
 
 		public LocalDate extractedDate() {
 			return LocalDate.now();
+		}
+
+		public LocalTime extractedTime() {
+			return LocalTime.of(2, 3, 0);
+		}
+
+		public LocalDateTime extractedDateTime() {
+			return LocalDateTime.of(LocalDate.now(), LocalTime.of(2, 3, 0));
 		}
 
 		public String extractedString() {

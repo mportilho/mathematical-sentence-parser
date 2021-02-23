@@ -14,6 +14,11 @@ public class EulerNumberConstantValueOperation extends AbstractConstantValueOper
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(getValue());
+	}
+
+	@Override
 	protected Object resolve(OperationContext context) {
 		return BigDecimalMath.e(context.getMathContext());
 	}
