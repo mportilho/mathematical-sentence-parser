@@ -21,6 +21,14 @@ public class PreciseRootOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
+	public void composeTextualRepresentation(StringBuilder builder) {
+		getRightOperand().generateRepresentation(builder);
+		builder.append(getOperationToken()).append('(');
+		getLeftOperand().generateRepresentation(builder);
+		builder.append(')');
+	}
+
+	@Override
 	protected String getOperationToken() {
 		return "\u221A";
 	}

@@ -39,6 +39,11 @@ public abstract class AbstractConstantValueOperation extends AbstractOperation {
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(getCache() != null ? getCache() : getValue());
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
 	}

@@ -14,7 +14,7 @@ public class DecisionOperation extends AbstractOperation {
 
 	public DecisionOperation(List<AbstractOperation> operations) {
 		if (operations == null || operations.size() < 2) {
-			throw new IllegalStateException("Decision operation must have at least two conditionals (if ... else ...)");
+			throw new IllegalStateException("Decision operation must have at least two conditionals (if ... then ... else ... endif)");
 		}
 		this.operations = operations;
 		for (int i = 0; i < operations.size(); i++) {
@@ -41,6 +41,16 @@ public class DecisionOperation extends AbstractOperation {
 			clonedOperations.add(op.copy(context));
 		}
 		return new DecisionOperation(clonedOperations);
+	}
+
+	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		int count = operations.size();
+		for (int i = 0; i < count - 1; i += 2) {
+			builder = i == 0 ? builder.append("if ") : builder.append(" elsif ");
+			builder.append(operations.get(i)).append(" then ").append(operations.get(i + 1));
+		}
+		builder.append(" else ").append(operations.get(operations.size() - 1)).append(" endif");
 	}
 
 	@Override

@@ -33,6 +33,18 @@ public abstract class AbstractOperation {
 
 	public abstract <T> T accept(OperationVisitor<T> visitor);
 
+	protected abstract void composeTextualRepresentation(StringBuilder builder);
+
+	public final void generateRepresentation(StringBuilder builder) {
+		if (this.applyingParenthesis) {
+			builder.append('(');
+			composeTextualRepresentation(builder);
+			builder.append(')');
+		} else {
+			composeTextualRepresentation(builder);
+		}
+	}
+
 	public final AbstractOperation copy(CloningContext cloningContext) throws Throwable {
 		AbstractOperation copy = null;
 		if (!cloningContext.getClonedOperationMap().keySet().contains(this)) {
@@ -45,7 +57,7 @@ public abstract class AbstractOperation {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T evaluate(OperationContext context) {
+	public final <T> T evaluate(OperationContext context) {
 		Object result;
 		try {
 			result = readValue(context);
@@ -113,6 +125,9 @@ public abstract class AbstractOperation {
 	}
 
 	public void addParent(AbstractOperation operation) {
+		if (operation == null) {
+			return;
+		}
 		if (parents == null) {
 			parents = new ArrayList<>();
 		}
@@ -161,6 +176,13 @@ public abstract class AbstractOperation {
 
 	protected boolean isApplyingParenthesis() {
 		return applyingParenthesis;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		generateRepresentation(builder);
+		return builder.toString();
 	}
 
 	protected interface CallSiteSupplier {

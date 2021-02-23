@@ -13,4 +13,11 @@ public class StringConstantValueOperation extends AbstractConstantValueOperation
 		return getValue().toString();
 	}
 
+	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append('\'');
+		super.composeTextualRepresentation(builder);
+		builder.append('\'');
+	}
+
 }

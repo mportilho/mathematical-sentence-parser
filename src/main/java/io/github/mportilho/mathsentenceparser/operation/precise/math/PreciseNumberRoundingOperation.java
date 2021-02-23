@@ -49,6 +49,15 @@ public class PreciseNumberRoundingOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
+	public void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(getOperationToken()).append('(');
+		getLeftOperand().generateRepresentation(builder);
+		builder.append(", ");
+		getRightOperand().generateRepresentation(builder);
+		builder.append(')');
+	}
+
+	@Override
 	protected String getOperationToken() {
 		return roundingEnum.toString();
 	}

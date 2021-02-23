@@ -41,6 +41,13 @@ public abstract class AbstractBinaryOperation extends AbstractOperation {
 	}
 
 	@Override
+	public void composeTextualRepresentation(StringBuilder builder) {
+		getLeftOperand().generateRepresentation(builder);
+		builder.append(' ').append(getOperationToken()).append(' ');
+		getRightOperand().generateRepresentation(builder);
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
 	}

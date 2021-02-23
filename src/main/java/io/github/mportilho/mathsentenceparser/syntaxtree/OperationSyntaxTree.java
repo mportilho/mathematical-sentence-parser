@@ -110,4 +110,8 @@ public class OperationSyntaxTree {
 		return operation.accept(visitor);
 	}
 
+	public String generateOperationRepresentation() {
+		return operation.toString();
+	}
+
 }

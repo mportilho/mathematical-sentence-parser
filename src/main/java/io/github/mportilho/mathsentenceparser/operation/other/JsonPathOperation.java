@@ -21,7 +21,12 @@ public class JsonPathOperation extends AbstractOperation {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		// TODO Auto-generated method stub
+	}
+
 	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);

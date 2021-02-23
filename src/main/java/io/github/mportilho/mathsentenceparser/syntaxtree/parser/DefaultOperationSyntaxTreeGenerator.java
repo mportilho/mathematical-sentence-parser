@@ -1,6 +1,5 @@
 package io.github.mportilho.mathsentenceparser.syntaxtree.parser;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 import java.util.ArrayList;
@@ -43,8 +42,8 @@ import io.github.mportilho.mathsentenceparser.operation.logic.OrOperation;
 import io.github.mportilho.mathsentenceparser.operation.logic.XnorOperation;
 import io.github.mportilho.mathsentenceparser.operation.logic.XorOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
+import io.github.mportilho.mathsentenceparser.operation.other.BaseOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
-import io.github.mportilho.mathsentenceparser.operation.other.EmptyOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.FunctionOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseAdditionOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseDivisionOperation;
@@ -147,44 +146,28 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 
 	@Override
 	public AbstractOperation visitMathStart(MathStartContext ctx) {
-		AbstractOperation previousAssignmentOperation = null;
 		for (AssignmentExpressionContext expressionContext : ctx.assignmentExpression()) {
-			AbstractOperation assignmentOperation = expressionContext.accept(this);
-			assignmentOperation.addParent(previousAssignmentOperation);
-			previousAssignmentOperation = assignmentOperation;
+			AssignedVariableOperation operator = (AssignedVariableOperation) expressionContext.accept(this);
+			parserContext.getAssignedVariables().put(operator.getVariableName(), operator);
 		}
-
-		AbstractOperation mathOperation;
-		if (nonNull(ctx.mathExpression())) {
-			mathOperation = ctx.mathExpression().accept(this);
-		} else {
-			mathOperation = new EmptyOperation(OperationValueType.NUMBER, parserContext.getAssignedVariables());
-		}
-
-		mathOperation.addParent(previousAssignmentOperation);
-		return mathOperation;
+		AbstractOperation mathOperation = ctx.mathExpression() != null ? ctx.mathExpression().accept(this) : null;
+		return new BaseOperation(OperationValueType.NUMBER, mathOperation, parserContext.getAssignedVariables());
 	}
 
 	@Override
 	public AbstractOperation visitLogicalStart(LogicalStartContext ctx) {
-		AbstractOperation previousAssignmentOperation = null;
 		for (AssignmentExpressionContext expressionContext : ctx.assignmentExpression()) {
-			AbstractOperation assignmentOperation = expressionContext.accept(this);
-			assignmentOperation.addParent(previousAssignmentOperation);
-			previousAssignmentOperation = assignmentOperation;
+			AssignedVariableOperation operator = (AssignedVariableOperation) expressionContext.accept(this);
+			parserContext.getAssignedVariables().put(operator.getVariableName(), operator);
 		}
-		AbstractOperation logicalOperation = nonNull(ctx.logicalExpression()) ? ctx.logicalExpression().accept(this)
-				: new EmptyOperation(OperationValueType.BOOLEAN, parserContext.getAssignedVariables());
-		logicalOperation.addParent(previousAssignmentOperation);
-		return logicalOperation;
+		AbstractOperation logicalOperation = ctx.logicalExpression() != null ? ctx.logicalExpression().accept(this) : null;
+		return new BaseOperation(OperationValueType.BOOLEAN, logicalOperation, parserContext.getAssignedVariables());
 	}
 
 	@Override
 	public AbstractOperation visitAssignOperation(AssignOperationContext ctx) {
 		AbstractOperation abstractOperation = ctx.allEntityTypes().accept(this);
-		AssignedVariableOperation operator = new AssignedVariableOperation(ctx.IDENTIFIER().getText(), abstractOperation);
-		parserContext.getAssignedVariables().put(operator.getVariableName(), operator.getAssignedOperation());
-		return operator;
+		return new AssignedVariableOperation(ctx.IDENTIFIER().getText(), abstractOperation);
 	}
 
 	@Override
@@ -316,7 +299,9 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 
 	@Override
 	public AbstractOperation visitLogicalParenthesis(LogicalParenthesisContext ctx) {
-		return ctx.logicalExpression().accept(this);
+		AbstractOperation operation = ctx.logicalExpression().accept(this);
+		operation.applyingParenthesis();
+		return operation;
 	}
 
 	@Override
@@ -414,7 +399,7 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 
 	@Override
 	public AbstractOperation visitMultiplicationExpression(MultiplicationExpressionContext ctx) {
-		if (nonNull(ctx.MULT())) {
+		if (ctx.MULT() != null) {
 			return new PreciseMultiplicationOperation(ctx.mathExpression(0).accept(this), ctx.mathExpression(1).accept(this));
 		} else if (nonNull(ctx.DIV())) {
 			return new PreciseDivisionOperation(ctx.mathExpression(0).accept(this), ctx.mathExpression(1).accept(this));
@@ -543,11 +528,11 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 			sequenceVariableStack = new Stack<>();
 		}
 		sequenceVariableStack.add(new ArrayList<>());
-		
+
 		AbstractOperation startIndexOperation = ctx.mathExpression(0).accept(this);
 		AbstractOperation endIndexOperation = ctx.mathExpression(1).accept(this);
 		AbstractOperation mathExpression = ctx.mathExpression(2).accept(this);
-		
+
 		List<SequenceVariableValueOperation> sequenceVariableContainer = sequenceVariableStack.pop();
 		SequenceVariableValueOperation sequenceVariable = sequenceVariableContainer.isEmpty() ? null : sequenceVariableContainer.get(0);
 		if (ctx.SUMMATION() != null) {
@@ -1076,8 +1061,8 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 		}
 
 		if (containsAssignedVariable) {
-			AbstractOperation valueOperation = this.parserContext.getAssignedVariables().get(name);
-			if (isNull(valueOperation)) {
+			AssignedVariableOperation valueOperation = this.parserContext.getAssignedVariables().get(name);
+			if (valueOperation == null) {
 				throw new IllegalStateException(
 						String.format("Assigned variable '%s' is not declared before the operation '%s'", name, context.getParent().getText()));
 			}

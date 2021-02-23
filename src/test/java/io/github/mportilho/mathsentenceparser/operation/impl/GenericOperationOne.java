@@ -22,6 +22,11 @@ public class GenericOperationOne extends AbstractOperation {
 	protected String getOperationToken() {
 		return null;
 	}
+	
+	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		
+	}
 
 	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {

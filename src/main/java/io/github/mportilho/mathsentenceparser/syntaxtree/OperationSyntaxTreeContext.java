@@ -1,21 +1,22 @@
 package io.github.mportilho.mathsentenceparser.syntaxtree;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
 
 public class OperationSyntaxTreeContext {
 
 	private Map<String, AbstractVariableValueOperation> providedVariables;
-	private Map<String, AbstractOperation> assignedVariables;
+	private Map<String, AssignedVariableOperation> assignedVariables;
 
 	public OperationSyntaxTreeContext() {
 	}
 
 	public OperationSyntaxTreeContext(Map<String, AbstractVariableValueOperation> providedVariables,
-			Map<String, AbstractOperation> assignedVariables) {
+			Map<String, AssignedVariableOperation> assignedVariables) {
 		this.providedVariables = providedVariables;
 		this.assignedVariables = assignedVariables;
 	}
@@ -27,9 +28,9 @@ public class OperationSyntaxTreeContext {
 		return providedVariables;
 	}
 
-	public Map<String, AbstractOperation> getAssignedVariables() {
+	public Map<String, AssignedVariableOperation> getAssignedVariables() {
 		if (assignedVariables == null) {
-			assignedVariables = new HashMap<>();
+			assignedVariables = new LinkedHashMap<>();
 		}
 		return assignedVariables;
 	}

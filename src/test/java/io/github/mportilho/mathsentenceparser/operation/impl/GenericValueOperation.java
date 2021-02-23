@@ -33,6 +33,11 @@ public class GenericValueOperation extends AbstractOperation {
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		// TODO Auto-generated method stub
 		return null;

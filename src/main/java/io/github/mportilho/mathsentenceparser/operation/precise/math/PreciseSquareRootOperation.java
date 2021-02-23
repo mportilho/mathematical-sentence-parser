@@ -17,8 +17,16 @@ public class PreciseSquareRootOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
+	public void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(2);
+		builder.append(getOperationToken()).append('(');
+		getOperand().generateRepresentation(builder);
+		builder.append(')');
+	}
+
+	@Override
 	protected String getOperationToken() {
-		return "sqrt";
+		return "\u221A";
 	}
 
 }

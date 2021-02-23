@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
+
 public class TestMathSentence {
 
 	public void computeMathSentence(String sentence, BigDecimal expectedValue) {
@@ -35,7 +37,7 @@ public class TestMathSentence {
 	@Test
 	public void testFactorialOperation() {
 		computeMathSentence("3!", valueOf(6));
-		computeMathSentence("5!", valueOf(120));
+		computeMathSentence("3!!", BigDecimalMath.factorial(6));
 	}
 
 	@Test

@@ -32,6 +32,13 @@ public abstract class AbstractVariableValueOperation extends AbstractOperation {
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		Object value = getCache() != null ? getCache() : getProvidedValue();
+		value = value != null ? value : getVariableName();
+		builder.append(value);
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
 	}

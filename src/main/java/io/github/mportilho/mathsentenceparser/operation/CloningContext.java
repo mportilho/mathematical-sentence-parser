@@ -3,12 +3,13 @@ package io.github.mportilho.mathsentenceparser.operation;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
 
 public class CloningContext {
 
 	private Map<String, AbstractVariableValueOperation> providedVariables;
-	private Map<String, AbstractOperation> assignedVariables;
+	private Map<String, AssignedVariableOperation> assignedVariables;
 	private Map<AbstractOperation, AbstractOperation> clonedOperationMap;
 
 	public CloningContext() {
@@ -25,7 +26,7 @@ public class CloningContext {
 		return providedVariables;
 	}
 
-	public final Map<String, AbstractOperation> getAssignedVariables() {
+	public final Map<String, AssignedVariableOperation> getAssignedVariables() {
 		return assignedVariables;
 	}
 

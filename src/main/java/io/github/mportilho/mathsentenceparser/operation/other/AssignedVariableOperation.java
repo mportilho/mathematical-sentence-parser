@@ -27,7 +27,12 @@ public class AssignedVariableOperation extends AbstractOperation {
 		context.getAssignedVariables().put(variableName, copyOperation);
 		return copyOperation;
 	}
-	
+
+	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(getCache() != null ? getCache() : getVariableName());
+	}
+
 	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);

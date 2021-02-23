@@ -5,7 +5,7 @@ import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
 import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
-import io.github.mportilho.mathsentenceparser.operation.other.EmptyOperation;
+import io.github.mportilho.mathsentenceparser.operation.other.BaseOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.FunctionOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.JsonPathOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseProductOfSequenceOperation;
@@ -15,7 +15,7 @@ import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractV
 
 public interface OperationVisitor<T> {
 
-	public T visit(EmptyOperation operation);
+	public T visit(BaseOperation operation);
 
 	public T visit(AbstractUnaryOperator operation);
 

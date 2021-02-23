@@ -52,6 +52,17 @@ public class PreciseProductOfSequenceOperation extends AbstractOperation {
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append("P[");
+		startIndex.generateRepresentation(builder);
+		builder.append(',');
+		endIndex.generateRepresentation(builder);
+		builder.append("](");
+		operation.generateRepresentation(builder);
+		builder.append(')');
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
 	}

@@ -24,6 +24,13 @@ public class PreciseExponentialOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
+	public void composeTextualRepresentation(StringBuilder builder) {
+		getLeftOperand().generateRepresentation(builder);
+		builder.append(getOperationToken());
+		getRightOperand().generateRepresentation(builder);
+	}
+
+	@Override
 	protected String getOperationToken() {
 		return "^";
 	}

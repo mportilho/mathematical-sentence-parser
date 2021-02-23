@@ -46,6 +46,13 @@ public abstract class AbstractDateTimeOperation extends AbstractOperation {
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		getLeftOperand().generateRepresentation(builder);
+		builder.append(getOperationToken());
+		getRightOperand().generateRepresentation(builder);
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
 	}

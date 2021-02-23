@@ -10,16 +10,19 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.function.DynamicFunctio
 
 public class MathSentence {
 
-	private final String sentence;
 	private MathSentenceOptions mathSentenceOptions;
 	private OperationSyntaxTree operationSyntaxTree;
+
+	private MathSentence() {
+		// internal use
+	}
 
 	public MathSentence(String sentence) {
 		this(sentence, null);
 	}
 
 	public MathSentence(String sentence, MathSentenceOptions mathSentenceOptions) {
-		this.sentence = Objects.requireNonNull(sentence, "Math sentence text is required");
+		Objects.requireNonNull(sentence, "Math sentence text is required");
 		this.mathSentenceOptions = mathSentenceOptions != null ? mathSentenceOptions : new MathSentenceOptions();
 		operationSyntaxTree = MathematicalSentenceGrammarParser.parseSentence(CharStreams.fromString(sentence), this.mathSentenceOptions);
 	}
@@ -39,9 +42,15 @@ public class MathSentence {
 	}
 
 	public final MathSentence copy() {
-		MathSentence mathSentence = new MathSentence(sentence, mathSentenceOptions);
+		MathSentence mathSentence = new MathSentence();
+		mathSentence.mathSentenceOptions = this.mathSentenceOptions;
 		mathSentence.operationSyntaxTree = operationSyntaxTree.copy();
 		return mathSentence;
+	}
+
+	@Override
+	public String toString() {
+		return operationSyntaxTree.generateOperationRepresentation();
 	}
 
 }

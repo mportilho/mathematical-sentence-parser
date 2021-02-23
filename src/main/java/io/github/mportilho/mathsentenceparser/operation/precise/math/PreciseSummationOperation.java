@@ -52,6 +52,17 @@ public class PreciseSummationOperation extends AbstractOperation {
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append("S[");
+		startIndex.generateRepresentation(builder);
+		builder.append(',');
+		endIndex.generateRepresentation(builder);
+		builder.append("](");
+		operation.generateRepresentation(builder);
+		builder.append(')');
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
 	}

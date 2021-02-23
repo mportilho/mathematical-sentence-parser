@@ -67,6 +67,19 @@ public class FunctionOperation extends AbstractOperation {
 	}
 
 	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(!isCaching() ? "~" + functionName : functionName).append("(");
+		int count = parameters.size();
+		for (int i = 0; i < parameters.size(); i++) {
+			AbstractOperation parameter = parameters.get(i);
+			if (--count != 0) {
+				builder.append(parameter.toString()).append(", ");
+			}
+		}
+		builder.append(")");
+	}
+
+	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
 	}

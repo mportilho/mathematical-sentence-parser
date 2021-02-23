@@ -36,4 +36,9 @@ public class SequenceVariableValueOperation extends AbstractVariableValueOperati
 		return getProvidedValue();
 	}
 
+	@Override
+	protected void composeTextualRepresentation(StringBuilder builder) {
+		builder.append(getVariableName());
+	}
+
 }
