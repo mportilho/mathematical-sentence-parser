@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.operation.other;
+package io.github.mportilho.mathsentenceparser.operation;
 
 import static java.util.Objects.nonNull;
 
@@ -9,9 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
-import io.github.mportilho.mathsentenceparser.operation.CloningContext;
-import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.OperationValueType;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 

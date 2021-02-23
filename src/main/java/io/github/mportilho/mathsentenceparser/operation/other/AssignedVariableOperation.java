@@ -39,7 +39,7 @@ public class AssignedVariableOperation extends AbstractOperation {
 	}
 
 	@Override
-	protected String getOperationToken() {
+	public String getOperationToken() {
 		return ":=";
 	}
 

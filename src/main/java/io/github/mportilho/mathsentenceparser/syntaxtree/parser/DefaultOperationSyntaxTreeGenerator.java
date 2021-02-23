@@ -18,6 +18,7 @@ import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParser
 import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarLexer;
 import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.*;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.BaseOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateAdditionOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateElementEnum;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateSetOperation;
@@ -42,7 +43,6 @@ import io.github.mportilho.mathsentenceparser.operation.logic.OrOperation;
 import io.github.mportilho.mathsentenceparser.operation.logic.XnorOperation;
 import io.github.mportilho.mathsentenceparser.operation.logic.XorOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
-import io.github.mportilho.mathsentenceparser.operation.other.BaseOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.FunctionOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseAdditionOperation;
