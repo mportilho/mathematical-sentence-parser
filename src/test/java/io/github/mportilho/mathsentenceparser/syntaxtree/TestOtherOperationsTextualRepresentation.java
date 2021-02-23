@@ -9,7 +9,7 @@ import io.github.mportilho.mathsentenceparser.MathSentence;
 public class TestOtherOperationsTextualRepresentation {
 
 	@Test
-	public void testBaseOperationTextRepresentation() {
+	public void testAssingedVariablesOnlyBaseOperationTextRepresentation() {
 		MathSentence mathSentence;
 
 		mathSentence = new MathSentence("a := 3; b := 5;");
@@ -21,6 +21,11 @@ public class TestOtherOperationsTextualRepresentation {
 		assertThat(mathSentence.toString()).isEqualTo("a := 3;\nb := 5;\na + b");
 		mathSentence.compute();
 		assertThat(mathSentence.toString()).isEqualTo("a := 3;\nb := 5;\n3 + 5");
+	}
+
+	@Test
+	public void testFullBaseOperationsTextualRepresentation() {
+		MathSentence mathSentence;
 
 		StringBuilder builder = new StringBuilder();
 		builder.append("a := 3 - 2;");
@@ -48,9 +53,34 @@ public class TestOtherOperationsTextualRepresentation {
 	}
 
 	@Test
-	public void testFunctionOperationTextRepresentation() {
+	public void testFunctionOperationWithOneParameterTextRepresentation() {
 		MathSentence mathSentence;
-		throw new IllegalArgumentException();
+
+		mathSentence = new MathSentence("f.function1(1 * 2) + f.function2(3 / 4)");
+		mathSentence.addFunction("function1", (context, params) -> 5);
+		mathSentence.addFunction("function2", (context, params) -> 6);
+		assertThat(mathSentence.toString()).isEqualTo("f.function1(1 * 2) + f.function2(3 / 4)");
+		mathSentence.compute();
+		assertThat(mathSentence.toString()).isEqualTo("f.function1(1 * 2) + f.function2(3 / 4)");
+
+		mathSentence = new MathSentence("f.function1(1 * 2) + ~f.function2(3 / 4, 7)");
+		mathSentence.addFunction("function1", (context, params) -> 5);
+		mathSentence.addFunction("function2", (context, params) -> 6);
+		assertThat(mathSentence.toString()).isEqualTo("f.function1(1 * 2) + ~f.function2(3 / 4, 7)");
+		mathSentence.compute();
+		assertThat(mathSentence.toString()).isEqualTo("f.function1(1 * 2) + ~f.function2(3 / 4, 7)");
+	}
+
+	@Test
+	public void testFunctionOperationWithMultipleParametersTextRepresentation() {
+		MathSentence mathSentence;
+
+		mathSentence = new MathSentence("f.function1(1 * 2, 9) + ~f.function2(3 / 4, 7, 11)");
+		mathSentence.addFunction("function1", (context, params) -> 5);
+		mathSentence.addFunction("function2", (context, params) -> 6);
+		assertThat(mathSentence.toString()).isEqualTo("f.function1(1 * 2, 9) + ~f.function2(3 / 4, 7, 11)");
+		mathSentence.compute();
+		assertThat(mathSentence.toString()).isEqualTo("f.function1(1 * 2, 9) + ~f.function2(3 / 4, 7, 11)");
 	}
 
 }

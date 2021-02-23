@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.syntaxtree.MathSentenceComputingException;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
 public abstract class AbstractOperation {
@@ -68,9 +69,9 @@ public abstract class AbstractOperation {
 					String.format("Arithmetic error for expression %s: %s", toString(), e.getMessage()));
 			newException.setStackTrace(e.getStackTrace());
 			throw newException;
-		} catch (MathSentenceParserException e) {
+		} catch (MathSentenceComputingException e) {
 			throw new IllegalStateException(e.getMessage(), e.getCause());
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException | IllegalStateException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new IllegalStateException(String.format("Error during calculation of expression %s", toString()), e);

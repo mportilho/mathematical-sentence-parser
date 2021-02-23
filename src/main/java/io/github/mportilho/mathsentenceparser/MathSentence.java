@@ -36,6 +36,10 @@ public class MathSentence {
 		operationSyntaxTree.addFunction(functionName, function);
 	}
 
+	public void addFunctions(Object functionProvider) {
+		operationSyntaxTree.addFunctions(functionProvider);
+	}
+
 	@SuppressWarnings("unchecked")
 	public <T> T getAssignedVariable(String variableName) {
 		return (T) operationSyntaxTree.getAssignedVariable(variableName);

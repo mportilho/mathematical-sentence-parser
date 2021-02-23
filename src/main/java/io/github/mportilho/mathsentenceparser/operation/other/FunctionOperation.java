@@ -40,7 +40,12 @@ public class FunctionOperation extends AbstractOperation {
 			args[i] = this.parameters.get(i).evaluate(context);
 		}
 
-		Function<Object[], Object> function = context.getExternalFunctions().get(functionKey);
+		Function<Object[], Object> function;
+		try {
+			function = context.getExternalFunctions().get(functionKey);
+		} catch (NullPointerException e) {
+			throw new IllegalStateException("No functions loaded in this math sentence object", e);
+		}
 		if (function == null) {
 			function = context.getExternalFunctions().get(functionName);
 		}
@@ -68,12 +73,16 @@ public class FunctionOperation extends AbstractOperation {
 
 	@Override
 	protected void composeTextualRepresentation(StringBuilder builder) {
-		builder.append(!isCaching() ? "~" + functionName : functionName).append("(");
+		if (!isCaching()) {
+			builder.append('~');
+		}
+		builder.append("f.").append(functionName).append("(");
 		int count = parameters.size();
-		for (int i = 0; i < parameters.size(); i++) {
-			AbstractOperation parameter = parameters.get(i);
-			if (--count != 0) {
-				builder.append(parameter.toString()).append(", ");
+		int index = count;
+		for (int i = 0; i < count; i++) {
+			parameters.get(i).generateRepresentation(builder);
+			if (--index != 0) {
+				builder.append(", ");
 			}
 		}
 		builder.append(")");

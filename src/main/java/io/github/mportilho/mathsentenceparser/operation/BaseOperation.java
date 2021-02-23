@@ -22,19 +22,24 @@ public class BaseOperation extends AbstractOperation {
 	public BaseOperation(OperationValueType type, AbstractOperation operation, Map<String, AssignedVariableOperation> assignedVariables) {
 		this.type = type;
 		this.assignedVariables = assignedVariables != null ? assignedVariables : Collections.emptyMap();
-//		for (AbstractOperation op : this.assignedVariables.values()) {
-//			op.addParent(this);
-//		}
 		this.operation = operation;
+		if (this.operation != null) {
+			this.operation.addParent(this);
+		}
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		for (AbstractOperation operation : assignedVariables.values()) {
-			operation.evaluate(context);
+		for (Entry<String, AssignedVariableOperation> entry : assignedVariables.entrySet()) {
+			entry.getValue().evaluate(context);
 		}
 		if (operation != null) {
-			return operation.evaluate(context);
+			Object result = operation.evaluate(context);
+			if (result instanceof BigDecimal) {
+				return ((BigDecimal) result).setScale(context.getScale(), context.getMathContext().getRoundingMode());
+			} else {
+				return result;
+			}
 		}
 		switch (type) {
 		case BOOLEAN:
@@ -42,7 +47,7 @@ public class BaseOperation extends AbstractOperation {
 		case NUMBER:
 			return BigDecimal.ZERO;
 		default:
-			throw new IllegalStateException(String.format("Type '%s' not valid for an empty operation. Only Boolean or Number allowed", type));
+			throw new IllegalStateException(String.format("'%s' is not a valid return type for operations. Only Boolean or Number allowed", type));
 		}
 	}
 
