@@ -124,7 +124,7 @@ public abstract class AbstractOperation {
 	public void applyingParenthesis() {
 		this.applyingParenthesis = true;
 	}
-
+	
 	public void addParent(AbstractOperation operation) {
 		if (operation == null) {
 			return;
@@ -175,7 +175,7 @@ public abstract class AbstractOperation {
 		return cache;
 	}
 
-	protected boolean isApplyingParenthesis() {
+	public boolean isApplyingParenthesis() {
 		return applyingParenthesis;
 	}
 

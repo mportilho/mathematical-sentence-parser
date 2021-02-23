@@ -348,21 +348,42 @@ public class MathematicalSentenceParserGrammarBaseVisitor<T> extends AbstractPar
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDateOperation(MathematicalSentenceParserGrammarParser.DateOperationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDateParenthesis(MathematicalSentenceParserGrammarParser.DateParenthesisContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTimeOperation(MathematicalSentenceParserGrammarParser.TimeOperationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDateFunction(MathematicalSentenceParserGrammarParser.DateFunctionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDateTimeOperation(MathematicalSentenceParserGrammarParser.DateTimeOperationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTimeParenthesis(MathematicalSentenceParserGrammarParser.TimeParenthesisContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTimeFunction(MathematicalSentenceParserGrammarParser.TimeFunctionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDateTimeParenthesis(MathematicalSentenceParserGrammarParser.DateTimeParenthesisContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDateTimeFunction(MathematicalSentenceParserGrammarParser.DateTimeFunctionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

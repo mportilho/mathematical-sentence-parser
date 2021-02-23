@@ -105,6 +105,22 @@ public class TestMathTextualRepresentation {
 		assertThat(mathSentence.toString()).isEqualTo("-7 * 7");
 		mathSentence.compute();
 		assertThat(mathSentence.toString()).isEqualTo("-7 * 7");
+
+		mathSentence = new MathSentence("7(7 + 2)");
+		assertThat(mathSentence.toString()).isEqualTo("7(7 + 2)");
+		mathSentence.compute();
+		assertThat(mathSentence.toString()).isEqualTo("7(7 + 2)");
+
+		mathSentence = new MathSentence("-7(7 + 2)");
+		assertThat(mathSentence.toString()).isEqualTo("-7(7 + 2)");
+		mathSentence.compute();
+		assertThat(mathSentence.toString()).isEqualTo("-7(7 + 2)");
+
+		mathSentence = new MathSentence("7a");
+		assertThat(mathSentence.toString()).isEqualTo("7a");
+		mathSentence.addVariableValue("a", 5);
+		mathSentence.compute();
+		assertThat(mathSentence.toString()).isEqualTo("7(5)");
 	}
 
 	@Test

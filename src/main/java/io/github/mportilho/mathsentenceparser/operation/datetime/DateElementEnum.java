@@ -31,28 +31,6 @@ public enum DateElementEnum {
 		this.mnemonic = mnemonic;
 	}
 
-	public static DateElementEnum parse(String textParameter) {
-		String text = textParameter;
-		if (textParameter.endsWith("s")) {
-			text = textParameter.substring(0, textParameter.length() - 1);
-		}
-		if ("year".equalsIgnoreCase(text)) {
-			return DateElementEnum.YEAR;
-		} else if ("month".equalsIgnoreCase(text)) {
-			return DateElementEnum.MONTH;
-		} else if ("day".equalsIgnoreCase(text)) {
-			return DateElementEnum.DAY;
-		} else if ("hour".equalsIgnoreCase(text)) {
-			return DateElementEnum.HOUR;
-		} else if ("minute".equalsIgnoreCase(text)) {
-			return DateElementEnum.MINUTE;
-		} else if ("second".equalsIgnoreCase(text)) {
-			return DateElementEnum.SECOND;
-		} else {
-			throw new IllegalStateException("Invalid date element: " + text);
-		}
-	}
-
 	@Override
 	public String toString() {
 		return mnemonic;

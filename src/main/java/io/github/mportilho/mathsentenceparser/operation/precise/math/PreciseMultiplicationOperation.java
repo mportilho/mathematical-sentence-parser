@@ -6,6 +6,7 @@ import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
 
 public class PreciseMultiplicationOperation extends AbstractBinaryOperation {
 
@@ -42,8 +43,26 @@ public class PreciseMultiplicationOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
-	public String toString() {
-		return implicit ? getLeftOperand().toString() + getRightOperand().toString() : super.toString();
+	public void composeTextualRepresentation(StringBuilder builder) {
+		if (implicit) {
+			boolean hasCache = getRightOperand().getCache() != null;
+
+			boolean isVariableWithCache = AbstractVariableValueOperation.class.isAssignableFrom(getRightOperand().getClass())
+					&& getRightOperand().getCache() != null;
+			boolean isOperationNotApplyingParenthesis = !AbstractVariableValueOperation.class.isAssignableFrom(getRightOperand().getClass())
+					&& !getRightOperand().isApplyingParenthesis();
+
+			getLeftOperand().generateRepresentation(builder);
+			if (isVariableWithCache || isOperationNotApplyingParenthesis) {
+				builder.append('(');
+			}
+			getRightOperand().generateRepresentation(builder);
+			if (isVariableWithCache || isOperationNotApplyingParenthesis) {
+				builder.append(')');
+			}
+		} else {
+			super.composeTextualRepresentation(builder);
+		}
 	}
 
 }

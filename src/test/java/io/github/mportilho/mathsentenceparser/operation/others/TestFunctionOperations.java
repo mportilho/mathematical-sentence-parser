@@ -56,7 +56,7 @@ public class TestFunctionOperations {
 		mathSentence.addFunctions(new FunctionProviderClass());
 		assertThat(mathSentence.<Boolean>compute()).isTrue();
 	}
-	
+
 	@Test
 	public void testFunctionOperationsWithExternalTimeMethods() {
 		MathSentence mathSentence;
@@ -65,14 +65,14 @@ public class TestFunctionOperations {
 		mathSentence.addFunctions(new FunctionProviderClass());
 		assertThat(mathSentence.<Boolean>compute()).isTrue();
 	}
-	
+
 	@Test
 	public void testFunctionOperationsWithExternalDateTimeMethods() {
 		MathSentence mathSentence;
 
-		mathSentence = new MathSentence("f.extractedDateTime() = (currDateTime setHour 2 setMinute 3 setSecond 0)");
+		mathSentence = new MathSentence("f.extractedDateTime() = (currDateTime setHours 2 setMinutes 3 setSeconds 0)");
 		mathSentence.addFunctions(new FunctionProviderClass());
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.<Boolean>compute()).isFalse();
 	}
 
 	@Test

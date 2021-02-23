@@ -392,8 +392,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 			((PreciseNumberConstantValueOperation) rightOperation).transformToPositiveValue();
 			return new PreciseSubtractionOperation(leftOperation, rightOperation);
 		}
-
-		rightOperation.applyingParenthesis();
 		return new PreciseMultiplicationOperation(leftOperation, rightOperation, true);
 	}
 
@@ -544,9 +542,18 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitDateOperation(DateOperationContext ctx) {
+	public AbstractOperation visitDateParenthesis(DateParenthesisContext ctx) {
+		AbstractOperation operation = ctx.dateOperation().accept(this);
+		operation.applyingParenthesis();
+		return operation;
+	}
+
+	@Override
+	public AbstractOperation visitDateFunction(DateFunctionContext ctx) {
 		AbstractOperation leftOperand = ctx.dateEntity().accept(this);
-		for (int i = 0; i < ctx.DATE_OPERATIONS().size(); i++) { //@formatter:off
+		int count = ctx.DATE_OPERATIONS().size();
+
+		for (int i = 0; i < count; i++) { //@formatter:off
 			String text = "'" + ctx.DATE_OPERATIONS(i).getSymbol().getText() + "'";
 			if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.PLUS_DAYS).equals(text)) {
 				leftOperand = new DateAdditionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.DAY);
@@ -560,11 +567,11 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 				leftOperand = new DateSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MONTH);
 			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.MINUS_YEARS).equals(text)) {
 				leftOperand = new DateSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.YEAR);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_DAYS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_DAYS).equals(text)) {
 				leftOperand = new DateSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.DAY);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_MONTHS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_MONTHS).equals(text)) {
 				leftOperand = new DateSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MONTH);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_YEARS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_YEARS).equals(text)) {
 				leftOperand = new DateSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.YEAR);
 			} else {
 				throw new IllegalStateException(String.format("Operation %s not implemented", ctx.DATE_OPERATIONS(i).getText()));
@@ -574,9 +581,18 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitTimeOperation(TimeOperationContext ctx) {
+	public AbstractOperation visitTimeParenthesis(TimeParenthesisContext ctx) {
+		AbstractOperation operation = ctx.timeOperation().accept(this);
+		operation.applyingParenthesis();
+		return operation;
+	}
+
+	@Override
+	public AbstractOperation visitTimeFunction(TimeFunctionContext ctx) {
 		AbstractOperation leftOperand = ctx.timeEntity().accept(this);
-		for (int i = 0; i < ctx.TIME_OPERATIONS().size(); i++) { //@formatter:off
+		int count = ctx.TIME_OPERATIONS().size();
+
+		for (int i = 0; i < count; i++) { //@formatter:off
 			String text = "'" + ctx.TIME_OPERATIONS(i).getSymbol().getText() + "'";
 			if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.PLUS_HOURS).equals(text)) {
 				leftOperand = new TimeAdditionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.HOUR);
@@ -590,11 +606,11 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 				leftOperand = new TimeSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MINUTE);
 			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.MINUS_SECONDS).equals(text)) {
 				leftOperand = new TimeSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.SECOND);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_HOURS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_HOURS).equals(text)) {
 				leftOperand = new TimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.HOUR);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_MINUTES).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_MINUTES).equals(text)) {
 				leftOperand = new TimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MINUTE);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_SECONDS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_SECONDS).equals(text)) {
 				leftOperand = new TimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.SECOND);
 			} else {
 				throw new IllegalStateException(String.format("Operation %s not implemented", ctx.TIME_OPERATIONS(i).getText()));
@@ -604,10 +620,19 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitDateTimeOperation(DateTimeOperationContext ctx) {
+	public AbstractOperation visitDateTimeParenthesis(DateTimeParenthesisContext ctx) {
+		AbstractOperation operation = ctx.dateTimeOperation().accept(this);
+		operation.applyingParenthesis();
+		return operation;
+	}
+
+	@Override
+	public AbstractOperation visitDateTimeFunction(DateTimeFunctionContext ctx) {
 		AbstractOperation leftOperand = ctx.dateTimeEntity().accept(this);//@formatter:off
-		for (int i = 0; i < ctx.DATE_OPERATIONS().size() + ctx.TIME_OPERATIONS().size(); i++) {
-			String text = "'" + ctx.getChild(1 + (3 * i)).getText() + "'";
+		int count = ctx.DATE_OPERATIONS().size() + ctx.TIME_OPERATIONS().size();
+		
+		for (int i = 0; i < count; i++) {
+			String text = "'" + ctx.getChild(1 + (2 * i)).getText() + "'";
 			if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.PLUS_DAYS).equals(text)) {
 				leftOperand = new DateTimeAdditionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.DAY);
 			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.PLUS_MONTHS).equals(text)) {
@@ -620,11 +645,11 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 				leftOperand = new DateTimeSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MONTH);
 			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.MINUS_YEARS).equals(text)) {
 				leftOperand = new DateTimeSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.YEAR);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_DAYS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_DAYS).equals(text)) {
 				leftOperand = new DateTimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.DAY);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_MONTHS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_MONTHS).equals(text)) {
 				leftOperand = new DateTimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MONTH);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_YEARS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_YEARS).equals(text)) {
 				leftOperand = new DateTimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.YEAR);
 			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.PLUS_HOURS).equals(text)) {
 				leftOperand = new DateTimeAdditionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.HOUR);
@@ -638,11 +663,11 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 				leftOperand = new DateTimeSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MINUTE);
 			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.MINUS_SECONDS).equals(text)) {
 				leftOperand = new DateTimeSubtractionOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.SECOND);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_HOURS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_HOURS).equals(text)) {
 				leftOperand = new DateTimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.HOUR);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_MINUTES).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_MINUTES).equals(text)) {
 				leftOperand = new DateTimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.MINUTE);
-			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.WITH_SECONDS).equals(text)) {
+			} else if (MathematicalSentenceParserGrammarLexer.VOCABULARY.getDisplayName(MathematicalSentenceParserGrammarLexer.SET_SECONDS).equals(text)) {
 				leftOperand = new DateTimeSetOperation(leftOperand, ctx.mathExpression(i).accept(this), DateElementEnum.SECOND);
 			} else {
 				throw new IllegalStateException(String.format("Operation %s not implemented", ctx.DATE_OPERATIONS(i).getText()));

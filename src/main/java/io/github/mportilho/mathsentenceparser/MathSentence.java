@@ -36,8 +36,14 @@ public class MathSentence {
 		operationSyntaxTree.addFunction(functionName, function);
 	}
 
-	public void addFunctions(Object functionProvider) {
+	public MathSentence addFunctions(Object functionProvider) {
 		operationSyntaxTree.addFunctions(functionProvider);
+		return this;
+	}
+
+	public MathSentence addVariableValue(String variableName, Object value) {
+		operationSyntaxTree.addVariableValue(variableName, value);
+		return this;
 	}
 
 	@SuppressWarnings("unchecked")

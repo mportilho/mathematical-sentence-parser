@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mportilho.mathsentenceparser.MathSentence;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 
@@ -63,6 +64,96 @@ public class TestDateOperations {
 		operation = new DateSubtractionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.YEAR);
 		assertThat(operation.<LocalDate>evaluate(context)).isEqualTo("1998-03-02");
+	}
+
+	@Test
+	public void testDateTextualRepresentation() {
+		MathSentence mathSentence;
+
+		mathSentence = new MathSentence("2000-03-05 = 2000-03-05");
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 = 2000-03-05");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 = 2000-03-05");
+
+		mathSentence = new MathSentence("(2000-03-05) = 2000-03-05");
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05) = 2000-03-05");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05) = 2000-03-05");
+
+		mathSentence = new MathSentence("2000-03-05 setDays 3 = 2000-03-05");
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 = 2000-03-05");
+		assertThat(mathSentence.<Boolean>compute()).isFalse();
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 = 2000-03-05");
+
+		mathSentence = new MathSentence("2000-03-05 setDays 3 setYears 2010 = 2010-03-03");
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 setYears 2010 = 2010-03-03");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 setYears 2010 = 2010-03-03");
+
+		mathSentence = new MathSentence("(2000-03-05 setDays 3 setYears 2010) = 2010-03-03");
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05 setDays 3 setYears 2010) = 2010-03-03");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05 setDays 3 setYears 2010) = 2010-03-03");
+	}
+
+	@Test
+	public void testTimeTextualRepresentation() {
+		MathSentence mathSentence;
+
+		mathSentence = new MathSentence("13:14:15 = 13:14:15");
+		assertThat(mathSentence.toString()).isEqualTo("13:14:15 = 13:14:15");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("13:14:15 = 13:14:15");
+
+		mathSentence = new MathSentence("(13:14:15) = 13:14:15");
+		assertThat(mathSentence.toString()).isEqualTo("(13:14:15) = 13:14:15");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("(13:14:15) = 13:14:15");
+
+		mathSentence = new MathSentence("13:14:15 setHours 3 = 13:14:15");
+		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 = 13:14:15");
+		assertThat(mathSentence.<Boolean>compute()).isFalse();
+		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 = 13:14:15");
+
+		mathSentence = new MathSentence("13:14:15 setHours 3 setSeconds 20 = 03:14:20");
+		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 setSeconds 20 = 03:14:20");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 setSeconds 20 = 03:14:20");
+
+		mathSentence = new MathSentence("(13:14:15 setHours 3 setSeconds 20) = 03:14:20");
+		assertThat(mathSentence.toString()).isEqualTo("(13:14:15 setHours 3 setSeconds 20) = 03:14:20");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("(13:14:15 setHours 3 setSeconds 20) = 03:14:20");
+	}
+
+	@Test
+	public void testDateTimeTextualRepresentation() {
+		MathSentence mathSentence;
+
+		mathSentence = new MathSentence("2000-03-05T13:14:15 = 2000-03-05T13:14:15");
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 = 2000-03-05T13:14:15");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 = 2000-03-05T13:14:15");
+
+		mathSentence = new MathSentence("(2000-03-05T13:14:15) = 2000-03-05T13:14:15");
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15) = 2000-03-05T13:14:15");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15) = 2000-03-05T13:14:15");
+
+		mathSentence = new MathSentence("2000-03-05T13:14:15 setDays 3 = 2000-03-05T13:14:15");
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 = 2000-03-05T13:14:15");
+		assertThat(mathSentence.<Boolean>compute()).isFalse();
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 = 2000-03-05T13:14:15");
+
+		mathSentence = new MathSentence("2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4 = 2010-03-03T13:18:15");
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4 = 2010-03-03T13:18:15");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4 = 2010-03-03T13:18:15");
+
+		mathSentence = new MathSentence("(2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4) = 2010-03-03T13:18:15");
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4) = 2010-03-03T13:18:15");
+		assertThat(mathSentence.<Boolean>compute()).isTrue();
+		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4) = 2010-03-03T13:18:15");
 	}
 
 }

@@ -337,23 +337,47 @@ public interface MathematicalSentenceParserGrammarVisitor<T> extends ParseTreeVi
 	 */
 	T visitSequenceFunction(MathematicalSentenceParserGrammarParser.SequenceFunctionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MathematicalSentenceParserGrammarParser#dateOperation}.
+	 * Visit a parse tree produced by the {@code dateParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateOperation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDateOperation(MathematicalSentenceParserGrammarParser.DateOperationContext ctx);
+	T visitDateParenthesis(MathematicalSentenceParserGrammarParser.DateParenthesisContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MathematicalSentenceParserGrammarParser#timeOperation}.
+	 * Visit a parse tree produced by the {@code dateFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateOperation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTimeOperation(MathematicalSentenceParserGrammarParser.TimeOperationContext ctx);
+	T visitDateFunction(MathematicalSentenceParserGrammarParser.DateFunctionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * Visit a parse tree produced by the {@code timeParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#timeOperation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDateTimeOperation(MathematicalSentenceParserGrammarParser.DateTimeOperationContext ctx);
+	T visitTimeParenthesis(MathematicalSentenceParserGrammarParser.TimeParenthesisContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code timeFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#timeOperation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTimeFunction(MathematicalSentenceParserGrammarParser.TimeFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dateTimeParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDateTimeParenthesis(MathematicalSentenceParserGrammarParser.DateTimeParenthesisContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dateTimeFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDateTimeFunction(MathematicalSentenceParserGrammarParser.DateTimeFunctionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MathematicalSentenceParserGrammarParser#function}.
 	 * @param ctx the parse tree

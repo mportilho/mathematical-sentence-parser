@@ -86,12 +86,12 @@ R_UNNECESSARY : 'unnecessary';
 DATE_OPERATIONS
     : PLUS_DAYS | PLUS_MONTHS | PLUS_YEARS
     | MINUS_DAYS | MINUS_MONTHS | MINUS_YEARS
-    | WITH_DAYS | WITH_MONTHS | WITH_YEARS
+    | SET_DAYS | SET_MONTHS | SET_YEARS
 ;
 TIME_OPERATIONS
     : PLUS_HOURS | PLUS_MINUTES | PLUS_SECONDS
     | MINUS_HOURS | MINUS_MINUTES | MINUS_SECONDS
-    | WITH_HOURS | WITH_MINUTES | WITH_SECONDS
+    | SET_HOURS | SET_MINUTES | SET_SECONDS
     ;
 NOW_DATE: 'currDate' ;
 NOW_TIME: 'currTime' ;
@@ -111,12 +111,12 @@ MINUS_HOURS : 'minusHours';
 MINUS_MINUTES : 'minusMinutes';
 MINUS_SECONDS : 'minusSeconds';
 
-WITH_DAYS : 'withDays';
-WITH_MONTHS : 'withMonths';
-WITH_YEARS : 'withYears';
-WITH_HOURS : 'withHours';
-WITH_MINUTES : 'withMinutes';
-WITH_SECONDS : 'withSeconds';
+SET_DAYS : 'setDays';
+SET_MONTHS : 'setMonths';
+SET_YEARS : 'setYears';
+SET_HOURS : 'setHours';
+SET_MINUTES : 'setMinutes';
+SET_SECONDS : 'setSeconds';
 
 // Grammar Assist Tokens
 LPAREN : '(' ;
@@ -273,9 +273,20 @@ sequenceFunction
   : (SUMMATION | PRODUCT_SEQUENCE) mathExpression COMMA mathExpression RBLACKET LPAREN mathExpression RPAREN
   ;
 
-dateOperation: dateEntity (DATE_OPERATIONS mathExpression (AND DATE_OPERATIONS mathExpression)*)? ;
-timeOperation: timeEntity (TIME_OPERATIONS mathExpression (AND TIME_OPERATIONS mathExpression)*)? ;
-dateTimeOperation: dateTimeEntity ((DATE_OPERATIONS | TIME_OPERATIONS) mathExpression (AND (DATE_OPERATIONS | TIME_OPERATIONS) mathExpression)*)? ;
+dateOperation
+    : LPAREN dateOperation RPAREN # dateParenthesis
+    | dateEntity (DATE_OPERATIONS mathExpression (DATE_OPERATIONS mathExpression)*)? # dateFunction
+    ;
+
+timeOperation
+    : LPAREN timeOperation RPAREN # timeParenthesis
+    | timeEntity (TIME_OPERATIONS mathExpression (TIME_OPERATIONS mathExpression)*)? # timeFunction
+    ;
+
+dateTimeOperation
+    : LPAREN dateTimeOperation RPAREN # dateTimeParenthesis
+    | dateTimeEntity ((DATE_OPERATIONS | TIME_OPERATIONS) mathExpression ((DATE_OPERATIONS | TIME_OPERATIONS) mathExpression)*)? # dateTimeFunction
+    ;
 
 function
   : NOT? FUNCTION_PREFIX IDENTIFIER LPAREN (allEntityTypes (COMMA  allEntityTypes)*)* RPAREN

@@ -564,35 +564,77 @@ public interface MathematicalSentenceParserGrammarListener extends ParseTreeList
 	 */
 	void exitSequenceFunction(MathematicalSentenceParserGrammarParser.SequenceFunctionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MathematicalSentenceParserGrammarParser#dateOperation}.
+	 * Enter a parse tree produced by the {@code dateParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateOperation}.
 	 * @param ctx the parse tree
 	 */
-	void enterDateOperation(MathematicalSentenceParserGrammarParser.DateOperationContext ctx);
+	void enterDateParenthesis(MathematicalSentenceParserGrammarParser.DateParenthesisContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MathematicalSentenceParserGrammarParser#dateOperation}.
+	 * Exit a parse tree produced by the {@code dateParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateOperation}.
 	 * @param ctx the parse tree
 	 */
-	void exitDateOperation(MathematicalSentenceParserGrammarParser.DateOperationContext ctx);
+	void exitDateParenthesis(MathematicalSentenceParserGrammarParser.DateParenthesisContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MathematicalSentenceParserGrammarParser#timeOperation}.
+	 * Enter a parse tree produced by the {@code dateFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateOperation}.
 	 * @param ctx the parse tree
 	 */
-	void enterTimeOperation(MathematicalSentenceParserGrammarParser.TimeOperationContext ctx);
+	void enterDateFunction(MathematicalSentenceParserGrammarParser.DateFunctionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MathematicalSentenceParserGrammarParser#timeOperation}.
+	 * Exit a parse tree produced by the {@code dateFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateOperation}.
 	 * @param ctx the parse tree
 	 */
-	void exitTimeOperation(MathematicalSentenceParserGrammarParser.TimeOperationContext ctx);
+	void exitDateFunction(MathematicalSentenceParserGrammarParser.DateFunctionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * Enter a parse tree produced by the {@code timeParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#timeOperation}.
 	 * @param ctx the parse tree
 	 */
-	void enterDateTimeOperation(MathematicalSentenceParserGrammarParser.DateTimeOperationContext ctx);
+	void enterTimeParenthesis(MathematicalSentenceParserGrammarParser.TimeParenthesisContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * Exit a parse tree produced by the {@code timeParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#timeOperation}.
 	 * @param ctx the parse tree
 	 */
-	void exitDateTimeOperation(MathematicalSentenceParserGrammarParser.DateTimeOperationContext ctx);
+	void exitTimeParenthesis(MathematicalSentenceParserGrammarParser.TimeParenthesisContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code timeFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#timeOperation}.
+	 * @param ctx the parse tree
+	 */
+	void enterTimeFunction(MathematicalSentenceParserGrammarParser.TimeFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code timeFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#timeOperation}.
+	 * @param ctx the parse tree
+	 */
+	void exitTimeFunction(MathematicalSentenceParserGrammarParser.TimeFunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dateTimeParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * @param ctx the parse tree
+	 */
+	void enterDateTimeParenthesis(MathematicalSentenceParserGrammarParser.DateTimeParenthesisContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dateTimeParenthesis}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * @param ctx the parse tree
+	 */
+	void exitDateTimeParenthesis(MathematicalSentenceParserGrammarParser.DateTimeParenthesisContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dateTimeFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * @param ctx the parse tree
+	 */
+	void enterDateTimeFunction(MathematicalSentenceParserGrammarParser.DateTimeFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dateTimeFunction}
+	 * labeled alternative in {@link MathematicalSentenceParserGrammarParser#dateTimeOperation}.
+	 * @param ctx the parse tree
+	 */
+	void exitDateTimeFunction(MathematicalSentenceParserGrammarParser.DateTimeFunctionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MathematicalSentenceParserGrammarParser#function}.
 	 * @param ctx the parse tree

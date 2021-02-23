@@ -582,37 +582,73 @@ public class MathematicalSentenceParserGrammarBaseListener implements Mathematic
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDateOperation(MathematicalSentenceParserGrammarParser.DateOperationContext ctx) { }
+	@Override public void enterDateParenthesis(MathematicalSentenceParserGrammarParser.DateParenthesisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDateOperation(MathematicalSentenceParserGrammarParser.DateOperationContext ctx) { }
+	@Override public void exitDateParenthesis(MathematicalSentenceParserGrammarParser.DateParenthesisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTimeOperation(MathematicalSentenceParserGrammarParser.TimeOperationContext ctx) { }
+	@Override public void enterDateFunction(MathematicalSentenceParserGrammarParser.DateFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTimeOperation(MathematicalSentenceParserGrammarParser.TimeOperationContext ctx) { }
+	@Override public void exitDateFunction(MathematicalSentenceParserGrammarParser.DateFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDateTimeOperation(MathematicalSentenceParserGrammarParser.DateTimeOperationContext ctx) { }
+	@Override public void enterTimeParenthesis(MathematicalSentenceParserGrammarParser.TimeParenthesisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDateTimeOperation(MathematicalSentenceParserGrammarParser.DateTimeOperationContext ctx) { }
+	@Override public void exitTimeParenthesis(MathematicalSentenceParserGrammarParser.TimeParenthesisContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTimeFunction(MathematicalSentenceParserGrammarParser.TimeFunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTimeFunction(MathematicalSentenceParserGrammarParser.TimeFunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDateTimeParenthesis(MathematicalSentenceParserGrammarParser.DateTimeParenthesisContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDateTimeParenthesis(MathematicalSentenceParserGrammarParser.DateTimeParenthesisContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDateTimeFunction(MathematicalSentenceParserGrammarParser.DateTimeFunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDateTimeFunction(MathematicalSentenceParserGrammarParser.DateTimeFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

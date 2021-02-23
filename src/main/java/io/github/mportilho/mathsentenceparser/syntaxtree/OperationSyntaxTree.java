@@ -52,7 +52,7 @@ public class OperationSyntaxTree {
 		}
 	}
 
-	public void provideValue(String variableName, Object value) {
+	public void addVariableValue(String variableName, Object value) {
 		try {
 			if (value instanceof Integer) {
 				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(new BigDecimal((Integer) value));
