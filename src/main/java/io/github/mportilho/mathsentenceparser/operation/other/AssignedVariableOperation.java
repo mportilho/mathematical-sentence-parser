@@ -3,28 +3,26 @@ package io.github.mportilho.mathsentenceparser.operation.other;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
-public class AssignedVariableOperation extends AbstractOperation {
-
-	private String variableName;
-	private AbstractOperation assignedOperation;
+public class AssignedVariableOperation extends AbstractVariableValueOperation<AbstractOperation> {
 
 	public AssignedVariableOperation(String variableName, AbstractOperation assignedOperation) {
-		this.variableName = variableName;
-		this.assignedOperation = assignedOperation;
-		this.assignedOperation.addParent(this);
+		super(variableName);
+		this.providedValue = assignedOperation;
+		assignedOperation.addParent(this);
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return assignedOperation.evaluate(context);
+		return getProvidedValue().evaluate(context);
 	}
 
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		AssignedVariableOperation copyOperation = new AssignedVariableOperation(variableName, assignedOperation.copy(context));
-		context.getAssignedVariables().put(variableName, copyOperation);
+		AssignedVariableOperation copyOperation = new AssignedVariableOperation(getVariableName(), getProvidedValue().copy(context));
+		context.getAssignedVariables().put(getVariableName(), copyOperation);
 		return copyOperation;
 	}
 
@@ -41,14 +39,6 @@ public class AssignedVariableOperation extends AbstractOperation {
 	@Override
 	public String getOperationToken() {
 		return ":=";
-	}
-
-	public String getVariableName() {
-		return variableName;
-	}
-
-	public AbstractOperation getAssignedOperation() {
-		return assignedOperation;
 	}
 
 }

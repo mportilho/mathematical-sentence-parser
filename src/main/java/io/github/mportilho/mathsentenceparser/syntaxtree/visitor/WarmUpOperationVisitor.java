@@ -9,7 +9,6 @@ import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
 import io.github.mportilho.mathsentenceparser.operation.BaseOperation;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
-import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.FunctionOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.JsonPathOperation;
@@ -103,18 +102,12 @@ public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 	}
 
 	@Override
-	public Object visit(AssignedVariableOperation operation) {
-		Object result = operation.accept(this);
-		return isNull(result) ? null : operation.evaluate(context);
-	}
-
-	@Override
 	public Object visit(AbstractConstantValueOperation operation) {
 		return operation.evaluate(context);
 	}
 
 	@Override
-	public Object visit(AbstractVariableValueOperation operation) {
+	public Object visit(AbstractVariableValueOperation<?> operation) {
 		return operation.evaluate(context);
 	}
 

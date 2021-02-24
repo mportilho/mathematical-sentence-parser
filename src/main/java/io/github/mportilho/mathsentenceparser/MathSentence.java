@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.CharStreams;
 import io.github.mportilho.mathsentenceparser.syntaxtree.MathematicalSentenceGrammarParser;
 import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTree;
 import io.github.mportilho.mathsentenceparser.syntaxtree.function.DynamicFunction;
+import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
 public class MathSentence {
 
@@ -56,6 +57,10 @@ public class MathSentence {
 		mathSentence.mathSentenceOptions = this.mathSentenceOptions;
 		mathSentence.operationSyntaxTree = operationSyntaxTree.copy();
 		return mathSentence;
+	}
+
+	public <T> T visitOperations(OperationVisitor<T> visitor) {
+		return operationSyntaxTree.visitOperation(visitor);
 	}
 
 	@Override

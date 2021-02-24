@@ -5,10 +5,10 @@ import java.util.Set;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
-public abstract class AbstractVariableValueOperation extends AbstractOperation {
+public abstract class AbstractVariableValueOperation<V> extends AbstractOperation {
 
 	private String variableName;
-	protected Object providedValue;
+	protected V providedValue;
 
 	public AbstractVariableValueOperation(String variableName) {
 		this.variableName = variableName;
@@ -19,11 +19,11 @@ public abstract class AbstractVariableValueOperation extends AbstractOperation {
 		return "";
 	}
 
-	public void provideNewValue(Object newValue) {
+	public void provideNewValue(V newValue) {
 		provideNewValue(newValue, null);
 	}
 
-	public void provideNewValue(Object newValue, Set<Class<? extends AbstractOperation>> stopOnOperationTypes) {
+	public void provideNewValue(V newValue, Set<Class<? extends AbstractOperation>> stopOnOperationTypes) {
 		if (newValue == null) {
 			throw new IllegalArgumentException(String.format("Variable %s was provided with a null value", variableName));
 		}
@@ -47,7 +47,7 @@ public abstract class AbstractVariableValueOperation extends AbstractOperation {
 		return variableName;
 	}
 
-	public Object getProvidedValue() {
+	public V getProvidedValue() {
 		return providedValue;
 	}
 }

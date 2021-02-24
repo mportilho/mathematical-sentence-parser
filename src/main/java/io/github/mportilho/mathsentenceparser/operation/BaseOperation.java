@@ -69,7 +69,7 @@ public class BaseOperation extends AbstractOperation {
 		Set<Entry<String, AssignedVariableOperation>> entrySet = assignedVariables.entrySet();
 		for (Entry<String, AssignedVariableOperation> entry : entrySet) {
 			builder.append(entry.getValue().getVariableName()).append(' ').append(entry.getValue().getOperationToken()).append(' ');
-			entry.getValue().getAssignedOperation().generateRepresentation(builder);
+			entry.getValue().getProvidedValue().generateRepresentation(builder);
 			builder.append(';');
 			builder.append("\n");
 		}

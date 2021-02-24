@@ -32,7 +32,7 @@ public class TestAssignedVariableOperations {
 		AssignedVariableOperation copyOperation = (AssignedVariableOperation) operation.copy(new CloningContext());
 
 		assertThat(operation).isNotEqualTo(copyOperation);
-		assertThat(operation.getAssignedOperation()).isNotEqualTo(copyOperation.getAssignedOperation());
+		assertThat(operation.getProvidedValue()).isNotEqualTo(copyOperation.getProvidedValue());
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo("2");
 		assertThat(copyOperation.<BigDecimal>evaluate(context)).isEqualByComparingTo("2");
 		assertThat(operation.getVariableName()).isEqualTo("AB");
