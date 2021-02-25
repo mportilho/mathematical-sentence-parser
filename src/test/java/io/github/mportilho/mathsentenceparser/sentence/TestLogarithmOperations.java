@@ -25,15 +25,18 @@ package io.github.mportilho.mathsentenceparser.sentence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import org.junit.jupiter.api.Test;
 
 import io.github.mportilho.mathsentenceparser.MathSentence;
+import io.github.mportilho.mathsentenceparser.MathSentenceOptions;
 
 public class TestLogarithmOperations {
 
 	public void computeMathSentence(String sentence, BigDecimal expectedValue) {
-		assertThat(new MathSentence(sentence).<BigDecimal>compute()).isEqualByComparingTo(expectedValue);
+		assertThat(new MathSentence(sentence, new MathSentenceOptions(MathContext.DECIMAL64, 8)).<BigDecimal>compute())
+				.isEqualByComparingTo(expectedValue);
 	}
 
 	@Test

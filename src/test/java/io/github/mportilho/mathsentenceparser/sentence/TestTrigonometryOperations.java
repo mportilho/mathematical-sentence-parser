@@ -25,15 +25,19 @@ package io.github.mportilho.mathsentenceparser.sentence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import org.junit.jupiter.api.Test;
 
 import io.github.mportilho.mathsentenceparser.MathSentence;
+import io.github.mportilho.mathsentenceparser.MathSentenceOptions;
 
 public class TestTrigonometryOperations {
 
+	private static final MathSentenceOptions MATH_OPTION = new MathSentenceOptions(MathContext.DECIMAL64, 8);
+
 	public void computeMathSentence(String sentence, BigDecimal expectedValue) {
-		assertThat(new MathSentence(sentence).<BigDecimal>compute()).isEqualByComparingTo(expectedValue);
+		assertThat(new MathSentence(sentence, MATH_OPTION).<BigDecimal>compute()).isEqualByComparingTo(expectedValue);
 	}
 
 	@Test
@@ -42,8 +46,8 @@ public class TestTrigonometryOperations {
 		computeMathSentence("1°", new BigDecimal("0.01745329"));
 		computeMathSentence("90°", new BigDecimal("1.57079633"));
 		computeMathSentence("135°", new BigDecimal("2.35619449"));
-		computeMathSentence("180°", new MathSentence("pi").compute());
-		computeMathSentence("360°", new MathSentence("2pi").compute());
+		computeMathSentence("180°", new MathSentence("pi", MATH_OPTION).compute());
+		computeMathSentence("360°", new MathSentence("2pi", MATH_OPTION).compute());
 	}
 
 	@Test

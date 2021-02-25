@@ -57,7 +57,7 @@ public class BaseOperation extends AbstractOperation {
 		}
 		if (operation != null) {
 			Object result = operation.evaluate(context);
-			if (result instanceof BigDecimal) {
+			if (context.getScale() != null && result instanceof BigDecimal) {
 				return ((BigDecimal) result).setScale(context.getScale(), context.getMathContext().getRoundingMode());
 			} else {
 				return result;

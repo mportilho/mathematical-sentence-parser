@@ -33,19 +33,17 @@ import io.github.mportilho.mathsentenceparser.MathSentenceOptions;
 public class OperationContext {
 
 	private final MathContext mathContext;
-	private final int scale;
+	private final Integer scale;
 
 	private boolean allowingNull;
 	private LocalDateTime currentDateTime;
 	private Map<String, Function<Object[], Object>> externalFunctions;
 
 	public OperationContext() {
-		this.mathContext = MathSentenceOptions.DEFAULT_MATH_CONTEXT;
-		this.scale = MathSentenceOptions.DEFAULT_SCALE;
-		this.allowingNull = false;
+		this(MathSentenceOptions.DEFAULT_MATH_CONTEXT, null, false);
 	}
 
-	public OperationContext(MathContext mathContext, int scale, boolean allowingNull) {
+	public OperationContext(MathContext mathContext, Integer scale, boolean allowingNull) {
 		this.mathContext = mathContext;
 		this.scale = scale;
 		this.allowingNull = allowingNull;
@@ -61,7 +59,7 @@ public class OperationContext {
 		return mathContext;
 	}
 
-	public int getScale() {
+	public Integer getScale() {
 		return scale;
 	}
 

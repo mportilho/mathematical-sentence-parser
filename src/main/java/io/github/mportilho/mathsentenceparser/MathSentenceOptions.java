@@ -30,21 +30,21 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.parser.OperationSyntaxT
 public class MathSentenceOptions {
 
 	public static final MathContext DEFAULT_MATH_CONTEXT = MathContext.DECIMAL64;
-	public static final int DEFAULT_SCALE = 8;
+//	public static final int DEFAULT_SCALE = 8;
 
 	private final MathContext mathContext;
-	private final int scale;
+	private final Integer scale;
 	private final OperationSyntaxTreeGenerator operationSyntaxTreeGenerator;
 
 	public MathSentenceOptions() {
-		this(DEFAULT_MATH_CONTEXT, DEFAULT_SCALE, null);
+		this(DEFAULT_MATH_CONTEXT, null, null);
 	}
 
-	public MathSentenceOptions(MathContext mathContext, int scale) {
+	public MathSentenceOptions(MathContext mathContext, Integer scale) {
 		this(mathContext, scale, null);
 	}
 
-	public MathSentenceOptions(MathContext mathContext, int scale, OperationSyntaxTreeGenerator operationSyntaxTreeGenerator) {
+	public MathSentenceOptions(MathContext mathContext, Integer scale, OperationSyntaxTreeGenerator operationSyntaxTreeGenerator) {
 		this.mathContext = mathContext;
 		this.scale = scale;
 		this.operationSyntaxTreeGenerator = operationSyntaxTreeGenerator != null ? operationSyntaxTreeGenerator
@@ -55,7 +55,7 @@ public class MathSentenceOptions {
 		return mathContext;
 	}
 
-	public int getScale() {
+	public Integer getScale() {
 		return scale;
 	}
 
