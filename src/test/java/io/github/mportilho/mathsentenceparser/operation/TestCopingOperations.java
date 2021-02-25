@@ -25,7 +25,7 @@ import io.github.mportilho.mathsentenceparser.operation.value.constant.DateConst
 import io.github.mportilho.mathsentenceparser.operation.value.constant.DateTimeConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNumberConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.TimeConstantValueOperation;
-import io.github.mportilho.mathsentenceparser.operation.value.variable.ProvidedVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.VariableValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
 
 public class TestCopingOperations {
@@ -134,24 +134,24 @@ public class TestCopingOperations {
 	public void testCopingProvidedVariableValueOperations() throws Throwable {
 		OperationContext context = new OperationContext();
 		context.setAllowingNull(true);
-		ProvidedVariableValueOperation operation;
-		ProvidedVariableValueOperation copy;
+		VariableValueOperation operation;
+		VariableValueOperation copy;
 
-		operation = new ProvidedVariableValueOperation("A");
-		copy = (ProvidedVariableValueOperation) operation.copy(new CloningContext());
+		operation = new VariableValueOperation("A");
+		copy = (VariableValueOperation) operation.copy(new CloningContext());
 		assertThat(copy).isNotEqualTo(operation);
 		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
 		assertThat(operation.<Object>evaluate(context)).isNull();
 		assertThat(copy.<Object>evaluate(context)).isNull();
 
-		operation.provideNewValue(3);
+		operation.setValue(3);
 		assertThat(copy).isNotEqualTo(operation);
 		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
 		assertThat(operation.<Object>evaluate(context)).isNotNull().isEqualTo(3);
 		assertThat(copy.<Object>evaluate(context)).isNull();
 
-		operation.provideNewValue(4);
-		copy = (ProvidedVariableValueOperation) operation.copy(new CloningContext());
+		operation.setValue(4);
+		copy = (VariableValueOperation) operation.copy(new CloningContext());
 		assertThat(copy).isNotEqualTo(operation);
 		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
 		assertThat(operation.<Object>evaluate(context)).isNotNull().isEqualTo(4);
@@ -172,13 +172,13 @@ public class TestCopingOperations {
 		assertThat(operation.<Object>evaluate(context)).isNull();
 		assertThat(copy.<Object>evaluate(context)).isNull();
 
-		operation.provideNewValue(3);
+		operation.setValue(3);
 		assertThat(copy).isNotEqualTo(operation);
 		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());
 		assertThat(operation.<Object>evaluate(context)).isNotNull().isEqualTo(3);
 		assertThat(copy.<Object>evaluate(context)).isNull();
 
-		operation.provideNewValue(4);
+		operation.setValue(4);
 		copy = (SequenceVariableValueOperation) operation.copy(new CloningContext());
 		assertThat(copy).isNotEqualTo(operation);
 		assertThat(copy.getVariableName()).isEqualTo(operation.getVariableName());

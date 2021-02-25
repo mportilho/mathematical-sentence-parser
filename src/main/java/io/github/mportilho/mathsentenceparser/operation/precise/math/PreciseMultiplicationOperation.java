@@ -45,8 +45,6 @@ public class PreciseMultiplicationOperation extends AbstractBinaryOperation {
 	@Override
 	public void composeTextualRepresentation(StringBuilder builder) {
 		if (implicit) {
-			boolean hasCache = getRightOperand().getCache() != null;
-
 			boolean isVariableWithCache = AbstractVariableValueOperation.class.isAssignableFrom(getRightOperand().getClass())
 					&& getRightOperand().getCache() != null;
 			boolean isOperationNotApplyingParenthesis = !AbstractVariableValueOperation.class.isAssignableFrom(getRightOperand().getClass())

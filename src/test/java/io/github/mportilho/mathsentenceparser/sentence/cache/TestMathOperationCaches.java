@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.syntaxtree;
+package io.github.mportilho.mathsentenceparser.sentence.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

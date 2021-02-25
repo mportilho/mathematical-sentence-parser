@@ -89,7 +89,7 @@ import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNu
 import io.github.mportilho.mathsentenceparser.operation.value.constant.StringConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.TimeConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
-import io.github.mportilho.mathsentenceparser.operation.value.variable.ProvidedVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.VariableValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
 import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTree;
 import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTreeContext;
@@ -811,7 +811,7 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 			return createNewVariable(ctx);
 		} else if (nonNull(ctx.NEGATIVE_IDENTIFIER())) {
 			return new PreciseNegativeOperation(
-					createNewVariable(ctx, name -> new ProvidedVariableValueOperation(name), () -> ctx.getText().substring(1)));
+					createNewVariable(ctx, name -> new VariableValueOperation(name), () -> ctx.getText().substring(1)));
 		}
 		throw new IllegalStateException("Invalid numeric operation: " + ctx.getText());
 	}
@@ -1062,7 +1062,7 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	private AbstractOperation createNewVariable(ParserRuleContext context) {
-		return createNewVariable(context, name -> new ProvidedVariableValueOperation(name), null);
+		return createNewVariable(context, name -> new VariableValueOperation(name), null);
 	}
 
 	private AbstractOperation createNewVariable(ParserRuleContext context, Function<String, AbstractVariableValueOperation> supplier,
@@ -1080,7 +1080,7 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 
 		boolean containsAssignedVariable = this.parserContext.getAssignedVariables() != null
 				&& this.parserContext.getAssignedVariables().containsKey(name);
-		boolean containsVariable = this.parserContext.getProvidedVariables() != null && this.parserContext.getProvidedVariables().containsKey(name);
+		boolean containsVariable = this.parserContext.getVariables() != null && this.parserContext.getVariables().containsKey(name);
 		if (containsAssignedVariable && containsVariable) {
 			throw new IllegalStateException(String.format("Duplicate variables named '%s' on current sentence", name));
 		}
@@ -1093,10 +1093,10 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 			}
 			return valueOperation;
 		} else {
-			if (!this.parserContext.getProvidedVariables().containsKey(name)) {
-				this.parserContext.getProvidedVariables().put(name, supplier.apply(name));
+			if (!this.parserContext.getVariables().containsKey(name)) {
+				this.parserContext.getVariables().put(name, supplier.apply(name));
 			}
-			return this.parserContext.getProvidedVariables().get(name);
+			return this.parserContext.getVariables().get(name);
 		}
 	}
 

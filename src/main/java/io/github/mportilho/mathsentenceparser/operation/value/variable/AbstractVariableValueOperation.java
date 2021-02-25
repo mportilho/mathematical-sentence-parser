@@ -5,10 +5,10 @@ import java.util.Set;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
-public abstract class AbstractVariableValueOperation<V> extends AbstractOperation {
+public abstract class AbstractVariableValueOperation extends AbstractOperation {
 
 	private String variableName;
-	protected V providedValue;
+	protected Object value;
 
 	public AbstractVariableValueOperation(String variableName) {
 		this.variableName = variableName;
@@ -19,21 +19,21 @@ public abstract class AbstractVariableValueOperation<V> extends AbstractOperatio
 		return "";
 	}
 
-	public void provideNewValue(V newValue) {
-		provideNewValue(newValue, null);
+	public void setValue(Object newValue) {
+		setValue(newValue, null);
 	}
 
-	public void provideNewValue(V newValue, Set<Class<? extends AbstractOperation>> stopOnOperationTypes) {
+	public void setValue(Object newValue, Set<Class<? extends AbstractOperation>> stopOnOperationTypes) {
 		if (newValue == null) {
 			throw new IllegalArgumentException(String.format("Variable %s was provided with a null value", variableName));
 		}
 		clearCache(stopOnOperationTypes);
-		this.providedValue = newValue;
+		this.value = newValue;
 	}
 
 	@Override
 	protected void composeTextualRepresentation(StringBuilder builder) {
-		Object value = getCache() != null ? getCache() : getProvidedValue();
+		Object value = getCache() != null ? getCache() : getValue();
 		value = value != null ? value : getVariableName();
 		builder.append(value);
 	}
@@ -47,7 +47,7 @@ public abstract class AbstractVariableValueOperation<V> extends AbstractOperatio
 		return variableName;
 	}
 
-	public V getProvidedValue() {
-		return providedValue;
+	public Object getValue() {
+		return value;
 	}
 }

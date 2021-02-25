@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.syntaxtree;
+package io.github.mportilho.mathsentenceparser.sentence.cache;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
 
 public class CacheCheckVisitor implements OperationVisitor<Integer> {
 
-	private Set<AbstractVariableValueOperation<?>> visitedVariables = new HashSet<>();
+	private Set<AbstractVariableValueOperation> visitedVariables = new HashSet<>();
 
 	public CacheCheckVisitor reset() {
 		visitedVariables = new HashSet<>();
@@ -118,15 +118,15 @@ public class CacheCheckVisitor implements OperationVisitor<Integer> {
 	}
 
 	@Override
-	public Integer visit(AbstractVariableValueOperation<?> operation) {
+	public Integer visit(AbstractVariableValueOperation operation) {
 		// don't revisit same variables
 		if (visitedVariables.contains(operation)) {
 			return 0;
 		} else {
 			Integer numberOfCaches = checkCache(operation);
 			visitedVariables.add(operation);
-			if (operation.getProvidedValue() instanceof AbstractOperation) {
-				numberOfCaches += ((AbstractOperation) operation.getProvidedValue()).accept(this);
+			if (operation.getValue() instanceof AbstractOperation) {
+				numberOfCaches += ((AbstractOperation) operation.getValue()).accept(this);
 			}
 			return numberOfCaches;
 		}

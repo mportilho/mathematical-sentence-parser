@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser;
+package io.github.mportilho.mathsentenceparser.sentence;
 
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
+
+import io.github.mportilho.mathsentenceparser.MathSentence;
 
 public class TestAssignedVariableOperations {
 

@@ -48,11 +48,11 @@ public abstract class AbstractOperation {
 
 	public final AbstractOperation copy(CloningContext cloningContext) throws Throwable {
 		AbstractOperation copy = null;
-		if (!cloningContext.getClonedOperationMap().keySet().contains(this)) {
+		if (cloningContext.getClonedOperationMap().keySet().contains(this)) {
+			copy = cloningContext.getClonedOperationMap().get(this);
+		} else {
 			copy = createClone(cloningContext).copyAtributes(this);
 			cloningContext.getClonedOperationMap().put(this, copy);
-		} else {
-			copy = cloningContext.getClonedOperationMap().get(this);
 		}
 		return copy;
 	}
@@ -73,6 +73,12 @@ public abstract class AbstractOperation {
 			throw new IllegalStateException(e.getMessage(), e.getCause());
 		} catch (IllegalArgumentException | IllegalStateException e) {
 			throw e;
+//		} catch (NullPointerException e) {
+//			if (context.isAllowingNull()) {
+//				return null;
+//			} else {
+//				throw e;
+//			}
 		} catch (Exception e) {
 			throw new IllegalStateException(String.format("Error during calculation of expression %s", toString()), e);
 		}
@@ -124,7 +130,7 @@ public abstract class AbstractOperation {
 	public void applyingParenthesis() {
 		this.applyingParenthesis = true;
 	}
-	
+
 	public void addParent(AbstractOperation operation) {
 		if (operation == null) {
 			return;

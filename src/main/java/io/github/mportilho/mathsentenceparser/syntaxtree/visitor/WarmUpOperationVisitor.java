@@ -32,7 +32,11 @@ public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 				abstractoperation.accept(this);
 			}
 		}
-		return operation.evaluate(context);
+		if (operation.getOperation() != null) {
+			Object object = operation.getOperation().accept(this);
+			return object != null ? operation.evaluate(context) : null;
+		}
+		return null;
 	}
 
 	@Override
@@ -87,18 +91,26 @@ public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 
 	@Override
 	public Object visit(PreciseSummationOperation operation) {
-		Object startIndexResult = operation.getStartIndex().accept(this);
-		Object endIndexResult = operation.getEndIndex().accept(this);
-		Object result = operation.getOperation().accept(this);
-		return (isNull(startIndexResult) || isNull(endIndexResult) || isNull(result)) ? null : operation.evaluate(context);
+		operation.getStartIndex().accept(this);
+		operation.getEndIndex().accept(this);
+		operation.getOperation().accept(this);
+		try {
+			return operation.evaluate(context);
+		} catch (NullPointerException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public Object visit(PreciseProductOfSequenceOperation operation) {
-		Object startIndexResult = operation.getStartIndex().accept(this);
-		Object endIndexResult = operation.getEndIndex().accept(this);
-		Object result = operation.getOperation().accept(this);
-		return (isNull(startIndexResult) || isNull(endIndexResult) || isNull(result)) ? null : operation.evaluate(context);
+		operation.getStartIndex().accept(this);
+		operation.getEndIndex().accept(this);
+		operation.getOperation().accept(this);
+		try {
+			return operation.evaluate(context);
+		} catch (NullPointerException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -107,7 +119,7 @@ public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 	}
 
 	@Override
-	public Object visit(AbstractVariableValueOperation<?> operation) {
+	public Object visit(AbstractVariableValueOperation operation) {
 		return operation.evaluate(context);
 	}
 

@@ -1,10 +1,12 @@
-package io.github.mportilho.mathsentenceparser;
+package io.github.mportilho.mathsentenceparser.sentence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class TestLogicSentence {
+import io.github.mportilho.mathsentenceparser.MathSentence;
+
+public class TestLogicOperations {
 
 	public void computeLogicSentence(String sentence, Boolean expectedValue) {
 		assertThat(new MathSentence(sentence).<Boolean>compute()).isEqualTo(expectedValue);
@@ -38,7 +40,7 @@ public class TestLogicSentence {
 	@Test
 	public void testGreaterOrEqualsOperation() {
 		computeLogicSentence("3 >= 3", Boolean.TRUE);
-		computeLogicSentence("3 >= 3", Boolean.TRUE);
+		computeLogicSentence("-3 >= 3", Boolean.FALSE);
 		computeLogicSentence("2 >= 3", Boolean.FALSE);
 
 		computeLogicSentence("'teste' >= 'teste'", Boolean.TRUE);

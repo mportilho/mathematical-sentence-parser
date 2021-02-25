@@ -42,29 +42,29 @@ public class OperationSyntaxTree {
 		return operation.evaluate(operationContext);
 	}
 
-	public void warmUp(OperationContext context) {
-		boolean originalAllowingNull = context.isAllowingNull();
+	public void warmUp() {
+		boolean originalAllowingNull = operationContext.isAllowingNull();
 		try {
-			context.setAllowingNull(true);
-			visitOperation(new WarmUpOperationVisitor(context));
+			operationContext.setAllowingNull(true);
+			visitOperation(new WarmUpOperationVisitor(operationContext));
 		} finally {
-			context.setAllowingNull(originalAllowingNull);
+			operationContext.setAllowingNull(originalAllowingNull);
 		}
 	}
 
 	public void addVariableValue(String variableName, Object value) {
 		try {
 			if (value instanceof Integer) {
-				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(new BigDecimal((Integer) value));
+				syntaxTreeContext.getVariables().get(variableName).setValue(new BigDecimal((Integer) value));
 			} else if (value instanceof Long) {
-				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(BigDecimal.valueOf((Long) value));
+				syntaxTreeContext.getVariables().get(variableName).setValue(BigDecimal.valueOf((Long) value));
 			} else if (value instanceof Number && !(value instanceof BigDecimal)) {
-				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(new BigDecimal(value.toString()));
+				syntaxTreeContext.getVariables().get(variableName).setValue(new BigDecimal(value.toString()));
 			} else if (value instanceof Date) {
-				syntaxTreeContext.getProvidedVariables().get(variableName)
-						.provideNewValue(LocalDateTime.ofInstant(((Date) value).toInstant(), ZoneId.systemDefault()));
+				syntaxTreeContext.getVariables().get(variableName)
+						.setValue(LocalDateTime.ofInstant(((Date) value).toInstant(), ZoneId.systemDefault()));
 			} else {
-				syntaxTreeContext.getProvidedVariables().get(variableName).provideNewValue(value);
+				syntaxTreeContext.getVariables().get(variableName).setValue(value);
 			}
 		} catch (NullPointerException e) {
 			throw new IllegalArgumentException(
@@ -76,7 +76,7 @@ public class OperationSyntaxTree {
 		CloningContext cloningContext = new CloningContext();
 		try {
 			AbstractOperation copy = operation.copy(cloningContext);
-			OperationSyntaxTreeContext grammarBaseVisitorContext = new OperationSyntaxTreeContext(cloningContext.getProvidedVariables(),
+			OperationSyntaxTreeContext grammarBaseVisitorContext = new OperationSyntaxTreeContext(cloningContext.getVariables(),
 					cloningContext.getAssignedVariables());
 			OperationSyntaxTree syntaxTree = new OperationSyntaxTree(copy, grammarBaseVisitorContext);
 			syntaxTree.operationContext = this.operationContext;

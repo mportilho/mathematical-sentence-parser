@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 
-public class TestBasicOperations {
+public class TestBasicMathOperations {
 
 	OperationContext context = new OperationContext();
 

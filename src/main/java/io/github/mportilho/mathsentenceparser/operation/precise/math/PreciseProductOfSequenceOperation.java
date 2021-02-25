@@ -38,7 +38,7 @@ public class PreciseProductOfSequenceOperation extends AbstractOperation {
 		BigDecimal result = BigDecimal.ONE;
 		for (int i = startIndexResult; i <= endIndexResult; i++) {
 			if (this.sequenceVariable != null) {
-				this.sequenceVariable.provideNewValue(BigDecimal.valueOf(i));
+				this.sequenceVariable.setValue(BigDecimal.valueOf(i));
 			}
 			result = result.multiply(operation.evaluate(context));
 		}

@@ -1,8 +1,10 @@
-package io.github.mportilho.mathsentenceparser;
+package io.github.mportilho.mathsentenceparser.sentence.text;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+
+import io.github.mportilho.mathsentenceparser.MathSentence;
 
 public class TestMathTextualRepresentation {
 

@@ -23,17 +23,17 @@ public class SequenceVariableValueOperation extends AbstractVariableValueOperati
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
 		SequenceVariableValueOperation operation = new SequenceVariableValueOperation(getVariableName());
-		operation.providedValue = this.providedValue;
+		operation.value = this.value;
 		return operation;
 	}
 
-	public void provideSequenceIndex(BigDecimal newValue) {
-		super.provideNewValue(newValue, STOP_ON);
+	public void setSequenceIndex(BigDecimal newValue) {
+		super.setValue(newValue, STOP_ON);
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return getProvidedValue();
+		return getValue();
 	}
 
 	@Override

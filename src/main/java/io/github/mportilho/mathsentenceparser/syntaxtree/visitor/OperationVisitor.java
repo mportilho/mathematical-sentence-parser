@@ -34,6 +34,6 @@ public interface OperationVisitor<T> {
 
 	public T visit(AbstractConstantValueOperation operation);
 
-	public T visit(AbstractVariableValueOperation<?> operation);
+	public T visit(AbstractVariableValueOperation operation);
 
 }

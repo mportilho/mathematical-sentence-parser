@@ -33,6 +33,11 @@ public class MathSentence {
 		return (T) operationSyntaxTree.compute();
 	}
 
+	public MathSentence warmUp() {
+		operationSyntaxTree.warmUp();
+		return this;
+	}
+
 	public void addFunction(String functionName, DynamicFunction function) {
 		operationSyntaxTree.addFunction(functionName, function);
 	}

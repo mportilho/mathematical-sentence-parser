@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.operation.precise.math;
+package io.github.mportilho.mathsentenceparser.sentence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

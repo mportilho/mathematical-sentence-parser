@@ -15,27 +15,27 @@ public class TestVariableValueOperations {
 
 	@Test
 	public void testProvidedVariableValueOperations() {
-		ProvidedVariableValueOperation operation;
+		VariableValueOperation operation;
 
-		operation = new ProvidedVariableValueOperation("A");
-		operation.provideNewValue(BigDecimal.ZERO);
+		operation = new VariableValueOperation("A");
+		operation.setValue(BigDecimal.ZERO);
 		assertThat(operation.getVariableName()).isEqualTo("A");
-		assertThat(operation.getProvidedValue()).isEqualTo(BigDecimal.ZERO);
+		assertThat(operation.getValue()).isEqualTo(BigDecimal.ZERO);
 	}
 
 	@Test
 	public void testVariableValueProvider() {
-		ProvidedVariableValueOperation operation;
+		VariableValueOperation operation;
 		VariableValueProvider provider = context -> BigDecimal.ONE.add(BigDecimal.ONE);
 
-		operation = new ProvidedVariableValueOperation("B");
-		operation.provideNewValue(provider);
+		operation = new VariableValueOperation("B");
+		operation.setValue(provider);
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo(BigDecimal.valueOf(2));
 	}
 
 	@Test
 	public void testNullVariableValue() {
-		assertThatThrownBy(() -> new ProvidedVariableValueOperation("a").provideNewValue(null)).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> new VariableValueOperation("a").setValue(null)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

@@ -14,7 +14,7 @@ import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperati
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseNumberRoundingOperation.RoundingEnum;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
 
-public class TestComplexOperations {
+public class TestComplexMathOperations {
 
 	OperationContext context = new OperationContext();
 

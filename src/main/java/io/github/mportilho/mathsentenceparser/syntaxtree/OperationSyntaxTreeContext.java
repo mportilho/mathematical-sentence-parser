@@ -9,23 +9,23 @@ import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractV
 
 public class OperationSyntaxTreeContext {
 
-	private Map<String, AbstractVariableValueOperation> providedVariables;
+	private Map<String, AbstractVariableValueOperation> variables;
 	private Map<String, AssignedVariableOperation> assignedVariables;
 
 	public OperationSyntaxTreeContext() {
 	}
 
-	public OperationSyntaxTreeContext(Map<String, AbstractVariableValueOperation> providedVariables,
+	public OperationSyntaxTreeContext(Map<String, AbstractVariableValueOperation> variables,
 			Map<String, AssignedVariableOperation> assignedVariables) {
-		this.providedVariables = providedVariables;
+		this.variables = variables;
 		this.assignedVariables = assignedVariables;
 	}
 
-	public Map<String, AbstractVariableValueOperation> getProvidedVariables() {
-		if (providedVariables == null) {
-			providedVariables = new HashMap<>();
+	public Map<String, AbstractVariableValueOperation> getVariables() {
+		if (variables == null) {
+			variables = new HashMap<>();
 		}
-		return providedVariables;
+		return variables;
 	}
 
 	public Map<String, AssignedVariableOperation> getAssignedVariables() {

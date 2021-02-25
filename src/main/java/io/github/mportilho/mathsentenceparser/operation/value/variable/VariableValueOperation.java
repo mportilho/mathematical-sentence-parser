@@ -4,38 +4,39 @@ import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
-public class ProvidedVariableValueOperation extends AbstractVariableValueOperation {
+public class VariableValueOperation extends AbstractVariableValueOperation {
 
 	private VariableValueProviderContext contextSupplier;
 
-	public ProvidedVariableValueOperation(String variableName) {
+	public VariableValueOperation(String variableName) {
 		super(variableName);
 	}
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		if (getProvidedValue() instanceof VariableValueProvider) {
+		if (getValue() instanceof VariableValueProvider) {
 			if (contextSupplier == null) {
 				contextSupplier = new VariableValueProviderContext(context.getMathContext(), context.getScale(), isCaching());
 			}
-			Object result = ((VariableValueProvider) getProvidedValue()).provideValue(contextSupplier);
+			Object result = ((VariableValueProvider) getValue()).provideValue(contextSupplier);
 			if (!contextSupplier.isCaching()) {
 				caching(false);
 			}
 			return result;
 		}
-		return getProvidedValue();
+		return getValue();
 	}
 
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		ProvidedVariableValueOperation operation = new ProvidedVariableValueOperation(getVariableName());
-		operation.providedValue = this.providedValue;
+		VariableValueOperation copiedOperation = new VariableValueOperation(getVariableName());
+		copiedOperation.value = this.value;
 		if (contextSupplier != null) {
-			operation.contextSupplier = new VariableValueProviderContext(contextSupplier.getMathContext(), contextSupplier.getScale(),
+			copiedOperation.contextSupplier = new VariableValueProviderContext(contextSupplier.getMathContext(), contextSupplier.getScale(),
 					contextSupplier.isCaching());
 		}
-		return operation;
+		context.getVariables().put(getVariableName(), copiedOperation);
+		return copiedOperation;
 	}
 
 }

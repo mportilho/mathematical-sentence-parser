@@ -1,4 +1,4 @@
-package io.github.mportilho.mathsentenceparser.syntaxtree;
+package io.github.mportilho.mathsentenceparser.sentence.warmup;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,8 +6,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.github.mportilho.mathsentenceparser.MathSentence;
+import io.github.mportilho.mathsentenceparser.sentence.cache.CacheCheckVisitor;
 
-public class TestOtherOperationCaches {
+public class TestWarmedUpAssignedOperation {
 
 	private static CacheCheckVisitor cacheVisitor;
 
@@ -26,7 +27,7 @@ public class TestOtherOperationCaches {
 		MathSentence mathSentence;
 		mathSentence = new MathSentence(sb.toString());
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
-		mathSentence.compute();
+		mathSentence.warmUp();
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(7);
 	}
 
@@ -41,7 +42,7 @@ public class TestOtherOperationCaches {
 		MathSentence mathSentence;
 		mathSentence = new MathSentence(sb.toString());
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
-		mathSentence.compute();
+		mathSentence.warmUp();
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(8);
 	}
 
@@ -56,8 +57,8 @@ public class TestOtherOperationCaches {
 		MathSentence mathSentence;
 		mathSentence = new MathSentence(sb.toString());
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
-		mathSentence.compute();
-		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(7);
+		mathSentence.warmUp();
+		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(6);
 	}
 
 	@Test
@@ -71,18 +72,8 @@ public class TestOtherOperationCaches {
 		MathSentence mathSentence;
 		mathSentence = new MathSentence(sb.toString());
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
-		mathSentence.compute();
-		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(8);
-	}
-
-	@Test
-	public void testDecisionOperations() {
-		throw new IllegalArgumentException();
-	}
-
-	@Test
-	public void testFunctionOperations() {
-		throw new IllegalArgumentException();
+		mathSentence.warmUp();
+		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(7);
 	}
 
 }
