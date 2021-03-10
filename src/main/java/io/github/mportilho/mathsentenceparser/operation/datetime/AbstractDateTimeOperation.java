@@ -32,6 +32,12 @@ import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
+/**
+ * Default behavior for date/time operations
+ * 
+ * @author Marcelo Portilho
+ *
+ */
 public abstract class AbstractDateTimeOperation extends AbstractOperation {
 
 	private AbstractOperation leftOperand;

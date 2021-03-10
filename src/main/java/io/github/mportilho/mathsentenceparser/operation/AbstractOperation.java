@@ -33,6 +33,12 @@ import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractV
 import io.github.mportilho.mathsentenceparser.syntaxtree.MathSentenceComputingException;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
+/**
+ * Default behavior for all operations
+ * 
+ * @author Marcelo Portilho
+ *
+ */
 public abstract class AbstractOperation {
 
 	private Object cache;
@@ -58,6 +64,12 @@ public abstract class AbstractOperation {
 
 	protected abstract void composeTextualRepresentation(StringBuilder builder);
 
+	/**
+	 * Builds a String representation of the current operation
+	 * 
+	 * @param builder the {@link StringBuilder} object where the representation will
+	 *                be placed
+	 */
 	public final void generateRepresentation(StringBuilder builder) {
 		if (this.applyingParenthesis) {
 			builder.append('(');
@@ -68,6 +80,13 @@ public abstract class AbstractOperation {
 		}
 	}
 
+	/**
+	 * Makes a copy of the current operation, with it's properties and cache value
+	 * 
+	 * @param cloningContext a holder of the cloning operation temporary properties
+	 * @return a new copy of this object
+	 * @throws Throwable
+	 */
 	public final AbstractOperation copy(CloningContext cloningContext) throws Throwable {
 		AbstractOperation copy = null;
 		if (cloningContext.getClonedOperationMap().keySet().contains(this)) {
@@ -79,6 +98,14 @@ public abstract class AbstractOperation {
 		return copy;
 	}
 
+	/**
+	 * Evaluates the current operation for it's resulting value. If the current
+	 * operation was previously evaluated, returns it's cached value.
+	 * 
+	 * @param <T>     Dynamic return type
+	 * @param context a holder of the evaluation proccess properties
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public final <T> T evaluate(OperationContext context) {
 		Object result;
@@ -95,12 +122,6 @@ public abstract class AbstractOperation {
 			throw new IllegalStateException(e.getMessage(), e.getCause());
 		} catch (IllegalArgumentException | IllegalStateException e) {
 			throw e;
-//		} catch (NullPointerException e) {
-//			if (context.isAllowingNull()) {
-//				return null;
-//			} else {
-//				throw e;
-//			}
 		} catch (Exception e) {
 			throw new IllegalStateException(String.format("Error during calculation of expression %s", toString()), e);
 		}
@@ -149,10 +170,19 @@ public abstract class AbstractOperation {
 		return cachedCallSite;
 	}
 
+	/**
+	 * Indicates that the representation of the current operation must be wrapped by
+	 * parenthesis
+	 */
 	public void applyingParenthesis() {
 		this.applyingParenthesis = true;
 	}
 
+	/**
+	 * Adds a parent operation node for this current operation
+	 * 
+	 * @param operation the parent of this operation
+	 */
 	public void addParent(AbstractOperation operation) {
 		if (operation == null) {
 			return;
@@ -163,6 +193,11 @@ public abstract class AbstractOperation {
 		parents.add(operation);
 	}
 
+	/**
+	 * Sets the caching behavior for this operation
+	 * 
+	 * @param value a indication if the current operation must be cached
+	 */
 	public void caching(boolean value) {
 		this.caching = value;
 	}
@@ -199,10 +234,22 @@ public abstract class AbstractOperation {
 		}
 	}
 
+	/**
+	 * Retrieves the current cached value for this operation
+	 * 
+	 * @return The current cache for this operation. Returns <code>null</code> if
+	 *         the operation was not evaluated or cache is disabled
+	 */
 	public Object getCache() {
 		return cache;
 	}
 
+	/**
+	 * Verify
+	 * 
+	 * @return a indication if the current operation must have it's text
+	 *         representation wrapped by parenthesis
+	 */
 	public boolean isApplyingParenthesis() {
 		return applyingParenthesis;
 	}
