@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mportilho.mathsentenceparser.MathSentence;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class TestVariableValueOperations {
@@ -48,7 +49,7 @@ public class TestVariableValueOperations {
 	@Test
 	public void testVariableValueProvider() {
 		VariableValueOperation operation;
-		VariableValueProvider provider = context -> BigDecimal.ONE.add(BigDecimal.ONE);
+		VariableProvider provider = context -> BigDecimal.ONE.add(BigDecimal.ONE);
 
 		operation = new VariableValueOperation("B");
 		operation.setValue(provider);
@@ -58,6 +59,17 @@ public class TestVariableValueOperations {
 	@Test
 	public void testNullVariableValue() {
 		assertThatThrownBy(() -> new VariableValueOperation("a").setValue(null)).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	public void testVariableValueProviderOnExpression() {
+		MathSentence parser = new MathSentence("a * b");
+		parser.addVariable("a", 5);
+		parser.addVariableProvider("b", context -> {
+			context.caching(false);
+			return new BigDecimal(6, context.getMathContext()).setScale(context.getScale().orElse(8));
+		});
+		assertThat(parser.<BigDecimal>compute()).isEqualByComparingTo("30");
 	}
 
 }

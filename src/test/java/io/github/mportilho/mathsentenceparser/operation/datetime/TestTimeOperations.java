@@ -24,7 +24,9 @@ package io.github.mportilho.mathsentenceparser.operation.datetime;
 
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
@@ -85,6 +87,51 @@ public class TestTimeOperations {
 		operation = new TimeSubtractionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
 				DateElementEnum.SECOND);
 		assertThat(operation.<LocalTime>evaluate(context)).isEqualTo("23:55:48");
+	}
+
+	@Test
+	public void testTimeAdditionOperation_WithInvalidDateElement() {
+		TimeAdditionOperation operation1 = new TimeAdditionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.DAY);
+		assertThatThrownBy(() -> operation1.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+
+		TimeAdditionOperation operation2 = new TimeAdditionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.MONTH);
+		assertThatThrownBy(() -> operation2.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+
+		TimeAdditionOperation operation3 = new TimeAdditionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.YEAR);
+		assertThatThrownBy(() -> operation3.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+	}
+
+	@Test
+	public void testTimeSetOperation_WithInvalidDateElement() {
+		TimeSetOperation operation1 = new TimeSetOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
+				DateElementEnum.DAY);
+		assertThatThrownBy(() -> operation1.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+
+		TimeSetOperation operation2 = new TimeSetOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
+				DateElementEnum.MONTH);
+		assertThatThrownBy(() -> operation2.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+
+		TimeSetOperation operation3 = new TimeSetOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)), new GenericValueOperation(valueOf(2)),
+				DateElementEnum.YEAR);
+		assertThatThrownBy(() -> operation3.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+	}
+
+	@Test
+	public void testTimeSubtractionOperation_WithInvalidDateElement() {
+		TimeSubtractionOperation operation1 = new TimeSubtractionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.DAY);
+		assertThatThrownBy(() -> operation1.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+
+		TimeSubtractionOperation operation2 = new TimeSubtractionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.MONTH);
+		assertThatThrownBy(() -> operation2.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
+
+		TimeSubtractionOperation operation3 = new TimeSubtractionOperation(new GenericValueOperation(LocalTime.of(23, 55, 50)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.YEAR);
+		assertThatThrownBy(() -> operation3.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 	}
 
 }

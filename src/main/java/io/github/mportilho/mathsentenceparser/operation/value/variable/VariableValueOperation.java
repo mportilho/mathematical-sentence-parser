@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
+import java.util.Optional;
+
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
@@ -36,11 +38,11 @@ public class VariableValueOperation extends AbstractVariableValueOperation {
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		if (getValue() instanceof VariableValueProvider) {
+		if (getValue() instanceof VariableProvider) {
 			if (contextSupplier == null) {
-				contextSupplier = new VariableValueProviderContext(context.getMathContext(), context.getScale(), isCaching());
+				contextSupplier = new VariableValueProviderContext(context.getMathContext(), Optional.ofNullable(context.getScale()), isCaching());
 			}
-			Object result = ((VariableValueProvider) getValue()).provideValue(contextSupplier);
+			Object result = ((VariableProvider) getValue()).provideValue(contextSupplier);
 			if (!contextSupplier.isCaching()) {
 				caching(false);
 			}

@@ -24,12 +24,12 @@ package io.github.mportilho.mathsentenceparser.operation.datetime;
 
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mportilho.mathsentenceparser.MathSentence;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.impl.GenericValueOperation;
 
@@ -89,93 +89,49 @@ public class TestDateOperations {
 	}
 
 	@Test
-	public void testDateTextualRepresentation() {
-		MathSentence mathSentence;
+	public void testDateAdditionOperation_WithInvalidDateElement() {
+		DateAdditionOperation operation1 = new DateAdditionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.HOUR);
+		assertThatThrownBy(() -> operation1.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 
-		mathSentence = new MathSentence("2000-03-05 = 2000-03-05");
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 = 2000-03-05");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 = 2000-03-05");
+		DateAdditionOperation operation2 = new DateAdditionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.MINUTE);
+		assertThatThrownBy(() -> operation2.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 
-		mathSentence = new MathSentence("(2000-03-05) = 2000-03-05");
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05) = 2000-03-05");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05) = 2000-03-05");
+		DateAdditionOperation operation3 = new DateAdditionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.SECOND);
+		assertThatThrownBy(() -> operation3.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 
-		mathSentence = new MathSentence("2000-03-05 setDays 3 = 2000-03-05");
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 = 2000-03-05");
-		assertThat(mathSentence.<Boolean>compute()).isFalse();
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 = 2000-03-05");
-
-		mathSentence = new MathSentence("2000-03-05 setDays 3 setYears 2010 = 2010-03-03");
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 setYears 2010 = 2010-03-03");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05 setDays 3 setYears 2010 = 2010-03-03");
-
-		mathSentence = new MathSentence("(2000-03-05 setDays 3 setYears 2010) = 2010-03-03");
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05 setDays 3 setYears 2010) = 2010-03-03");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05 setDays 3 setYears 2010) = 2010-03-03");
 	}
 
 	@Test
-	public void testTimeTextualRepresentation() {
-		MathSentence mathSentence;
+	public void testDateSetOperation_WithInvalidDateElement() {
+		DateSetOperation operation4 = new DateSetOperation(new GenericValueOperation(LocalDate.of(2000, 3, 25)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.HOUR);
+		assertThatThrownBy(() -> operation4.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 
-		mathSentence = new MathSentence("13:14:15 = 13:14:15");
-		assertThat(mathSentence.toString()).isEqualTo("13:14:15 = 13:14:15");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("13:14:15 = 13:14:15");
+		DateSetOperation operation5 = new DateSetOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)), new GenericValueOperation(valueOf(2)),
+				DateElementEnum.MINUTE);
+		assertThatThrownBy(() -> operation5.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 
-		mathSentence = new MathSentence("(13:14:15) = 13:14:15");
-		assertThat(mathSentence.toString()).isEqualTo("(13:14:15) = 13:14:15");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("(13:14:15) = 13:14:15");
-
-		mathSentence = new MathSentence("13:14:15 setHours 3 = 13:14:15");
-		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 = 13:14:15");
-		assertThat(mathSentence.<Boolean>compute()).isFalse();
-		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 = 13:14:15");
-
-		mathSentence = new MathSentence("13:14:15 setHours 3 setSeconds 20 = 03:14:20");
-		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 setSeconds 20 = 03:14:20");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("13:14:15 setHours 3 setSeconds 20 = 03:14:20");
-
-		mathSentence = new MathSentence("(13:14:15 setHours 3 setSeconds 20) = 03:14:20");
-		assertThat(mathSentence.toString()).isEqualTo("(13:14:15 setHours 3 setSeconds 20) = 03:14:20");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("(13:14:15 setHours 3 setSeconds 20) = 03:14:20");
+		DateSetOperation operation6 = new DateSetOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)),
+				new GenericValueOperation(valueOf(2020)), DateElementEnum.SECOND);
+		assertThatThrownBy(() -> operation6.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 	}
 
 	@Test
-	public void testDateTimeTextualRepresentation() {
-		MathSentence mathSentence;
+	public void testDateSubtractionOperation_WithInvalidDateElement() {
+		DateSubtractionOperation operation7 = new DateSubtractionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.HOUR);
+		assertThatThrownBy(() -> operation7.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 
-		mathSentence = new MathSentence("2000-03-05T13:14:15 = 2000-03-05T13:14:15");
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 = 2000-03-05T13:14:15");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 = 2000-03-05T13:14:15");
+		DateSubtractionOperation operation8 = new DateSubtractionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.MINUTE);
+		assertThatThrownBy(() -> operation8.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 
-		mathSentence = new MathSentence("(2000-03-05T13:14:15) = 2000-03-05T13:14:15");
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15) = 2000-03-05T13:14:15");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15) = 2000-03-05T13:14:15");
-
-		mathSentence = new MathSentence("2000-03-05T13:14:15 setDays 3 = 2000-03-05T13:14:15");
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 = 2000-03-05T13:14:15");
-		assertThat(mathSentence.<Boolean>compute()).isFalse();
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 = 2000-03-05T13:14:15");
-
-		mathSentence = new MathSentence("2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4 = 2010-03-03T13:18:15");
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4 = 2010-03-03T13:18:15");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4 = 2010-03-03T13:18:15");
-
-		mathSentence = new MathSentence("(2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4) = 2010-03-03T13:18:15");
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4) = 2010-03-03T13:18:15");
-		assertThat(mathSentence.<Boolean>compute()).isTrue();
-		assertThat(mathSentence.toString()).isEqualTo("(2000-03-05T13:14:15 setDays 3 setYears 2010 plusMinutes 4) = 2010-03-03T13:18:15");
+		DateSubtractionOperation operation9 = new DateSubtractionOperation(new GenericValueOperation(LocalDate.of(2000, 3, 2)),
+				new GenericValueOperation(valueOf(2)), DateElementEnum.SECOND);
+		assertThatThrownBy(() -> operation9.<LocalDate>evaluate(context)).isInstanceOf(IllegalStateException.class);
 	}
 
 }

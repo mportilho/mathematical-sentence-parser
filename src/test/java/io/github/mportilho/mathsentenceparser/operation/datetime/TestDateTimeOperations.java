@@ -122,4 +122,5 @@ public class TestDateTimeOperations {
 				new GenericValueOperation(valueOf(2)), DateElementEnum.SECOND);
 		assertThat(operation.<LocalDateTime>evaluate(context)).isEqualTo("2000-03-02T23:55:48");
 	}
+
 }

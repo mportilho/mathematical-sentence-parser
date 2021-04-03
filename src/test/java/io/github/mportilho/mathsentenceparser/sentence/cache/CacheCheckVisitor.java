@@ -33,7 +33,6 @@ import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTim
 import io.github.mportilho.mathsentenceparser.operation.other.AssignedVariableOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.FunctionOperation;
-import io.github.mportilho.mathsentenceparser.operation.other.JsonPathOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseProductOfSequenceOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSummationOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.AbstractConstantValueOperation;
@@ -106,13 +105,6 @@ public class CacheCheckVisitor implements OperationVisitor<Integer> {
 		for (AbstractOperation op : operation.getParameters()) {
 			numberOfCaches += op.accept(this);
 		}
-		return numberOfCaches;
-	}
-
-	@Override
-	public Integer visit(JsonPathOperation operation) {
-		Integer numberOfCaches = checkCache(operation);
-//		numberOfCaches += operation.getOperand().accept(this);
 		return numberOfCaches;
 	}
 

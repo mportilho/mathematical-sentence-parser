@@ -20,44 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-package io.github.mportilho.mathsentenceparser.operation.other;
+package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
-import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
-import io.github.mportilho.mathsentenceparser.operation.CloningContext;
-import io.github.mportilho.mathsentenceparser.operation.OperationContext;
-import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
+public interface VariableProvider {
 
-public class JsonPathOperation extends AbstractOperation {
-
-	public JsonPathOperation() {
-	}
-
-	@Override
-	protected Object resolve(OperationContext context) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void composeTextualRepresentation(StringBuilder builder) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public <T> T accept(OperationVisitor<T> visitor) {
-		return visitor.visit(this);
-	}
-
-	@Override
-	protected String getOperationToken() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	Object provideValue(VariableValueProviderContext context);
 
 }

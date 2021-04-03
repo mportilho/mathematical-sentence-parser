@@ -23,14 +23,15 @@ SOFTWARE.*/
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
 import java.math.MathContext;
+import java.util.Optional;
 
 public class VariableValueProviderContext {
 
 	private final MathContext mathContext;
-	private final Integer scale;
+	private final Optional<Integer> scale;
 	private boolean caching;
 
-	public VariableValueProviderContext(MathContext mathContext, Integer scale, boolean caching) {
+	public VariableValueProviderContext(MathContext mathContext, Optional<Integer> scale, boolean caching) {
 		this.mathContext = mathContext;
 		this.scale = scale;
 		this.caching = caching;
@@ -40,7 +41,7 @@ public class VariableValueProviderContext {
 		return mathContext;
 	}
 
-	public Integer getScale() {
+	public Optional<Integer> getScale() {
 		return scale;
 	}
 

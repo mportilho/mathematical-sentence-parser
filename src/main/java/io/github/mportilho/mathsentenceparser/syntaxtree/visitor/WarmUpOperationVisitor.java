@@ -33,7 +33,6 @@ import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.DecisionOperation;
 import io.github.mportilho.mathsentenceparser.operation.other.FunctionOperation;
-import io.github.mportilho.mathsentenceparser.operation.other.JsonPathOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseProductOfSequenceOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseSummationOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.AbstractConstantValueOperation;
@@ -105,22 +104,11 @@ public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 	}
 
 	@Override
-	public Object visit(JsonPathOperation operation) {
-//		Object result = operation.getVariable().accept(this);
-//		return isNull(result) ? null : operation.evaluate(context);
-		return null;
-	}
-
-	@Override
 	public Object visit(PreciseSummationOperation operation) {
 		operation.getStartIndex().accept(this);
 		operation.getEndIndex().accept(this);
 		operation.getOperation().accept(this);
-		try {
-			return operation.evaluate(context);
-		} catch (NullPointerException e) {
-			return null;
-		}
+		return operation.evaluate(context);
 	}
 
 	@Override
@@ -128,11 +116,7 @@ public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 		operation.getStartIndex().accept(this);
 		operation.getEndIndex().accept(this);
 		operation.getOperation().accept(this);
-		try {
-			return operation.evaluate(context);
-		} catch (NullPointerException e) {
-			return null;
-		}
+		return operation.evaluate(context);
 	}
 
 	@Override

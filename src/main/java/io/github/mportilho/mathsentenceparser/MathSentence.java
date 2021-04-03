@@ -26,6 +26,7 @@ import java.util.Objects;
 
 import org.antlr.v4.runtime.CharStreams;
 
+import io.github.mportilho.mathsentenceparser.operation.value.variable.VariableProvider;
 import io.github.mportilho.mathsentenceparser.syntaxtree.MathematicalSentenceGrammarParser;
 import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTree;
 import io.github.mportilho.mathsentenceparser.syntaxtree.function.DynamicFunction;
@@ -69,9 +70,13 @@ public class MathSentence {
 		return this;
 	}
 
-	public MathSentence addVariableValue(String variableName, Object value) {
+	public MathSentence addVariable(String variableName, Object value) {
 		operationSyntaxTree.addVariableValue(variableName, value);
 		return this;
+	}
+
+	public MathSentence addVariableProvider(String variableName, VariableProvider provider) {
+		return addVariable(variableName, provider);
 	}
 
 	@SuppressWarnings("unchecked")
