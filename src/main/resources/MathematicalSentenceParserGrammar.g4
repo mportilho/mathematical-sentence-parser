@@ -153,6 +153,7 @@ PERIOD : '.';
 CONTAINS: 'contains' ;
 JSON_PATH:  '$.' RawTextNoWhiteSpace;
 FUNCTION_PREFIX: 'f.' ;
+NO_CACHE_FUNCTION_PREFIX: 'f0.' ;
 
 // DECIMAL, IDENTIFIER, and OTHER TYPES
 IDENTIFIER : IdentifierText ;
@@ -311,7 +312,7 @@ dateTimeOperation
     ;
 
 function
-  : NOT? FUNCTION_PREFIX IDENTIFIER LPAREN (allEntityTypes (COMMA  allEntityTypes)*)* RPAREN
+  : (FUNCTION_PREFIX | NO_CACHE_FUNCTION_PREFIX) IDENTIFIER LPAREN (allEntityTypes (COMMA  allEntityTypes)*)* RPAREN
   ;
 
 listFunction
