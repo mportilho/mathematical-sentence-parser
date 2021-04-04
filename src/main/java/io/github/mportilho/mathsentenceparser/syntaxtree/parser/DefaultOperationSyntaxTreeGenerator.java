@@ -32,13 +32,97 @@ import java.util.function.Supplier;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.RuleNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarBaseVisitor;
 import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarLexer;
-import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.*;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.AllEntityTypesContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ArccosineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ArcsineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.Arctangent2ExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ArctangentExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.AssignOperationContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.AssignmentExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ComparisonMathExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.CosineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateCurrentValueContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateDecisionExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateFunctionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateFunctionResultContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateOperationContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateParenthesisContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeCurrentValueContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeDecisionExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeFunctionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeFunctionResultContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeOperationContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeParenthesisContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateTimeVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DateVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.DegreeExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.EulerConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ExponentiationExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.FactorialExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.FixedLogarithmContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.FunctionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.HyperbolicCosineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.HyperbolicSineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.HyperbolicTangentExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ImplicitMultiplicationExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.InverseHyperbolicCosineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.InverseHyperbolicSineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.InverseHyperbolicTangentExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicalConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicalDecisionExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicalExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicalFunctionResultContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicalParenthesisContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicalStartContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.LogicalVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.MathDecisionExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.MathExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.MathParenthesisContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.MathStartContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ModulusExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.MultiplicationExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.NegateMathParenthesisContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.NotExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.NumericConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.NumericFunctionResultContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.NumericVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.PercentExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.PiConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.ProductSequenceVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.RootExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.RoundingFunctionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.SequenceExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.SequenceFunctionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.SineExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.SquareRootExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.StartContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.StringConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.StringDecisionExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.StringEntityContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.StringExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.StringFunctionResultContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.StringVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.SumExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.SummationVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TangentExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeConstantContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeCurrentValueContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeDecisionExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeExpressionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeFunctionContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeFunctionResultContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeOperationContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeParenthesisContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.TimeVariableContext;
+import io.github.mportilho.mathsentenceparser.grammar.MathematicalSentenceParserGrammarParser.VariableLogarithmContext;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.BaseOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateAdditionOperation;
@@ -111,8 +195,8 @@ import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNu
 import io.github.mportilho.mathsentenceparser.operation.value.constant.StringConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.TimeConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
-import io.github.mportilho.mathsentenceparser.operation.value.variable.VariableValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.VariableValueOperation;
 import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTree;
 import io.github.mportilho.mathsentenceparser.syntaxtree.OperationSyntaxTreeContext;
 
@@ -130,40 +214,12 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	@Override
 	public OperationSyntaxTree createOperationSyntaxTree(StartContext startContext) {
 		OperationSyntaxTree syntaxTree = new OperationSyntaxTree(visit(startContext), parserContext);
-//		if (functionOperations != null) {
-//			for (int i = 0; i < functionOperations.size(); i++) {
-//				FunctionOperation functionOperation = functionOperations.get(i);
-//				if (functionOperation.isNoCache()) {
-//					functionOperation.caching(false);
-//				}
-//			}
-//		}
 		return syntaxTree;
-	}
-
-	@Override
-	public AbstractOperation visit(ParseTree tree) {
-		return super.visit(tree);
-	}
-
-	@Override
-	public AbstractOperation visitChildren(RuleNode node) {
-		return super.visitChildren(node);
-	}
-
-	@Override
-	public AbstractOperation visitTerminal(TerminalNode node) {
-		return super.visitTerminal(node);
 	}
 
 	@Override
 	public AbstractOperation visitErrorNode(ErrorNode node) {
 		return super.visitErrorNode(node);
-	}
-
-	@Override
-	public AbstractOperation visitStart(StartContext ctx) {
-		return super.visitStart(ctx);
 	}
 
 	@Override
@@ -229,11 +285,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitLogicalValue(LogicalValueContext ctx) {
-		return super.visitLogicalValue(ctx);
-	}
-
-	@Override
 	public AbstractOperation visitLogicExpression(LogicExpressionContext ctx) {
 		if (nonNull(ctx.logicalOperator().AND())) {
 			return new AndOperation(ctx.logicalExpression(0).accept(this), ctx.logicalExpression(1).accept(this));
@@ -276,11 +327,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	@Override
 	public AbstractOperation visitNotExpression(NotExpressionContext ctx) {
 		return new NegationOperation(ctx.logicalExpression().accept(this));
-	}
-
-	@Override
-	public AbstractOperation visitListExpression(ListExpressionContext ctx) {
-		return super.visitListExpression(ctx);
 	}
 
 	@Override
@@ -382,16 +428,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitRoundingExpression(RoundingExpressionContext ctx) {
-		return super.visitRoundingExpression(ctx);
-	}
-
-	@Override
-	public AbstractOperation visitNumberValue(NumberValueContext ctx) {
-		return super.visitNumberValue(ctx);
-	}
-
-	@Override
 	public AbstractOperation visitHyperbolicTangentExpression(HyperbolicTangentExpressionContext ctx) {
 		return new HyperbolicTangentOperation(ctx.mathExpression().accept(this));
 	}
@@ -444,11 +480,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	@Override
 	public AbstractOperation visitPercentExpression(PercentExpressionContext ctx) {
 		return new PrecisePercentualOperation(ctx.mathExpression().accept(this));
-	}
-
-	@Override
-	public AbstractOperation visitLogarithmExpression(LogarithmExpressionContext ctx) {
-		return super.visitLogarithmExpression(ctx);
 	}
 
 	@Override
@@ -707,30 +738,9 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 		for (AllEntityTypesContext entityType : ctx.allEntityTypes()) {
 			parameters.add(entityType.accept(this));
 		}
-		FunctionOperation functionOperation = new FunctionOperation(ctx.IDENTIFIER().getText(), parameters, ctx.NOT() == null);
+		FunctionOperation functionOperation = new FunctionOperation(ctx.IDENTIFIER().getText(), parameters, ctx.NO_CACHE_FUNCTION_PREFIX() == null);
 		functionOperations.add(functionOperation);
 		return functionOperation;
-	}
-
-	@Override
-	public AbstractOperation visitListContainsOperation(ListContainsOperationContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitComparisonOperator(ComparisonOperatorContext ctx) {
-		return super.visitComparisonOperator(ctx);
-	}
-
-	@Override
-	public AbstractOperation visitLogicalOperator(LogicalOperatorContext ctx) {
-		return super.visitLogicalOperator(ctx);
-	}
-
-	@Override
-	public AbstractOperation visitAllEntityTypes(AllEntityTypesContext ctx) {
-		return super.visitAllEntityTypes(ctx);
 	}
 
 	@Override
@@ -749,12 +759,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 		}
 		operations.add(logicalExpressions.get(logicalExpressions.size() - 1).accept(this));
 		return new DecisionOperation(operations);
-	}
-
-	@Override
-	public AbstractOperation visitLogicalJsonPath(LogicalJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -817,12 +821,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitNumericJsonPath(NumericJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public AbstractOperation visitNumericFunctionResult(NumericFunctionResultContext ctx) {
 		return ctx.function().accept(this);
 	}
@@ -832,8 +830,7 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 		if (nonNull(ctx.IDENTIFIER())) {
 			return createNewVariable(ctx);
 		} else if (nonNull(ctx.NEGATIVE_IDENTIFIER())) {
-			return new PreciseNegativeOperation(
-					createNewVariable(ctx, name -> new VariableValueOperation(name), () -> ctx.getText().substring(1)));
+			return new PreciseNegativeOperation(createNewVariable(ctx, name -> new VariableValueOperation(name), () -> ctx.getText().substring(1)));
 		}
 		throw new IllegalStateException("Invalid numeric operation: " + ctx.getText());
 	}
@@ -855,12 +852,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	@Override
 	public AbstractOperation visitStringConstant(StringConstantContext ctx) {
 		return new StringConstantValueOperation(ctx.getText().substring(1, ctx.getText().length() - 1));
-	}
-
-	@Override
-	public AbstractOperation visitStringJsonPath(StringJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -908,12 +899,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitDateJsonPath(DateJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public AbstractOperation visitTimeDecisionExpression(TimeDecisionExpressionContext ctx) {
 		List<AbstractOperation> operations = new ArrayList<>();
 		List<LogicalExpressionContext> logicalExpressions = ctx.logicalExpression();
@@ -948,12 +933,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	}
 
 	@Override
-	public AbstractOperation visitTimeJsonPath(TimeJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public AbstractOperation visitDateTimeDecisionExpression(DateTimeDecisionExpressionContext ctx) {
 		List<AbstractOperation> operations = new ArrayList<>();
 		List<LogicalExpressionContext> logicalExpressions = ctx.logicalExpression();
@@ -985,102 +964,6 @@ public class DefaultOperationSyntaxTreeGenerator extends MathematicalSentencePar
 	@Override
 	public AbstractOperation visitDateTimeFunctionResult(DateTimeFunctionResultContext ctx) {
 		return ctx.function().accept(this);
-	}
-
-	@Override
-	public AbstractOperation visitDateTimeJsonPath(DateTimeJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitJsonPathDecisionExpression(JsonPathDecisionExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitJsonPathValue(JsonPathValueContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListDecisionExpression(ListDecisionExpressionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfNumbers(ListOfNumbersContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfBooleans(ListOfBooleansContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfStrings(ListOfStringsContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfDates(ListOfDatesContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfTimes(ListOfTimesContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfDateTimes(ListOfDateTimesContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfVariables(ListOfVariablesContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfJsonPath(ListOfJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListOfFunctionResult(ListOfFunctionResultContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListFromFunction(ListFromFunctionContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListFromJsonPath(ListFromJsonPathContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractOperation visitListVariable(ListVariableContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private AbstractOperation createNewVariable(ParserRuleContext context) {

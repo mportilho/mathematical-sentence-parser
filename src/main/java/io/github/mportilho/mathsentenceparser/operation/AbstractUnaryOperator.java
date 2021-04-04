@@ -87,7 +87,7 @@ public abstract class AbstractUnaryOperator extends AbstractOperation {
 			builder.append(getOperationToken());
 			break;
 		default:
-			throw new IllegalStateException("Operation position not implemented: " + getOperatorPosition());
+			throw new IllegalStateException("Operation position not implemented: " + operatorPosition);
 
 		}
 	}
@@ -95,10 +95,6 @@ public abstract class AbstractUnaryOperator extends AbstractOperation {
 	@Override
 	public <T> T accept(OperationVisitor<T> visitor) {
 		return visitor.visit(this);
-	}
-
-	public OperatorPosition getOperatorPosition() {
-		return operatorPosition;
 	}
 
 	public enum OperatorPosition {

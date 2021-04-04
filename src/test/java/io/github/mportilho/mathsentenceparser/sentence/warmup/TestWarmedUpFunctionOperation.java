@@ -62,8 +62,12 @@ public class TestWarmedUpFunctionOperation {
 		mathSentence = new MathSentence("f.extractedString() = 'food'");
 		mathSentence.addFunctions(new FunctionProviderClass());
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
+		MathSentence copyBefore = mathSentence.copy();
 		mathSentence.warmUp();
+		MathSentence copyAfter = mathSentence.copy();
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(4);
+		assertThat(copyBefore.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
+		assertThat(copyAfter.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(4);
 	}
 
 	@Test
@@ -117,8 +121,12 @@ public class TestWarmedUpFunctionOperation {
 		mathSentence = new MathSentence("f.add(3, 4 + 2 - f.extractedNumber())");
 		mathSentence.addFunctions(new FunctionProviderClass());
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
+		MathSentence copyBefore = mathSentence.copy();
 		mathSentence.warmUp();
+		MathSentence copyAfter = mathSentence.copy();
 		assertThat(mathSentence.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(8);
+		assertThat(copyBefore.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(0);
+		assertThat(copyAfter.visitOperations(cacheVisitor.reset())).isEqualByComparingTo(8);
 	}
 
 	public static class FunctionProviderClass {

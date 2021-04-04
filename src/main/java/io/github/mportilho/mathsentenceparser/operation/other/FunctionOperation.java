@@ -95,10 +95,12 @@ public class FunctionOperation extends AbstractOperation {
 
 	@Override
 	protected void composeTextualRepresentation(StringBuilder builder) {
-		if (!isCaching()) {
-			builder.append('~');
+		if (isCaching()) {
+			builder.append("f.");
+		} else {
+			builder.append("f0.");
 		}
-		builder.append("f.").append(functionName).append("(");
+		builder.append(functionName).append("(");
 		int count = parameters.size();
 		int index = count;
 		for (int i = 0; i < count; i++) {
