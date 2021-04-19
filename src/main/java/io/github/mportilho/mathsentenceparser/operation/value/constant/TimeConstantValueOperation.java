@@ -52,7 +52,7 @@ public class TimeConstantValueOperation extends AbstractConstantValueOperation {
 
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		TimeConstantValueOperation operation = (TimeConstantValueOperation) super.createClone(context);
+		TimeConstantValueOperation operation = new TimeConstantValueOperation(getValue());
 		operation.current = this.current;
 		return operation;
 	}

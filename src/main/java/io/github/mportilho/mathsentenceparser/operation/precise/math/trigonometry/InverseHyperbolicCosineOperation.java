@@ -25,6 +25,7 @@ package io.github.mportilho.mathsentenceparser.operation.precise.math.trigonomet
 import ch.obermuhlner.math.big.BigDecimalMath;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class InverseHyperbolicCosineOperation extends AbstractUnaryOperator {
@@ -36,6 +37,11 @@ public class InverseHyperbolicCosineOperation extends AbstractUnaryOperator {
 	@Override
 	protected Object resolve(OperationContext context) {
 		return BigDecimalMath.acosh(getOperand().evaluate(context), context.getMathContext());
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new InverseHyperbolicCosineOperation(getOperand().copy(context));
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class DateConstantValueOperation extends AbstractConstantValueOperation {
 
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		DateConstantValueOperation operation = (DateConstantValueOperation) super.createClone(context);
+		DateConstantValueOperation operation = new DateConstantValueOperation(getValue());
 		operation.current = this.current;
 		return operation;
 	}

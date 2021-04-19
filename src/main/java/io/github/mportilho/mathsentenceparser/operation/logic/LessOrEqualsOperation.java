@@ -24,6 +24,7 @@ package io.github.mportilho.mathsentenceparser.operation.logic;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class LessOrEqualsOperation extends AbstractBinaryOperation {
@@ -35,6 +36,11 @@ public class LessOrEqualsOperation extends AbstractBinaryOperation {
 	@Override
 	protected Object resolve(OperationContext context) {
 		return getLeftOperand().<Comparable<?>>evaluate(context).compareTo(getRightOperand().evaluate(context)) <= 0;
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new LessOrEqualsOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 
 	@Override

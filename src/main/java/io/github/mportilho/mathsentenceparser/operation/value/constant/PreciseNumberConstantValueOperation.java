@@ -23,6 +23,8 @@ SOFTWARE.*/
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseNumberConstantValueOperation extends AbstractConstantValueOperation {
@@ -35,11 +37,16 @@ public class PreciseNumberConstantValueOperation extends AbstractConstantValueOp
 	protected Object resolve(OperationContext context) {
 		return BigDecimalMath.toBigDecimal(getValue().toString(), context.getMathContext());
 	}
-	
+
 	public void transformToPositiveValue() {
 		if (getValue() != null && getValue().startsWith("-")) {
 			setValue(getValue().substring(1));
 		}
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PreciseNumberConstantValueOperation(getValue());
 	}
 
 }

@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class BooleanConstantValueOperation extends AbstractConstantValueOperation {
@@ -33,6 +35,11 @@ public class BooleanConstantValueOperation extends AbstractConstantValueOperatio
 	@Override
 	protected Object resolve(OperationContext context) {
 		return Boolean.parseBoolean(getValue().toString());
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new BooleanConstantValueOperation(getValue());
 	}
 
 }

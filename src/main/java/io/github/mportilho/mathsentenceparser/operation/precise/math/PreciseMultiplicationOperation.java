@@ -45,7 +45,8 @@ public class PreciseMultiplicationOperation extends AbstractBinaryOperation {
 
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		PreciseMultiplicationOperation operation = (PreciseMultiplicationOperation) super.createClone(context);
+		PreciseMultiplicationOperation operation = new PreciseMultiplicationOperation(getLeftOperand().copy(context),
+				getRightOperand().copy(context));
 		operation.implicit = this.implicit;
 		return operation;
 	}

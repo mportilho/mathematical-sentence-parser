@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseModuloOperation extends AbstractBinaryOperation {
@@ -39,6 +40,11 @@ public class PreciseModuloOperation extends AbstractBinaryOperation {
 		BigDecimal leftValue = getLeftOperand().evaluate(context);
 		BigDecimal rightValue = getRightOperand().evaluate(context);
 		return leftValue.remainder(rightValue, context.getMathContext());
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PreciseModuloOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 
 	@Override

@@ -24,9 +24,7 @@ package io.github.mportilho.mathsentenceparser.operation;
 
 import java.lang.invoke.CallSite;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
@@ -46,8 +44,6 @@ public abstract class AbstractOperation {
 	private boolean cachingForever;
 
 	private List<AbstractOperation> parents;
-	private static Map<Class<?>, CallSite> constructors;
-
 	private boolean applyingParenthesis;
 
 	public AbstractOperation() {
@@ -156,18 +152,6 @@ public abstract class AbstractOperation {
 		this.cachingForever = sourceOperation.cachingForever;
 		this.applyingParenthesis = sourceOperation.applyingParenthesis;
 		return this;
-	}
-
-	protected CallSite cacheCopingFunction(Class<?> clazz, CallSiteSupplier supplier) throws Throwable {
-		if (constructors == null) {
-			constructors = new HashMap<>();
-		}
-		CallSite cachedCallSite = constructors.get(clazz);
-		if (cachedCallSite == null) {
-			cachedCallSite = supplier.get(clazz);
-			constructors.put(clazz, cachedCallSite);
-		}
-		return cachedCallSite;
 	}
 
 	/**

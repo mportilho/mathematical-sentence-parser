@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseModulusOperation extends AbstractUnaryOperator {
@@ -37,6 +38,11 @@ public class PreciseModulusOperation extends AbstractUnaryOperator {
 	@Override
 	protected Object resolve(OperationContext context) {
 		return getOperand().<BigDecimal>evaluate(context).abs(context.getMathContext());
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PreciseModulusOperation(getOperand().copy(context));
 	}
 
 	@Override

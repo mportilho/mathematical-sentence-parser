@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class StringConstantValueOperation extends AbstractConstantValueOperation {
@@ -40,6 +42,11 @@ public class StringConstantValueOperation extends AbstractConstantValueOperation
 		builder.append('\'');
 		super.composeTextualRepresentation(builder);
 		builder.append('\'');
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new StringConstantValueOperation(getValue());
 	}
 
 }

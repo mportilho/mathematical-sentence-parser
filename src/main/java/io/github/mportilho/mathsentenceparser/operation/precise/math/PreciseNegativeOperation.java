@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseNegativeOperation extends AbstractUnaryOperator {
@@ -50,6 +51,11 @@ public class PreciseNegativeOperation extends AbstractUnaryOperator {
 
 	public boolean isNegatingValue() {
 		return negatingValue;
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PreciseNegativeOperation(getOperand().copy(context));
 	}
 
 	@Override

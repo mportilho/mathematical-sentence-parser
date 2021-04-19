@@ -22,14 +22,7 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation.datetime;
 
-import java.lang.invoke.CallSite;
-import java.lang.invoke.LambdaMetafactory;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
-
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
-import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
 /**
@@ -51,26 +44,6 @@ public abstract class AbstractDateTimeOperation extends AbstractOperation {
 		this.leftOperand.addParent(this);
 		this.rightOperand.addParent(this);
 		this.dateElement = dateElement;
-	}
-
-	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		CallSite callSite = cacheCopingFunction(getClass(), clazz -> {
-			MethodHandles.Lookup lookup = MethodHandles.lookup();
-			MethodType factoryMethodType = MethodType.methodType(DateFunction.class);
-			MethodType functionMethodType = MethodType.methodType(void.class, AbstractOperation.class, AbstractOperation.class,
-					DateElementEnum.class);
-			MethodHandle implementationMethodHandle = lookup.findConstructor(clazz, functionMethodType);
-			return LambdaMetafactory.metafactory( //
-					lookup, //
-					"apply", //
-					factoryMethodType, //
-					functionMethodType.generic(), //
-					implementationMethodHandle, //
-					implementationMethodHandle.type());
-		});
-		return ((DateFunction<AbstractOperation, AbstractOperation, DateElementEnum, AbstractOperation>) callSite.getTarget().invokeExact())
-				.apply(leftOperand.copy(context), rightOperand.copy(context), dateElement);
 	}
 
 	@Override
@@ -97,10 +70,6 @@ public abstract class AbstractDateTimeOperation extends AbstractOperation {
 
 	public final DateElementEnum getDateElement() {
 		return dateElement;
-	}
-
-	static interface DateFunction<P1, P2, T, R> {
-		R apply(P1 p1, P2 p2, T t);
 	}
 
 }

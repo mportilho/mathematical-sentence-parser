@@ -44,7 +44,7 @@ public class DateTimeConstantValueOperation extends AbstractConstantValueOperati
 
 	@Override
 	protected AbstractOperation createClone(CloningContext context) throws Throwable {
-		DateTimeConstantValueOperation operation = (DateTimeConstantValueOperation) super.createClone(context);
+		DateTimeConstantValueOperation operation = new DateTimeConstantValueOperation(getValue());
 		operation.current = this.current;
 		return operation;
 	}

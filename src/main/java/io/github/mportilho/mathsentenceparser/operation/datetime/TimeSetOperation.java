@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class TimeSetOperation extends AbstractDateTimeOperation {
@@ -48,6 +49,11 @@ public class TimeSetOperation extends AbstractDateTimeOperation {
 		default:
 			throw new IllegalStateException("Date information not supported: " + getDateElement());
 		}
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new TimeSetOperation(getLeftOperand().copy(context), getRightOperand().copy(context), getDateElement());
 	}
 
 	@Override

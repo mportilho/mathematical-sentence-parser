@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseExponentialOperation extends AbstractBinaryOperation {
@@ -50,6 +51,11 @@ public class PreciseExponentialOperation extends AbstractBinaryOperation {
 		getLeftOperand().generateRepresentation(builder);
 		builder.append(getOperationToken());
 		getRightOperand().generateRepresentation(builder);
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PreciseExponentialOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 
 	@Override

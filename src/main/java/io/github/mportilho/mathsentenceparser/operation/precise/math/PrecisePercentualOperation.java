@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PrecisePercentualOperation extends AbstractUnaryOperator {
@@ -39,6 +40,11 @@ public class PrecisePercentualOperation extends AbstractUnaryOperator {
 	@Override
 	protected Object resolve(OperationContext context) {
 		return getOperand().<BigDecimal>evaluate(context).multiply(PERCENT, context.getMathContext());
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PrecisePercentualOperation(getOperand().copy(context));
 	}
 
 	@Override

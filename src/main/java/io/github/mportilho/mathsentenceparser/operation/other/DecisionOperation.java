@@ -36,7 +36,8 @@ public class DecisionOperation extends AbstractOperation {
 
 	public DecisionOperation(List<AbstractOperation> operations) {
 		if (operations == null || operations.size() < 2) {
-			throw new IllegalStateException("Decision operation must have at least two conditionals (if ... then ... else ... endif)");
+			throw new IllegalStateException(
+					"Decision operation must have at least two conditionals (if ... then ... [elsif then ...] else ... endif)");
 		}
 		this.operations = operations;
 		for (int i = 0; i < operations.size(); i++) {

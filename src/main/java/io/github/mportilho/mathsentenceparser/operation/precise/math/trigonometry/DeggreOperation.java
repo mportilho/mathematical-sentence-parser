@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class DeggreOperation extends AbstractUnaryOperator {
@@ -41,6 +42,11 @@ public class DeggreOperation extends AbstractUnaryOperator {
 	protected Object resolve(OperationContext context) {
 		return getOperand().<BigDecimal>evaluate(context).multiply(BigDecimalMath.pi(context.getMathContext())).divide(HALF_RADIUS,
 				context.getMathContext());
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new DeggreOperation(getOperand().copy(context));
 	}
 
 	@Override

@@ -25,6 +25,7 @@ package io.github.mportilho.mathsentenceparser.operation.precise.math;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractUnaryOperator;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseSquareRootOperation extends AbstractUnaryOperator {
@@ -44,6 +45,11 @@ public class PreciseSquareRootOperation extends AbstractUnaryOperator {
 		builder.append(getOperationToken()).append('(');
 		getOperand().generateRepresentation(builder);
 		builder.append(')');
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PreciseSquareRootOperation(getOperand().copy(context));
 	}
 
 	@Override

@@ -24,6 +24,7 @@ package io.github.mportilho.mathsentenceparser.operation.impl;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class GenericBinaryOperation extends AbstractBinaryOperation {
@@ -40,6 +41,11 @@ public class GenericBinaryOperation extends AbstractBinaryOperation {
 	@Override
 	protected String getOperationToken() {
 		return null;
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new GenericBinaryOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 
 }

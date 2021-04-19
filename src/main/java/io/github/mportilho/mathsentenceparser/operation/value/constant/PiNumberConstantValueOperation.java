@@ -23,6 +23,8 @@ SOFTWARE.*/
 package io.github.mportilho.mathsentenceparser.operation.value.constant;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
+import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PiNumberConstantValueOperation extends AbstractConstantValueOperation {
@@ -31,13 +33,18 @@ public class PiNumberConstantValueOperation extends AbstractConstantValueOperati
 		this("pi");
 	}
 
-	public PiNumberConstantValueOperation(String value) {
+	private PiNumberConstantValueOperation(String value) {
 		super(value);
 	}
 
 	@Override
 	protected void composeTextualRepresentation(StringBuilder builder) {
 		builder.append(getValue());
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PiNumberConstantValueOperation();
 	}
 
 	@Override

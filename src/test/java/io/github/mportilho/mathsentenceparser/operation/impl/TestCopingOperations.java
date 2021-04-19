@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-package io.github.mportilho.mathsentenceparser.operation;
+package io.github.mportilho.mathsentenceparser.operation.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,15 +31,13 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 import io.github.mportilho.mathsentenceparser.operation.datetime.AbstractDateTimeOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateAdditionOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateElementEnum;
 import io.github.mportilho.mathsentenceparser.operation.datetime.DateTimeAdditionOperation;
 import io.github.mportilho.mathsentenceparser.operation.datetime.TimeAdditionOperation;
-import io.github.mportilho.mathsentenceparser.operation.impl.GenericBinaryOperation;
-import io.github.mportilho.mathsentenceparser.operation.impl.GenericOperationOne;
-import io.github.mportilho.mathsentenceparser.operation.impl.GenericOperationTwo;
-import io.github.mportilho.mathsentenceparser.operation.impl.GenericUnaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseMultiplicationOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseNumberRoundingOperation;
 import io.github.mportilho.mathsentenceparser.operation.precise.math.PreciseNumberRoundingOperation.RoundingEnum;
@@ -47,8 +45,8 @@ import io.github.mportilho.mathsentenceparser.operation.value.constant.DateConst
 import io.github.mportilho.mathsentenceparser.operation.value.constant.DateTimeConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.PreciseNumberConstantValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.constant.TimeConstantValueOperation;
-import io.github.mportilho.mathsentenceparser.operation.value.variable.VariableValueOperation;
 import io.github.mportilho.mathsentenceparser.operation.value.variable.SequenceVariableValueOperation;
+import io.github.mportilho.mathsentenceparser.operation.value.variable.VariableValueOperation;
 
 public class TestCopingOperations {
 
@@ -57,10 +55,10 @@ public class TestCopingOperations {
 		GenericOperationOne genericOperationOne = new GenericOperationOne();
 		GenericUnaryOperation operation = new GenericUnaryOperation(genericOperationOne);
 
-		GenericUnaryOperation copyOperation = (GenericUnaryOperation) operation.createClone(new CloningContext());
+		GenericUnaryOperation copyOperation = (GenericUnaryOperation) operation.copy(new CloningContext());
 		GenericOperationOne copyGenericOperationOne = (GenericOperationOne) copyOperation.getOperand();
 
-		GenericUnaryOperation copyOperation2 = (GenericUnaryOperation) copyOperation.createClone(new CloningContext());
+		GenericUnaryOperation copyOperation2 = (GenericUnaryOperation) copyOperation.copy(new CloningContext());
 		GenericOperationOne copyGenericOperationOne2 = (GenericOperationOne) copyOperation2.getOperand();
 
 		assertThat(operation).isNotEqualTo(copyOperation);
@@ -76,11 +74,11 @@ public class TestCopingOperations {
 		GenericOperationTwo genericOperationTwo = new GenericOperationTwo();
 		GenericBinaryOperation operation = new GenericBinaryOperation(genericOperationOne, genericOperationTwo);
 
-		GenericBinaryOperation copyOperation = (GenericBinaryOperation) operation.createClone(new CloningContext());
+		GenericBinaryOperation copyOperation = (GenericBinaryOperation) operation.copy(new CloningContext());
 		GenericOperationOne copyGenericOperationOne = (GenericOperationOne) copyOperation.getLeftOperand();
 		GenericOperationTwo copyGenericOperationTwo = (GenericOperationTwo) copyOperation.getRightOperand();
 
-		GenericBinaryOperation copyOperation2 = (GenericBinaryOperation) operation.createClone(new CloningContext());
+		GenericBinaryOperation copyOperation2 = (GenericBinaryOperation) operation.copy(new CloningContext());
 		GenericOperationOne copyGenericOperationOne_2 = (GenericOperationOne) copyOperation2.getLeftOperand();
 		GenericOperationTwo copyGenericOperationTwo_2 = (GenericOperationTwo) copyOperation2.getRightOperand();
 
@@ -119,8 +117,8 @@ public class TestCopingOperations {
 
 	@Test
 	public void testCopingConstantValueOperation() throws Throwable {
-		AbstractOperation operation = new PreciseNumberConstantValueOperation("3");
-		PreciseNumberConstantValueOperation copyOperation = (PreciseNumberConstantValueOperation) operation.createClone(new CloningContext());
+		PreciseNumberConstantValueOperation operation = new PreciseNumberConstantValueOperation("3");
+		PreciseNumberConstantValueOperation copyOperation = (PreciseNumberConstantValueOperation) operation.copy(new CloningContext());
 		assertThat(copyOperation).isNotEqualTo(operation);
 		assertThat(copyOperation.getValue()).isEqualTo(((PreciseNumberConstantValueOperation) operation).getValue());
 	}

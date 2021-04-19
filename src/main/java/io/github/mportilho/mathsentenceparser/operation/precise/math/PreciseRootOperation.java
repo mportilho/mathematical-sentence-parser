@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseRootOperation extends AbstractBinaryOperation {
@@ -48,6 +49,11 @@ public class PreciseRootOperation extends AbstractBinaryOperation {
 		builder.append(getOperationToken()).append('(');
 		getLeftOperand().generateRepresentation(builder);
 		builder.append(')');
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new PreciseRootOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 
 	@Override

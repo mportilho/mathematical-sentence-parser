@@ -25,6 +25,7 @@ package io.github.mportilho.mathsentenceparser.operation.precise.math.trigonomet
 import ch.obermuhlner.math.big.BigDecimalMath;
 import io.github.mportilho.mathsentenceparser.operation.AbstractBinaryOperation;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
+import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class Arctangent2Operation extends AbstractBinaryOperation {
@@ -45,6 +46,11 @@ public class Arctangent2Operation extends AbstractBinaryOperation {
 		builder.append(", ");
 		getRightOperand().generateRepresentation(builder);
 		builder.append(')');
+	}
+
+	@Override
+	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+		return new Arctangent2Operation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 
 	@Override
