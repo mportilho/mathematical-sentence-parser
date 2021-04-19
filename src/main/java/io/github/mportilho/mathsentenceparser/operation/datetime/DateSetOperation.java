@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation.datetime;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
@@ -38,7 +37,7 @@ public class DateSetOperation extends AbstractDateTimeOperation {
 	@Override
 	protected Object resolve(OperationContext context) {
 		LocalDate leftResult = getLeftOperand().evaluate(context);
-		BigDecimal rightResult = getRightOperand().evaluate(context);
+		Number rightResult = getRightOperand().evaluate(context);
 		switch (getDateElement()) {
 		case DAY:
 			return leftResult.withDayOfMonth(rightResult.intValue());

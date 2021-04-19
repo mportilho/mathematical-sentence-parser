@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,7 +48,7 @@ public class SequenceVariableValueOperation extends AbstractVariableValueOperati
 		return operation;
 	}
 
-	public void setSequenceIndex(BigDecimal newValue) {
+	public void setSequenceIndex(Number newValue) {
 		super.setValue(newValue, STOP_ON);
 	}
 

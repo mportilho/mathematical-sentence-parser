@@ -57,11 +57,16 @@ public class BaseOperation extends AbstractOperation {
 		}
 		if (operation != null) {
 			Object result = operation.evaluate(context);
-			if (context.getScale() != null && result instanceof BigDecimal) {
-				return ((BigDecimal) result).setScale(context.getScale(), context.getMathContext().getRoundingMode());
-			} else {
-				return result;
+
+			if (result instanceof Number) {
+				BigDecimal numberResult = result instanceof BigDecimal ? (BigDecimal) result
+						: new BigDecimal(result.toString(), context.getMathContext());
+				if (context.getScale() != null) {
+					numberResult = numberResult.setScale(context.getScale(), context.getMathContext().getRoundingMode());
+				}
+				return numberResult;
 			}
+			return result;
 		}
 		switch (type) {
 		case BOOLEAN:

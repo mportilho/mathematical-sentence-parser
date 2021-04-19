@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation;
 
-import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -243,10 +242,6 @@ public abstract class AbstractOperation {
 		StringBuilder builder = new StringBuilder();
 		generateRepresentation(builder);
 		return builder.toString();
-	}
-
-	protected interface CallSiteSupplier {
-		CallSite get(Class<?> clazz) throws Throwable;
 	}
 
 }
