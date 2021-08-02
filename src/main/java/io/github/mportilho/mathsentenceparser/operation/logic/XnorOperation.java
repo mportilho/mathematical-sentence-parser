@@ -35,11 +35,11 @@ public class XnorOperation extends AbstractBinaryOperation {
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return !(getLeftOperand().<Boolean>evaluate(context) ^ getRightOperand().<Boolean>evaluate(context));
+		return getLeftOperand().<Boolean>evaluate(context) == getRightOperand().<Boolean>evaluate(context);
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new XnorOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 

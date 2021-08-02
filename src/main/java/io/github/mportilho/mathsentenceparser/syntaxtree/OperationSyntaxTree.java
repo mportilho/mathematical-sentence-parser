@@ -43,8 +43,8 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.WarmUpOperation
 
 public class OperationSyntaxTree {
 
-	private AbstractOperation operation;
-	private OperationSyntaxTreeContext syntaxTreeContext;
+	private final AbstractOperation operation;
+	private final OperationSyntaxTreeContext syntaxTreeContext;
 	private OperationContext operationContext;
 	private DynamicFunctionContext dynamicFunctionContext;
 

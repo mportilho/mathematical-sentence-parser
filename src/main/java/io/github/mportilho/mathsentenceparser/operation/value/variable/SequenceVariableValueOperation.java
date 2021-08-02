@@ -42,7 +42,7 @@ public class SequenceVariableValueOperation extends AbstractVariableValueOperati
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		SequenceVariableValueOperation operation = new SequenceVariableValueOperation(getVariableName());
 		operation.value = this.value;
 		return operation;

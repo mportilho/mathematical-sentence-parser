@@ -37,9 +37,9 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
 
 public class BaseOperation extends AbstractOperation {
 
-	private OperationValueType type;
-	private Map<String, AssignedVariableOperation> assignedVariables;
-	private AbstractOperation operation;
+	private final OperationValueType type;
+	private final Map<String, AssignedVariableOperation> assignedVariables;
+	private final AbstractOperation operation;
 
 	public BaseOperation(OperationValueType type, AbstractOperation operation, Map<String, AssignedVariableOperation> assignedVariables) {
 		this.type = type;
@@ -79,7 +79,7 @@ public class BaseOperation extends AbstractOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		Map<String, AssignedVariableOperation> newAssignedVariables = null;
 		if (nonNull(assignedVariables)) {
 			newAssignedVariables = new HashMap<>();

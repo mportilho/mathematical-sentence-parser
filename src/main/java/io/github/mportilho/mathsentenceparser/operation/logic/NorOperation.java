@@ -39,7 +39,7 @@ public class NorOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new NorOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 

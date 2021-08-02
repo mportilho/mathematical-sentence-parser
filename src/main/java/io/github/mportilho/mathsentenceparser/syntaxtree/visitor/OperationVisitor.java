@@ -35,24 +35,24 @@ import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractV
 
 public interface OperationVisitor<T> {
 
-	public T visit(BaseOperation operation);
+    T visit(BaseOperation operation);
 
-	public T visit(AbstractUnaryOperator operation);
+    T visit(AbstractUnaryOperator operation);
 
-	public T visit(AbstractBinaryOperation operation);
+    T visit(AbstractBinaryOperation operation);
 
-	public T visit(AbstractDateTimeOperation operation);
+    T visit(AbstractDateTimeOperation operation);
 
-	public T visit(DecisionOperation operation);
+    T visit(DecisionOperation operation);
 
-	public T visit(FunctionOperation operation);
+    T visit(FunctionOperation operation);
 
-	public T visit(PreciseSummationOperation operation);
+    T visit(PreciseSummationOperation operation);
 
-	public T visit(PreciseProductOfSequenceOperation operation);
+    T visit(PreciseProductOfSequenceOperation operation);
 
-	public T visit(AbstractConstantValueOperation operation);
+    T visit(AbstractConstantValueOperation operation);
 
-	public T visit(AbstractVariableValueOperation operation);
+    T visit(AbstractVariableValueOperation operation);
 
 }

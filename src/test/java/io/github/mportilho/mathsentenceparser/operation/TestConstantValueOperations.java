@@ -47,11 +47,11 @@ public class TestConstantValueOperations {
 
 	@Test
 	public void testBooleanConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new BooleanConstantValueOperation("true");
 		assertThat((Boolean) operation.evaluate(context)).isTrue();
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 
 		operation = new BooleanConstantValueOperation("false");
 		assertThat((Boolean) operation.evaluate(context)).isFalse();
@@ -59,56 +59,56 @@ public class TestConstantValueOperations {
 
 	@Test
 	public void testDateConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new DateConstantValueOperation("2001-04-12");
 		assertThat((LocalDate) operation.evaluate(context)).isEqualTo(LocalDate.of(2001, 4, 12));
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 	}
 
 	@Test
 	public void testTimeConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new TimeConstantValueOperation("04:12:33");
 		assertThat((LocalTime) operation.evaluate(context)).isEqualTo(LocalTime.of(4, 12, 33));
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 	}
 
 	@Test
 	public void testDateTimeConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new DateTimeConstantValueOperation("2001-04-12T04:12:33");
 		assertThat((LocalDateTime) operation.evaluate(context)).isEqualTo(LocalDateTime.of(2001, 4, 12, 4, 12, 33));
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 	}
 
 	@Test
 	public void testEulerNumberConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new EulerNumberConstantValueOperation();
 		assertThat((BigDecimal) operation.evaluate(context)).isEqualTo(BigDecimal.valueOf(2.718281828459045));
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 	}
 
 	@Test
 	public void testPiNumberConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new PiNumberConstantValueOperation();
 		assertThat((BigDecimal) operation.evaluate(context)).isEqualTo(BigDecimal.valueOf(3.141592653589793));
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 	}
 
 	@Test
 	public void testPreciseNumberConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new PreciseNumberConstantValueOperation("3.141592653589793");
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualTo(BigDecimal.valueOf(3.141592653589793));
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 
 		operation = new PreciseNumberConstantValueOperation("-3.141592653589793");
 		assertThat(operation.<BigDecimal>evaluate(context)).isEqualTo(BigDecimal.valueOf(-3.141592653589793));
@@ -119,11 +119,11 @@ public class TestConstantValueOperations {
 
 	@Test
 	public void testStringConstantValueOperation() {
-		AbstractOperation operation;
+		AbstractConstantValueOperation operation;
 
 		operation = new StringConstantValueOperation("3.141592653589793");
 		assertThat((String) operation.evaluate(context)).isEqualTo("3.141592653589793");
-		assertThat(((AbstractConstantValueOperation) operation).isCachingForever());
+		assertThat(operation.isCachingForever()).isTrue();
 
 		operation = new StringConstantValueOperation("-3.141592653589793");
 		assertThat((String) operation.evaluate(context)).isEqualTo("-3.141592653589793");

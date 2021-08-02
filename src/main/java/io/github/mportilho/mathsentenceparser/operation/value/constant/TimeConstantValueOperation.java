@@ -47,11 +47,11 @@ public class TimeConstantValueOperation extends AbstractConstantValueOperation {
 		if (current) {
 			return context.getCurrentDateTime().toLocalTime();
 		}
-		return DateTimeFormatter.ISO_LOCAL_TIME.parse(getValue().toString(), LocalTime::from);
+		return DateTimeFormatter.ISO_LOCAL_TIME.parse(getValue(), LocalTime::from);
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		TimeConstantValueOperation operation = new TimeConstantValueOperation(getValue());
 		operation.current = this.current;
 		return operation;

@@ -32,10 +32,10 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
 
 public class PreciseSummationOperation extends AbstractOperation {
 
-	private AbstractOperation startIndex;
-	private AbstractOperation endIndex;
-	private AbstractOperation operation;
-	private SequenceVariableValueOperation sequenceVariable;
+	private final AbstractOperation startIndex;
+	private final AbstractOperation endIndex;
+	private final AbstractOperation operation;
+	private final SequenceVariableValueOperation sequenceVariable;
 
 	public PreciseSummationOperation(AbstractOperation startIndex, AbstractOperation endIndex, AbstractOperation operation,
 			SequenceVariableValueOperation sequenceVariable) {
@@ -68,7 +68,7 @@ public class PreciseSummationOperation extends AbstractOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseSummationOperation(startIndex.copy(context), endIndex.copy(context), operation.copy(context),
 				(SequenceVariableValueOperation) sequenceVariable.copy(context));
 	}

@@ -30,9 +30,9 @@ import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractV
 
 public class CloningContext {
 
-	private Map<String, AbstractVariableValueOperation> variables;
-	private Map<String, AssignedVariableOperation> assignedVariables;
-	private Map<AbstractOperation, AbstractOperation> clonedOperationMap;
+	private final Map<String, AbstractVariableValueOperation> variables;
+	private final Map<String, AssignedVariableOperation> assignedVariables;
+	private final Map<AbstractOperation, AbstractOperation> clonedOperationMap;
 
 	public CloningContext() {
 		this.variables = new HashMap<>();

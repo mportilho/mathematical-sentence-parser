@@ -40,7 +40,7 @@ public class PreciseFactorialOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseFactorialOperation(getOperand().copy(context));
 	}
 

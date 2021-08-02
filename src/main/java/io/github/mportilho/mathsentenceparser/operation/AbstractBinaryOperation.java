@@ -26,8 +26,8 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
 
 public abstract class AbstractBinaryOperation extends AbstractOperation {
 
-	private AbstractOperation leftOperand;
-	private AbstractOperation rightOperand;
+	private final AbstractOperation leftOperand;
+	private final AbstractOperation rightOperand;
 
 	public AbstractBinaryOperation(AbstractOperation leftOperand, AbstractOperation rightOperand) {
 		this.leftOperand = leftOperand;

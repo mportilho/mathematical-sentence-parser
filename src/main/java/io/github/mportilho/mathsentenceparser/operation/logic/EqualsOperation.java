@@ -43,7 +43,7 @@ public class EqualsOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new EqualsOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 

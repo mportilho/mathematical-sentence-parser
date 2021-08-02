@@ -29,7 +29,7 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
 
 public abstract class AbstractVariableValueOperation extends AbstractOperation {
 
-	private String variableName;
+	private final String variableName;
 	protected Object value;
 
 	public AbstractVariableValueOperation(String variableName) {

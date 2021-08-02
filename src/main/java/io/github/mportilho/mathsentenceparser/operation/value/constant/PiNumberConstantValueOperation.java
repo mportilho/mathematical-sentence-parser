@@ -43,7 +43,7 @@ public class PiNumberConstantValueOperation extends AbstractConstantValueOperati
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PiNumberConstantValueOperation();
 	}
 

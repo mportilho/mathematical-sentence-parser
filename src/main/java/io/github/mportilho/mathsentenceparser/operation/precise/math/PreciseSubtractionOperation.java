@@ -37,11 +37,11 @@ public class PreciseSubtractionOperation extends AbstractBinaryOperation {
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return getLeftOperand().<BigDecimal>evaluate(context).subtract(getRightOperand().<BigDecimal>evaluate(context), context.getMathContext());
+		return getLeftOperand().<BigDecimal>evaluate(context).subtract(getRightOperand().evaluate(context), context.getMathContext());
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseSubtractionOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 

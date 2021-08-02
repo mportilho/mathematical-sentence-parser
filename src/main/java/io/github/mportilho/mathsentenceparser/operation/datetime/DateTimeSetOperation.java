@@ -57,7 +57,7 @@ public class DateTimeSetOperation extends AbstractDateTimeOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new DateTimeSetOperation(getLeftOperand().copy(context), getRightOperand().copy(context), getDateElement());
 	}
 

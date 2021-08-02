@@ -40,7 +40,7 @@ public class HyperbolicSineOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new HyperbolicSineOperation(getOperand().copy(context));
 	}
 

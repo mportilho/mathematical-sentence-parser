@@ -28,8 +28,8 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
 
 public abstract class AbstractUnaryOperator extends AbstractOperation {
 
-	private AbstractOperation operand;
-	private OperatorPosition operatorPosition;
+	private final AbstractOperation operand;
+	private final OperatorPosition operatorPosition;
 
 	public AbstractUnaryOperator(AbstractOperation operand, OperatorPosition operatorPosition) {
 		this.operand = operand;

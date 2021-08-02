@@ -31,7 +31,7 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
 
 public class GenericOperationOne extends AbstractOperation {
 
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new GenericOperationOne();
 	}
 

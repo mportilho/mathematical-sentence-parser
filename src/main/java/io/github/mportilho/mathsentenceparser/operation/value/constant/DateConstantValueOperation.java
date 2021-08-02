@@ -47,11 +47,11 @@ public class DateConstantValueOperation extends AbstractConstantValueOperation {
 		if (current) {
 			return context.getCurrentDateTime().toLocalDate();
 		}
-		return DateTimeFormatter.ISO_LOCAL_DATE.parse(getValue().toString(), LocalDate::from);
+		return DateTimeFormatter.ISO_LOCAL_DATE.parse(getValue(), LocalDate::from);
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		DateConstantValueOperation operation = new DateConstantValueOperation(getValue());
 		operation.current = this.current;
 		return operation;

@@ -35,18 +35,18 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.parser.ParsingErrorList
 
 public final class MathematicalSentenceGrammarParser {
 
-	public static final OperationSyntaxTree parseSentence(CharStream expression, MathSentenceOptions mathSentenceOptions) {
+	public static OperationSyntaxTree parseSentence(CharStream expression, MathSentenceOptions mathSentenceOptions) {
 		StartContext startContext = createOperationParser(expression, PredictionMode.SLL).start();
 		OperationSyntaxTree operationSyntaxTree = mathSentenceOptions.getOperationSyntaxTreeGenerator().createOperationSyntaxTree(startContext);
 		operationSyntaxTree.setOperationContext(new OperationContext(mathSentenceOptions.getMathContext(), mathSentenceOptions.getScale(), false));
 		return operationSyntaxTree;
 	}
 
-	public static final void validate(CharStream expression) {
+	public static void validate(CharStream expression) {
 		createOperationParser(expression, PredictionMode.LL_EXACT_AMBIG_DETECTION).start();
 	}
 
-	private static final MathematicalSentenceParserGrammarParser createOperationParser(CharStream expression, PredictionMode predictionMode) {
+	private static MathematicalSentenceParserGrammarParser createOperationParser(CharStream expression, PredictionMode predictionMode) {
 		MathematicalSentenceParserGrammarLexer lexer = new MathematicalSentenceParserGrammarLexer(expression);
 		lexer.removeErrorListeners();
 		lexer.addErrorListener(ParsingErrorListener.INSTANCE);

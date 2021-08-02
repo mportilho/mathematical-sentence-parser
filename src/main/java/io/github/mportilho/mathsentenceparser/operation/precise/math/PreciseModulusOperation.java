@@ -41,7 +41,7 @@ public class PreciseModulusOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseModulusOperation(getOperand().copy(context));
 	}
 

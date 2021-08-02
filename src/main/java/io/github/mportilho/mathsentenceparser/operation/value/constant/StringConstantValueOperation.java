@@ -34,7 +34,7 @@ public class StringConstantValueOperation extends AbstractConstantValueOperation
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return getValue().toString();
+		return getValue();
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class StringConstantValueOperation extends AbstractConstantValueOperation
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new StringConstantValueOperation(getValue());
 	}
 

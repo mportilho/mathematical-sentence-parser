@@ -39,7 +39,7 @@ public class GreaterOrEqualsOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new GreaterOrEqualsOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 

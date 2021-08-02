@@ -35,7 +35,7 @@ public class PreciseNumberConstantValueOperation extends AbstractConstantValueOp
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return BigDecimalMath.toBigDecimal(getValue().toString(), context.getMathContext());
+		return BigDecimalMath.toBigDecimal(getValue(), context.getMathContext());
 	}
 
 	public void transformToPositiveValue() {
@@ -45,7 +45,7 @@ public class PreciseNumberConstantValueOperation extends AbstractConstantValueOp
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseNumberConstantValueOperation(getValue());
 	}
 

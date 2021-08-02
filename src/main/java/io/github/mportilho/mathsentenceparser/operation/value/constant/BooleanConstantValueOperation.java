@@ -34,11 +34,11 @@ public class BooleanConstantValueOperation extends AbstractConstantValueOperatio
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return Boolean.parseBoolean(getValue().toString());
+		return Boolean.parseBoolean(getValue());
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new BooleanConstantValueOperation(getValue());
 	}
 

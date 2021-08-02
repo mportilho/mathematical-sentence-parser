@@ -33,9 +33,9 @@ import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisito
  */
 public abstract class AbstractDateTimeOperation extends AbstractOperation {
 
-	private AbstractOperation leftOperand;
-	private AbstractOperation rightOperand;
-	private DateElementEnum dateElement;
+	private final AbstractOperation leftOperand;
+	private final AbstractOperation rightOperand;
+	private final DateElementEnum dateElement;
 
 	public AbstractDateTimeOperation(AbstractOperation leftOperand, AbstractOperation rightOperand, DateElementEnum dateElement) {
 		super();

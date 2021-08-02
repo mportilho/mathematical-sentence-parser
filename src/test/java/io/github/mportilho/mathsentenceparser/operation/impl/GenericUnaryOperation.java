@@ -41,7 +41,7 @@ public class GenericUnaryOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new GenericUnaryOperation(getOperand().copy(context));
 	}
 

@@ -40,7 +40,7 @@ public class SineOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new SineOperation(getOperand().copy(context));
 	}
 

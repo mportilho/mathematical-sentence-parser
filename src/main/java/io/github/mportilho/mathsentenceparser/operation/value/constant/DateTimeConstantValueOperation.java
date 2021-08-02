@@ -43,7 +43,7 @@ public class DateTimeConstantValueOperation extends AbstractConstantValueOperati
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		DateTimeConstantValueOperation operation = new DateTimeConstantValueOperation(getValue());
 		operation.current = this.current;
 		return operation;
@@ -54,7 +54,7 @@ public class DateTimeConstantValueOperation extends AbstractConstantValueOperati
 		if (current) {
 			return context.getCurrentDateTime();
 		}
-		return DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(getValue().toString(), LocalDateTime::from);
+		return DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(getValue(), LocalDateTime::from);
 	}
 
 }

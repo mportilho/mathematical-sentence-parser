@@ -54,7 +54,7 @@ public class PreciseExponentialOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseExponentialOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 

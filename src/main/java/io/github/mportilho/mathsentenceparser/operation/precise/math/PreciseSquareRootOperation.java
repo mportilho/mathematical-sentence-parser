@@ -48,7 +48,7 @@ public class PreciseSquareRootOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseSquareRootOperation(getOperand().copy(context));
 	}
 

@@ -57,7 +57,7 @@ public class DateTimeAdditionOperation extends AbstractDateTimeOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new DateTimeAdditionOperation(getLeftOperand().copy(context), getRightOperand().copy(context), getDateElement());
 	}
 

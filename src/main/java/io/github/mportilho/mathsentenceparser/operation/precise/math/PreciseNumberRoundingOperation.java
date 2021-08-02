@@ -32,7 +32,7 @@ import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class PreciseNumberRoundingOperation extends AbstractBinaryOperation {
 
-	private RoundingEnum roundingEnum;
+	private final RoundingEnum roundingEnum;
 
 	public PreciseNumberRoundingOperation(AbstractOperation leftOperand, AbstractOperation rightOperand, RoundingEnum roundingEnum) {
 		super(leftOperand, rightOperand);
@@ -66,7 +66,7 @@ public class PreciseNumberRoundingOperation extends AbstractBinaryOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseNumberRoundingOperation(getLeftOperand().copy(context), getRightOperand().copy(context), roundingEnum);
 	}
 
@@ -92,9 +92,9 @@ public class PreciseNumberRoundingOperation extends AbstractBinaryOperation {
 		UP("up"), DOWN("down"), CEILING("ceiling"), FLOOR("floor"), HALF_UP("halfUp"), HALF_DOWN("halfDown"), HALF_EVEN("halfEven"),
 		UNNECESSARY("Unnecessary");
 
-		private String mnemonic;
+		private final String mnemonic;
 
-		private RoundingEnum(String mnemonic) {
+		RoundingEnum(String mnemonic) {
 			this.mnemonic = mnemonic;
 		}
 

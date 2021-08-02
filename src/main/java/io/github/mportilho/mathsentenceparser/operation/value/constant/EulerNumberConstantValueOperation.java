@@ -48,7 +48,7 @@ public class EulerNumberConstantValueOperation extends AbstractConstantValueOper
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new EulerNumberConstantValueOperation();
 	}
 

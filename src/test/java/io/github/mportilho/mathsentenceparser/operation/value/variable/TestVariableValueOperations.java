@@ -22,54 +22,54 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation.value.variable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import io.github.mportilho.mathsentenceparser.MathSentence;
+import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import org.junit.jupiter.api.Test;
-
-import io.github.mportilho.mathsentenceparser.MathSentence;
-import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TestVariableValueOperations {
 
-	private OperationContext context = new OperationContext();
+    private final OperationContext context = new OperationContext();
 
-	@Test
-	public void testProvidedVariableValueOperations() {
-		VariableValueOperation operation;
+    @Test
+    public void testProvidedVariableValueOperations() {
+        VariableValueOperation operation;
 
-		operation = new VariableValueOperation("A");
-		operation.setValue(BigDecimal.ZERO);
-		assertThat(operation.getVariableName()).isEqualTo("A");
-		assertThat(operation.getValue()).isEqualTo(BigDecimal.ZERO);
-	}
+        operation = new VariableValueOperation("A");
+        operation.setValue(BigDecimal.ZERO);
+        assertThat(operation.getVariableName()).isEqualTo("A");
+        assertThat(operation.getValue()).isEqualTo(BigDecimal.ZERO);
+    }
 
-	@Test
-	public void testVariableValueProvider() {
-		VariableValueOperation operation;
-		VariableProvider provider = context -> BigDecimal.ONE.add(BigDecimal.ONE);
+    @Test
+    public void testVariableValueProvider() {
+        VariableValueOperation operation;
+        VariableProvider provider = context -> BigDecimal.ONE.add(BigDecimal.ONE);
 
-		operation = new VariableValueOperation("B");
-		operation.setValue(provider);
-		assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo(BigDecimal.valueOf(2));
-	}
+        operation = new VariableValueOperation("B");
+        operation.setValue(provider);
+        assertThat(operation.<BigDecimal>evaluate(context)).isEqualByComparingTo(BigDecimal.valueOf(2));
+    }
 
-	@Test
-	public void testNullVariableValue() {
-		assertThatThrownBy(() -> new VariableValueOperation("a").setValue(null)).isInstanceOf(IllegalArgumentException.class);
-	}
+    @Test
+    public void testNullVariableValue() {
+        assertThatThrownBy(() -> new VariableValueOperation("a").setValue(null)).isInstanceOf(IllegalArgumentException.class);
+    }
 
-	@Test
-	public void testVariableValueProviderOnExpression() {
-		MathSentence parser = new MathSentence("a * b");
-		parser.addVariable("a", 5);
-		parser.addVariableProvider("b", context -> {
-			context.caching(false);
-			return new BigDecimal(6, context.getMathContext()).setScale(context.getScale().orElse(8));
-		});
-		assertThat(parser.<BigDecimal>compute()).isEqualByComparingTo("30");
-	}
+    @Test
+    public void testVariableValueProviderOnExpression() {
+        MathSentence parser = new MathSentence("a * b");
+        parser.addVariable("a", 5);
+        parser.addVariableProvider("b", context -> {
+            context.caching(false);
+            int scale = context.getScale() != null ? context.getScale() : 8;
+            return new BigDecimal(6, context.getMathContext()).setScale(scale, context.getMathContext().getRoundingMode());
+        });
+        assertThat(parser.<BigDecimal>compute()).isEqualByComparingTo("30");
+    }
 
 }

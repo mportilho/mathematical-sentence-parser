@@ -37,11 +37,11 @@ public class PreciseDivisionOperation extends AbstractBinaryOperation {
 
 	@Override
 	protected Object resolve(OperationContext context) {
-		return getLeftOperand().<BigDecimal>evaluate(context).divide(getRightOperand().<BigDecimal>evaluate(context), context.getMathContext());
+		return getLeftOperand().<BigDecimal>evaluate(context).divide(getRightOperand().evaluate(context), context.getMathContext());
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseDivisionOperation(getLeftOperand().copy(context), getRightOperand().copy(context));
 	}
 

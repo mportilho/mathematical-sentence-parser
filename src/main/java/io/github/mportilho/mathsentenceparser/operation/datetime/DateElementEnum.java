@@ -32,9 +32,9 @@ public enum DateElementEnum {
 
 	DAY("Days"), MONTH("Months"), YEAR("Years"), SECOND("Seconds"), MINUTE("Minutes"), HOUR("Hours");
 
-	private String mnemonic;
+	private final String mnemonic;
 
-	private DateElementEnum(String mnemonic) {
+	DateElementEnum(String mnemonic) {
 		this.mnemonic = mnemonic;
 	}
 

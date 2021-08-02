@@ -41,7 +41,7 @@ public class GenericValueOperation extends AbstractOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return null;
 	}
 

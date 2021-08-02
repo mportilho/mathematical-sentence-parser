@@ -40,7 +40,7 @@ import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractV
 
 public class WarmUpOperationVisitor implements OperationVisitor<Object> {
 
-	private OperationContext context;
+	private final OperationContext context;
 
 	public WarmUpOperationVisitor(OperationContext context) {
 		this.context = context;

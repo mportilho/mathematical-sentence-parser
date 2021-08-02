@@ -54,7 +54,7 @@ public class PreciseNegativeOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new PreciseNegativeOperation(getOperand().copy(context));
 	}
 

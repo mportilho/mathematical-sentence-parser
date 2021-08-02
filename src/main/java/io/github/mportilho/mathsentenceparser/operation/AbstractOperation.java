@@ -22,226 +22,223 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import io.github.mportilho.mathsentenceparser.operation.value.variable.AbstractVariableValueOperation;
 import io.github.mportilho.mathsentenceparser.syntaxtree.MathSentenceComputingException;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Default behavior for all operations
- * 
- * @author Marcelo Portilho
  *
+ * @author Marcelo Portilho
  */
 public abstract class AbstractOperation {
 
-	private Object cache;
-	private boolean caching;
-	private boolean cachingForever;
+    private Object cache;
+    private boolean caching;
+    private boolean cachingForever;
 
-	private List<AbstractOperation> parents;
-	private boolean applyingParenthesis;
+    private List<AbstractOperation> parents;
+    private boolean applyingParenthesis;
 
-	public AbstractOperation() {
-		this.caching = true;
-	}
+    public AbstractOperation() {
+        this.caching = true;
+    }
 
-	protected abstract Object resolve(OperationContext context);
+    protected abstract Object resolve(OperationContext context);
 
-	protected abstract AbstractOperation createClone(CloningContext context) throws Throwable;
+    protected abstract AbstractOperation createClone(CloningContext context);
 
-	protected abstract String getOperationToken();
+    protected abstract String getOperationToken();
 
-	public abstract <T> T accept(OperationVisitor<T> visitor);
+    public abstract <T> T accept(OperationVisitor<T> visitor);
 
-	protected abstract void composeTextualRepresentation(StringBuilder builder);
+    protected abstract void composeTextualRepresentation(StringBuilder builder);
 
-	/**
-	 * Builds a String representation of the current operation
-	 * 
-	 * @param builder the {@link StringBuilder} object where the representation will
-	 *                be placed
-	 */
-	public final void generateRepresentation(StringBuilder builder) {
-		if (this.applyingParenthesis) {
-			builder.append('(');
-			composeTextualRepresentation(builder);
-			builder.append(')');
-		} else {
-			composeTextualRepresentation(builder);
-		}
-	}
+    /**
+     * Builds a String representation of the current operation
+     *
+     * @param builder the {@link StringBuilder} object where the representation will
+     *                be placed
+     */
+    public final void generateRepresentation(StringBuilder builder) {
+        if (this.applyingParenthesis) {
+            builder.append('(');
+            composeTextualRepresentation(builder);
+            builder.append(')');
+        } else {
+            composeTextualRepresentation(builder);
+        }
+    }
 
-	/**
-	 * Makes a copy of the current operation, with it's properties and cache value
-	 * 
-	 * @param cloningContext a holder of the cloning operation temporary properties
-	 * @return a new copy of this object
-	 * @throws Throwable
-	 */
-	public final AbstractOperation copy(CloningContext cloningContext) throws Throwable {
-		AbstractOperation copy = null;
-		if (cloningContext.getClonedOperationMap().keySet().contains(this)) {
-			copy = cloningContext.getClonedOperationMap().get(this);
-		} else {
-			copy = createClone(cloningContext).copyAtributes(this);
-			cloningContext.getClonedOperationMap().put(this, copy);
-		}
-		return copy;
-	}
+    /**
+     * Makes a copy of the current operation, with it's properties and cache value
+     *
+     * @param cloningContext a holder of the cloning operation temporary properties
+     * @return a new copy of this object
+     */
+    public final AbstractOperation copy(CloningContext cloningContext) {
+        AbstractOperation copy;
+        if (cloningContext.getClonedOperationMap().containsKey(this)) {
+            copy = cloningContext.getClonedOperationMap().get(this);
+        } else {
+            copy = createClone(cloningContext).copyAtributes(this);
+            cloningContext.getClonedOperationMap().put(this, copy);
+        }
+        return copy;
+    }
 
-	/**
-	 * Evaluates the current operation for it's resulting value. If the current
-	 * operation was previously evaluated, returns it's cached value.
-	 * 
-	 * @param <T>     Dynamic return type
-	 * @param context a holder of the evaluation proccess properties
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public final <T> T evaluate(OperationContext context) {
-		Object result;
-		try {
-			result = readValue(context);
-		} catch (ClassCastException e) {
-			throw new IllegalStateException(String.format("Wrong operands type for expression %s", toString()), e);
-		} catch (ArithmeticException e) {
-			ArithmeticException newException = new ArithmeticException(
-					String.format("Arithmetic error for expression %s: %s", toString(), e.getMessage()));
-			newException.setStackTrace(e.getStackTrace());
-			throw newException;
-		} catch (MathSentenceComputingException e) {
-			throw new IllegalStateException(e.getMessage(), e.getCause());
-		} catch (IllegalArgumentException | IllegalStateException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new IllegalStateException(String.format("Error during calculation of expression %s", toString()), e);
-		}
-		if (result == null && !context.isAllowingNull()) {
-			if (this instanceof AbstractVariableValueOperation) {
-				throw new IllegalArgumentException(String.format("The variable \"%s\" does not have any provided value", this.toString()));
-			} else {
-				throw new NullPointerException(String.format("Not expected null value for expression %s ", toString()));
-			}
-		}
-		return (T) result;
-	}
+    /**
+     * Evaluates the current operation for it's resulting value. If the current
+     * operation was previously evaluated, returns it's cached value.
+     *
+     * @param <T>     Dynamic return type
+     * @param context a holder of the evaluation proccess properties
+     * @return the operation's evaluation result
+     */
+    @SuppressWarnings("unchecked")
+    public final <T> T evaluate(OperationContext context) {
+        Object result;
+        try {
+            result = readValue(context);
+        } catch (ClassCastException e) {
+            throw new IllegalStateException(String.format("Wrong operands type for expression %s", this), e);
+        } catch (ArithmeticException e) {
+            ArithmeticException newException = new ArithmeticException(
+                    String.format("Arithmetic error for expression %s: %s", this, e.getMessage()));
+            newException.setStackTrace(e.getStackTrace());
+            throw newException;
+        } catch (MathSentenceComputingException e) {
+            throw new IllegalStateException(e.getMessage(), e.getCause());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new IllegalStateException(String.format("Error during calculation of expression %s", this), e);
+        }
+        if (result == null && !context.isAllowingNull()) {
+            if (this instanceof AbstractVariableValueOperation) {
+                throw new IllegalArgumentException(String.format("The variable \"%s\" does not have any provided value", this));
+            } else {
+                throw new NullPointerException(String.format("Not expected null value for expression %s ", this));
+            }
+        }
+        return (T) result;
+    }
 
-	private Object readValue(OperationContext context) {
-		Object result = null;
-		if (caching || cachingForever) {
-			if (cache == null) {
-				result = resolve(context); // resolve method can disable cache
-				cache = caching || cachingForever ? result : null;
-			} else {
-				result = cache;
-			}
-		} else {
-			result = resolve(context);
-		}
-		return result;
-	}
+    private Object readValue(OperationContext context) {
+        Object result;
+        if (caching || cachingForever) {
+            if (cache == null) {
+                result = resolve(context); // resolve method can disable cache
+                cache = caching || cachingForever ? result : null;
+            } else {
+                result = cache;
+            }
+        } else {
+            result = resolve(context);
+        }
+        return result;
+    }
 
-	private final AbstractOperation copyAtributes(AbstractOperation sourceOperation) {
-		this.cache = sourceOperation.cache;
-		this.caching = sourceOperation.caching;
-		this.cachingForever = sourceOperation.cachingForever;
-		this.applyingParenthesis = sourceOperation.applyingParenthesis;
-		return this;
-	}
+    private AbstractOperation copyAtributes(AbstractOperation sourceOperation) {
+        this.cache = sourceOperation.cache;
+        this.caching = sourceOperation.caching;
+        this.cachingForever = sourceOperation.cachingForever;
+        this.applyingParenthesis = sourceOperation.applyingParenthesis;
+        return this;
+    }
 
-	/**
-	 * Indicates that the representation of the current operation must be wrapped by
-	 * parenthesis
-	 */
-	public void applyingParenthesis() {
-		this.applyingParenthesis = true;
-	}
+    /**
+     * Indicates that the representation of the current operation must be wrapped by
+     * parenthesis
+     */
+    public void applyingParenthesis() {
+        this.applyingParenthesis = true;
+    }
 
-	/**
-	 * Adds a parent operation node for this current operation
-	 * 
-	 * @param operation the parent of this operation
-	 */
-	public void addParent(AbstractOperation operation) {
-		if (operation == null) {
-			return;
-		}
-		if (parents == null) {
-			parents = new ArrayList<>();
-		}
-		parents.add(operation);
-	}
+    /**
+     * Adds a parent operation node for this current operation
+     *
+     * @param operation the parent of this operation
+     */
+    public void addParent(AbstractOperation operation) {
+        if (operation == null) {
+            return;
+        }
+        if (parents == null) {
+            parents = new ArrayList<>();
+        }
+        parents.add(operation);
+    }
 
-	/**
-	 * Sets the caching behavior for this operation
-	 * 
-	 * @param value a indication if the current operation must be cached
-	 */
-	public void caching(boolean value) {
-		this.caching = value;
-	}
+    /**
+     * Sets the caching behavior for this operation
+     *
+     * @param value a indication if the current operation must be cached
+     */
+    public void caching(boolean value) {
+        this.caching = value;
+    }
 
-	protected boolean isCaching() {
-		return caching || cachingForever;
-	}
+    protected boolean isCaching() {
+        return caching || cachingForever;
+    }
 
-	protected void cachingForever() {
-		this.cachingForever = true;
-	}
+    protected void cachingForever() {
+        this.cachingForever = true;
+    }
 
-	protected boolean isCachingForever() {
-		return cachingForever;
-	}
+    protected boolean isCachingForever() {
+        return cachingForever;
+    }
 
-	protected void clearCache() {
-		clearCache(null);
-	}
+    protected void clearCache() {
+        clearCache(null);
+    }
 
-	protected final void clearCache(Set<Class<? extends AbstractOperation>> stopOnOperationTypes) {
-		if (!isCaching() || this.cache == null) {
-			return;
-		}
-		this.cache = null;
-		if (parents != null) {
-			int size = parents.size();
-			for (int i = 0; i < size; i++) {
-				AbstractOperation currParent = parents.get(i);
-				if (currParent.cache != null && (stopOnOperationTypes == null || !stopOnOperationTypes.contains(getClass()))) {
-					currParent.clearCache(stopOnOperationTypes);
-				}
-			}
-		}
-	}
+    protected final void clearCache(Set<Class<? extends AbstractOperation>> stopOnOperationTypes) {
+        if (!isCaching() || this.cache == null) {
+            return;
+        }
+        this.cache = null;
+        if (parents != null) {
+            for (int i = 0; i < parents.size(); i++) {
+                AbstractOperation currParent = parents.get(i);
+                if (currParent.cache != null && (stopOnOperationTypes == null || !stopOnOperationTypes.contains(getClass()))) {
+                    currParent.clearCache(stopOnOperationTypes);
+                }
+            }
+        }
+    }
 
-	/**
-	 * Retrieves the current cached value for this operation
-	 * 
-	 * @return The current cache for this operation. Returns <code>null</code> if
-	 *         the operation was not evaluated or cache is disabled
-	 */
-	public Object getCache() {
-		return cache;
-	}
+    /**
+     * Retrieves the current cached value for this operation
+     *
+     * @return The current cache for this operation. Returns <code>null</code> if
+     * the operation was not evaluated or cache is disabled
+     */
+    public Object getCache() {
+        return cache;
+    }
 
-	/**
-	 * Verify
-	 * 
-	 * @return a indication if the current operation must have it's text
-	 *         representation wrapped by parenthesis
-	 */
-	public boolean isApplyingParenthesis() {
-		return applyingParenthesis;
-	}
+    /**
+     * Verify
+     *
+     * @return a indication if the current operation must have it's text
+     * representation wrapped by parenthesis
+     */
+    public boolean isApplyingParenthesis() {
+        return applyingParenthesis;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		generateRepresentation(builder);
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        generateRepresentation(builder);
+        return builder.toString();
+    }
 
 }

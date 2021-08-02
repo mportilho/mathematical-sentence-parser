@@ -39,7 +39,7 @@ public class NegationOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new NegationOperation(getOperand().copy(context));
 	}
 

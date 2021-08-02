@@ -32,7 +32,7 @@ import io.github.mportilho.mathsentenceparser.operation.OperationContext;
 
 public class DeggreOperation extends AbstractUnaryOperator {
 
-	private static final BigDecimal HALF_RADIUS = BigDecimal.valueOf(180l);
+	private static final BigDecimal HALF_RADIUS = BigDecimal.valueOf(180L);
 
 	public DeggreOperation(AbstractOperation operand) {
 		super(operand, OperatorPosition.RIGHT);
@@ -45,7 +45,7 @@ public class DeggreOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new DeggreOperation(getOperand().copy(context));
 	}
 

@@ -42,7 +42,7 @@ public class AssignedVariableOperation extends AbstractVariableValueOperation {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		AssignedVariableOperation copyOperation = new AssignedVariableOperation(getVariableName(),
 				((AbstractOperation) getValue()).copy(context));
 		context.getAssignedVariables().put(getVariableName(), copyOperation);

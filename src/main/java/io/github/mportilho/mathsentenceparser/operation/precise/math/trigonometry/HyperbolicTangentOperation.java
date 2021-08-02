@@ -40,7 +40,7 @@ public class HyperbolicTangentOperation extends AbstractUnaryOperator {
 	}
 
 	@Override
-	protected AbstractOperation createClone(CloningContext context) throws Throwable {
+	protected AbstractOperation createClone(CloningContext context) {
 		return new HyperbolicTangentOperation(getOperand().copy(context));
 	}
 
