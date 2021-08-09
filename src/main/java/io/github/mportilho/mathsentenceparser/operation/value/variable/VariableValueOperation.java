@@ -25,6 +25,7 @@ package io.github.mportilho.mathsentenceparser.operation.value.variable;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import io.github.mportilho.mathsentenceparser.syntaxtree.MathSentenceUtils;
 
 public class VariableValueOperation extends AbstractVariableValueOperation {
 
@@ -44,7 +45,7 @@ public class VariableValueOperation extends AbstractVariableValueOperation {
             if (!contextSupplier.isCaching()) {
                 caching(false);
             }
-            return result;
+            return MathSentenceUtils.tryConventingKnownTypes(result, context.getMathContext());
         }
         return getValue();
     }

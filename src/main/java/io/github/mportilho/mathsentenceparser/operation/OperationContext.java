@@ -22,70 +22,77 @@ SOFTWARE.*/
 
 package io.github.mportilho.mathsentenceparser.operation;
 
+import io.github.mportilho.mathsentenceparser.MathSentenceOptions;
+
 import java.math.MathContext;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import io.github.mportilho.mathsentenceparser.MathSentenceOptions;
-
 public class OperationContext {
 
-	private final MathContext mathContext;
-	private final Integer scale;
+    private final MathContext mathContext;
+    private final Integer scale;
+    private boolean allowingNull;
 
-	private boolean allowingNull;
-	private LocalDateTime currentDateTime;
-	private Map<String, Function<Object[], Object>> externalFunctions;
+    private LocalDateTime currentDateTime;
+    private Map<String, Function<Object[], Object>> externalFunctions;
 
-	public OperationContext() {
-		this(MathSentenceOptions.DEFAULT_MATH_CONTEXT, null, false);
-	}
+    public OperationContext() {
+        this(MathSentenceOptions.DEFAULT_MATH_CONTEXT, null, false);
+    }
 
-	public OperationContext(MathContext mathContext, Integer scale, boolean allowingNull) {
-		this.mathContext = mathContext;
-		this.scale = scale;
-		this.allowingNull = allowingNull;
-	}
+    public OperationContext(MathContext mathContext, Integer scale, boolean allowingNull) {
+        this.mathContext = mathContext;
+        this.scale = scale;
+        this.allowingNull = allowingNull;
+    }
 
-	public OperationContext clearContext() {
-		this.currentDateTime = null;
-		this.allowingNull = false;
-		return this;
-	}
+    private OperationContext(MathContext mathContext, Integer scale, boolean allowingNull, Map<String, Function<Object[], Object>> externalFunctions) {
+        this.mathContext = mathContext;
+        this.scale = scale;
+        this.allowingNull = allowingNull;
+        this.externalFunctions = externalFunctions == null || externalFunctions.isEmpty() ? Collections.emptyMap() : Collections.unmodifiableMap(externalFunctions);
+    }
 
-	public MathContext getMathContext() {
-		return mathContext;
-	}
+    public OperationContext newInstance() {
+        return new OperationContext(this.mathContext, this.scale, this.allowingNull, this.externalFunctions);
+    }
 
-	public Integer getScale() {
-		return scale;
-	}
+    public MathContext getMathContext() {
+        return mathContext;
+    }
 
-	public void setAllowingNull(boolean allowingNull) {
-		this.allowingNull = allowingNull;
-	}
+    public Integer getScale() {
+        return scale;
+    }
 
-	public boolean isAllowingNull() {
-		return allowingNull;
-	}
+    public OperationContext setAllowingNull(boolean allowingNull) {
+        this.allowingNull = allowingNull;
+        return this;
+    }
 
-	public void addExternalFunctions(Map<String, Function<Object[], Object>> externalFunctions) {
-		if (this.externalFunctions == null) {
-			this.externalFunctions = new HashMap<>();
-		}
-		this.externalFunctions.putAll(externalFunctions);
-	}
+    public boolean isAllowingNull() {
+        return allowingNull;
+    }
 
-	public Map<String, Function<Object[], Object>> getExternalFunctions() {
-		return externalFunctions;
-	}
+    public void addExternalFunctions(Map<String, Function<Object[], Object>> externalFunctions) {
+        if (this.externalFunctions == null) {
+            this.externalFunctions = new HashMap<>();
+        }
+        this.externalFunctions.putAll(externalFunctions);
+    }
 
-	public LocalDateTime getCurrentDateTime() {
-		if (currentDateTime == null) {
-			currentDateTime = LocalDateTime.now();
-		}
-		return currentDateTime;
-	}
+    public Map<String, Function<Object[], Object>> getExternalFunctions() {
+        return externalFunctions;
+    }
+
+    public LocalDateTime getCurrentDateTime() {
+        if (currentDateTime == null) {
+            currentDateTime = LocalDateTime.now();
+        }
+        return currentDateTime;
+    }
 }

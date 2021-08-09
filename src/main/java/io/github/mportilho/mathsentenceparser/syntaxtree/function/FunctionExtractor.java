@@ -47,7 +47,7 @@ public class FunctionExtractor {
 	 * @throws IntrospectionException
 	 * @throws IllegalAccessException
 	 */
-	public static final Map<String, Function<Object[], Object>> extractFunctions(Object functionProvider)
+	public static Map<String, Function<Object[], Object>> extractFunctions(Object functionProvider)
 			throws IntrospectionException, IllegalAccessException {
 		Map<String, Function<Object[], Object>> functionPool = new HashMap<>();
 		MethodHandles.Lookup lookup = MethodHandles.publicLookup();
@@ -79,7 +79,7 @@ public class FunctionExtractor {
 		return functionPool;
 	}
 
-	private static final String generateMethodSignature(String methodName, MethodType type) {
+	private static String generateMethodSignature(String methodName, MethodType type) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(type.returnType().getSimpleName());
 		sb.append(' ').append(methodName).append('(');

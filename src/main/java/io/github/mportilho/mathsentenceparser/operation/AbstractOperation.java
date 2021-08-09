@@ -108,7 +108,7 @@ public abstract class AbstractOperation {
             throw new IllegalStateException(String.format("Wrong operands type for expression %s", this), e);
         } catch (ArithmeticException e) {
             ArithmeticException newException = new ArithmeticException(
-                    String.format("Arithmetic error for expression %s: %s", this, e.getMessage()));
+                    String.format("Arithmetic error for expression '%s': %s", this, e.getMessage()));
             newException.setStackTrace(e.getStackTrace());
             throw newException;
         } catch (MathSentenceComputingException e) {
@@ -116,13 +116,13 @@ public abstract class AbstractOperation {
         } catch (IllegalArgumentException | IllegalStateException e) {
             throw e;
         } catch (Exception e) {
-            throw new IllegalStateException(String.format("Error during calculation of expression %s", this), e);
+            throw new IllegalStateException(String.format("Error during calculation of expression '%s'", this), e);
         }
         if (result == null && !context.isAllowingNull()) {
             if (this instanceof AbstractVariableValueOperation) {
-                throw new IllegalArgumentException(String.format("The variable \"%s\" does not have any provided value", this));
+                throw new IllegalArgumentException(String.format("The variable '%s' does not have any provided value", this));
             } else {
-                throw new NullPointerException(String.format("Not expected null value for expression %s ", this));
+                throw new NullPointerException(String.format("Not expecting null for expression value '%s' ", this));
             }
         }
         return (T) result;

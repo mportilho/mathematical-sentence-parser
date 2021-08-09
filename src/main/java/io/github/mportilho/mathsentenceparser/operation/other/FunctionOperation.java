@@ -25,14 +25,11 @@ package io.github.mportilho.mathsentenceparser.operation.other;
 import io.github.mportilho.mathsentenceparser.operation.AbstractOperation;
 import io.github.mportilho.mathsentenceparser.operation.CloningContext;
 import io.github.mportilho.mathsentenceparser.operation.OperationContext;
+import io.github.mportilho.mathsentenceparser.syntaxtree.MathSentenceUtils;
 import io.github.mportilho.mathsentenceparser.syntaxtree.visitor.OperationVisitor;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
@@ -74,13 +71,7 @@ public class FunctionOperation extends AbstractOperation {
             throw new IllegalStateException(String.format("Function '%s' not found", functionName));
         }
 
-        Object response = function.apply(args);
-        if (response instanceof Number) {
-            return new BigDecimal(response.toString(), context.getMathContext());
-        } else if (response instanceof Date) {
-            return LocalDateTime.ofInstant(((Date) response).toInstant(), ZoneId.systemDefault());
-        }
-        return response;
+        return MathSentenceUtils.tryConventingKnownTypes(function.apply(args), context.getMathContext());
     }
 
     @Override
